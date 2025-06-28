@@ -80,7 +80,6 @@ export const getPinnedRepos = unstable_cache(
 
 export const getUserOrganizations = unstable_cache(
   async (username) => {
-    console.log("GH_TOKEN:", process.env.GH_TOKEN);
     console.log("Fetching organizations for", username);
     console.time("getUserOrganizations");
     const res = await fetch("https://api.github.com/graphql", {
