@@ -104,7 +104,7 @@ export const getUserOrganizations = unstable_cache(
     return orgs;
   },
   ["getUserOrganizations"],
-  { revalidate: 60 }
+  { revalidate: HOURS_12 }
 );
 
 export const getVercelProjects = async () => {
