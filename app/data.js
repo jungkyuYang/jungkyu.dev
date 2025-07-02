@@ -361,3 +361,22 @@ export const checkAppJsxExistence = unstable_cache(
   ["checkAppJsxExistence"],
   { revalidate: HOURS_1 }
 );
+
+export async function getOrgRepos(orgName) {
+  console.log("Fetching repos for organization:", orgName);
+  console.time("getOrgRepos:" + orgName);
+  const res = await fetch(`https://api.github.com/orgs/${orgName}/repos`, {
+    headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
+    next: { revalidate: HOURS_1 },
+  });
+  if (!res.ok) {
+    console.error(
+      "GitHub API returned an error for org repos.",
+      res.status,
+      res.statusText
+    );
+    return [];
+  }
+  console.timeEnd("getOrgRepos:" + orgName);
+  return res.json();
+}
