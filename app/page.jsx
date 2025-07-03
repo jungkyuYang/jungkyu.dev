@@ -6,6 +6,7 @@ import { ProfileOrganizations } from "./_components/orgs";
 import { RecentActivity } from "./_components/recent-activity";
 import { getUser } from "./_service/data";
 import LoadingIndicator from "./_components/loading-indicator";
+import DarkModeToggle from "./_components/DarkModeToggle";
 
 const navigation = [
   { name: "Projects", href: "/projects" },
@@ -50,7 +51,7 @@ const TryYourself = ({ customUsername }) => {
   return (
     <Link
       href={href}
-      className="text-lg duration-500 text-zinc-500 hover:text-zinc-300 border-dashed p-2 rounded-sm border-2 border-zinc-500 hover:border-zinc-300"
+      className="text-lg duration-500 !text-zinc-900 dark:!text-zinc-100 border-dashed p-2 rounded-sm border-2 border-zinc-500 hover:!text-zinc-700 dark:hover:!text-zinc-300 hover:border-zinc-300"
     >
       {customUsername
         ? "Showing: " + customUsername + ", click to cancel ❌"
@@ -75,7 +76,7 @@ const LandingComponent = async ({ searchParams: { customUsername } }) => {
                 item.href +
                 (customUsername ? `?customUsername=${customUsername}` : "")
               }
-              className="text-lg duration-500 text-zinc-500 hover:text-zinc-300"
+              className="text-lg duration-500 !text-zinc-900 dark:!text-zinc-100 hover:!text-zinc-700 dark:hover:!text-zinc-300"
             >
               <span className="inline-flex items-center">
                 {item.name} <LoadingIndicator />
@@ -83,11 +84,14 @@ const LandingComponent = async ({ searchParams: { customUsername } }) => {
             </Link>
           ))}
           <TryYourself customUsername={customUsername} />
+          <li>
+            <DarkModeToggle />
+          </li>
         </ul>
       </nav>
       <div className="hidden w-screen h-px animate-glow md:block animate-fade-left bg-linear-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" />
 
-      <h1 className="flex items-center z-10 text-4xl hover:scale-110 text-transparent duration-1000 cursor-default text-edge-outline animate-title font-display sm:text-6xl md:text-9xl whitespace-nowrap bg-clip-text bg-white p-5">
+      <h1 className="flex items-center z-10 text-4xl hover:scale-110 !text-zinc-900 dark:!text-zinc-100 duration-1000 cursor-default text-edge-outline animate-title font-display sm:text-6xl md:text-9xl whitespace-nowrap p-5">
         {username}
         <Suspense fallback={<p>Loading...</p>}>
           <UserIcon promise={promise} />
@@ -96,7 +100,7 @@ const LandingComponent = async ({ searchParams: { customUsername } }) => {
 
       <div className="hidden w-screen h-px animate-glow md:block animate-fade-right bg-linear-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" />
       <div className="my-16 text-center animate-fade-in">
-        <h2 className="text-lg text-zinc-500">
+        <h2 className="text-lg !text-zinc-700 dark:!text-zinc-400">
           <Suspense
             fallback={<div className="w-full h-px min-h-28">Loading...</div>}
           >

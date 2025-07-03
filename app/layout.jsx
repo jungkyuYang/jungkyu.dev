@@ -4,6 +4,7 @@ import LocalFont from "next/font/local";
 import Script from "next/script";
 import data from "../data.json";
 import AnalyticsProvider from "./_providers/AnalyticsProvider";
+import ThemeClientProvider from "./_providers/ThemeClientProvider";
 
 const username = process.env.GITHUB_USERNAME || data.githubUsername;
 const displayName = data.displayName || username;
@@ -63,12 +64,14 @@ export default function RootLayout({ children }) {
         </Script>
       </head>
       <body
-        className={`bg-black ${
+        className={`bg-white text-black dark:bg-zinc-900 dark:text-white ${
           process.env.NODE_ENV === "development" ? "debug-screens" : ""
         }`}
       >
-        <AnalyticsProvider />
-        {children}
+        <ThemeClientProvider>
+          <AnalyticsProvider />
+          {children}
+        </ThemeClientProvider>
       </body>
     </html>
   );

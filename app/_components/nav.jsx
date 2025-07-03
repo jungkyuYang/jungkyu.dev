@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import LoadingIndicator from "./loading-indicator";
+import DarkModeToggle from "./DarkModeToggle";
 
 export const Navigation = () => {
   const ref = useRef(null);
@@ -31,14 +32,23 @@ export const Navigation = () => {
             : "bg-zinc-900/500 border-zinc-800"
         }`}
       >
-        <div className="container flex flex-row-reverse items-center justify-between p-6 mx-auto">
-          <div className="flex justify-between gap-8 text-base">
+        <div className="container flex items-center justify-between p-6 mx-auto">
+          <Link
+            href={
+              "/" + (customUsername ? `?customUsername=${customUsername}` : "")
+            }
+            className="duration-200 !text-zinc-900 dark:!text-zinc-300 hover:!text-zinc-700 dark:hover:!text-zinc-100"
+          >
+            <GoArrowLeft className="w-6 h-6" />
+          </Link>
+
+          <div className="flex items-center gap-4">
             <Link
               href={
                 "/projects" +
                 (customUsername ? `?customUsername=${customUsername}` : "")
               }
-              className="duration-200 text-zinc-400 hover:text-zinc-100 relative block"
+              className="duration-200 !text-zinc-900 dark:!text-zinc-400 hover:!text-zinc-700 dark:hover:!text-zinc-100 relative block px-3 py-1"
             >
               <span className="inline-flex items-center">
                 Projects <LoadingIndicator />
@@ -49,22 +59,16 @@ export const Navigation = () => {
                 "/contact" +
                 (customUsername ? `?customUsername=${customUsername}` : "")
               }
-              className="duration-200 text-zinc-400 hover:text-zinc-100 relative block"
+              className="duration-200 !text-zinc-900 dark:!text-zinc-400 hover:!text-zinc-700 dark:hover:!text-zinc-100 relative block px-3 py-1"
             >
               <span className="inline-flex items-center">
                 Contact <LoadingIndicator />
               </span>
             </Link>
+            <div className="ml-2">
+              <DarkModeToggle />
+            </div>
           </div>
-
-          <Link
-            href={
-              "/" + (customUsername ? `?customUsername=${customUsername}` : "")
-            }
-            className="duration-200 text-zinc-300 hover:text-zinc-100"
-          >
-            <GoArrowLeft className="w-6 h-6" />
-          </Link>
         </div>
       </div>
     </header>

@@ -8,118 +8,118 @@ import { getRepos, getPinnedRepos, getVercelProjects } from "../_service/data";
 
 export default async function ProjectsComponent({ username }) {
   const [repositories, pinnedNames, vercelProjects] = await Promise.all([
-    getRepos(username),
-    getPinnedRepos(username),
+		getRepos(username),
+		getPinnedRepos(username),
     getVercelProjects(),
-  ]);
+	]);
 
-  // interested only in the project name, link, framework and description
-  // interested only in Vercel projects that are linked to GitHub repositories
-  const vercelProjectsDetails = vercelProjects.projects
+	// interested only in the project name, link, framework and description
+	// interested only in Vercel projects that are linked to GitHub repositories
+	const vercelProjectsDetails = vercelProjects.projects
     .filter((project) => {
       const githubRepo = repositories.find(
         (repo) => repo.name === project.name
       );
-      return githubRepo;
-    })
-    .map((project) => ({
-      framework: project.framework,
-      name: project.name,
-      nodeVersion: project.nodeVersion,
-      link: project.link,
-      description: project.description,
-    }));
+			return githubRepo;
+		})
+		.map((project) => ({
+			framework: project.framework,
+			name: project.name,
+			nodeVersion: project.nodeVersion,
+			link: project.link,
+			description: project.description,
+		}));
 
-  // For Vercel projects, add the framework to the GitHub repository info object.
+	// For Vercel projects, add the framework to the GitHub repository info object.
   repositories.forEach((repo) => {
     const vercelRepo = vercelProjectsDetails.find(
       (vercelRepo) => vercelRepo.name === repo.name
     );
-    if (vercelRepo) {
-      repo.vercel = vercelRepo;
-    }
-  });
+		if (vercelRepo) {
+			repo.vercel = vercelRepo;
+		}
+	});
 
-  // const heroes = repositories.filter((project) => data.projects.heroNames.includes(project.name)).sort((a, b) => b.stargazers_count - a.stargazers_count);
+	// const heroes = repositories.filter((project) => data.projects.heroNames.includes(project.name)).sort((a, b) => b.stargazers_count - a.stargazers_count);
   const heroes = repositories
     .filter((project) => pinnedNames.includes(project.name))
     .sort((a, b) => b.stargazers_count - a.stargazers_count);
-  const sorted = repositories
-    .filter((p) => !p.private)
-    .filter((p) => !p.fork)
-    .filter((p) => !p.archived)
-    // .filter((p) => p.name !== username)
-    .filter((p) => !pinnedNames.includes(p.name))
-    .filter((p) => !data.projects.blacklist.includes(p.name))
-    .sort(
-      (a, b) =>
-        new Date(b.updated_at ?? Number.POSITIVE_INFINITY).getTime() -
+	const sorted = repositories
+		.filter((p) => !p.private)
+		.filter((p) => !p.fork)
+		.filter((p) => !p.archived)
+		// .filter((p) => p.name !== username)
+		.filter((p) => !pinnedNames.includes(p.name))
+		.filter((p) => !data.projects.blacklist.includes(p.name))
+		.sort(
+			(a, b) =>
+				new Date(b.updated_at ?? Number.POSITIVE_INFINITY).getTime() -
         new Date(a.updated_at ?? Number.POSITIVE_INFINITY).getTime()
-    );
+		);
 
-  const chunkSize = Math.ceil(sorted.length / 3);
+	const chunkSize = Math.ceil(sorted.length / 3);
 
   // 조건부로 사용할 Article 컴포넌트 결정
   const githubUsername = data.githubUsername || data.projects.githubUsername;
   const ArticleComponent =
     githubUsername === "jungkyuYang" ? FlipArticle : Article;
 
-  return (
-    <>
+	return (
+		<>
       {heroes.length ? (
         <>
-          <div className="w-full h-px bg-zinc-800" />
-          <div className="grid grid-cols-1 gap-8 mx-auto lg:grid-cols-2 ">
+						<div className="w-full h-px bg-zinc-800" />
+						<div className="grid grid-cols-1 gap-8 mx-auto lg:grid-cols-2 ">
             {heroes[0] || heroes[2] ? (
-              <div className="grid grid-cols-1 gap-4">
+									<div className="grid grid-cols-1 gap-4">
                 {[heroes[0], heroes[2]].map((project) =>
                   !project ? null : (
-                    <Card key={project.name}>
+												<Card key={project.name}>
                       <ArticleComponent project={project} />
-                    </Card>
+												</Card>
                   )
                 )}
               </div>
             ) : null}
             {heroes[1] || heroes[3] ? (
-              <div className="grid grid-cols-1 gap-4">
+									<div className="grid grid-cols-1 gap-4">
                 {[heroes[1], heroes[3]].map((project) =>
                   !project ? null : (
-                    <Card key={project.name}>
+												<Card key={project.name}>
                       <ArticleComponent project={project} />
-                    </Card>
+												</Card>
                   )
                 )}
               </div>
             ) : null}
-          </div>
-          <div className="hidden w-full h-px md:block bg-zinc-800" />
+						</div>
+						<div className="hidden w-full h-px md:block bg-zinc-800" />
         </>
       ) : null}
 
-      <div className="grid grid-cols-1 gap-4 mx-auto lg:mx-0 md:grid-cols-3">
-        <div className="grid grid-cols-1 gap-4">
-          {chunk(sorted, chunkSize)[0]?.map((project) => (
-            <Card key={project.name}>
+				<div className="grid grid-cols-1 gap-4 mx-auto lg:mx-0 md:grid-cols-3">
+					<div className="grid grid-cols-1 gap-4">
+						{chunk(sorted, chunkSize)[0]?.map((project) => (
+							<Card key={project.name}>
               <ArticleComponent project={project} />
-            </Card>
-          ))}
-        </div>
-        <div className="grid grid-cols-1 gap-4">
-          {chunk(sorted, chunkSize)[1]?.map((project) => (
-            <Card key={project.name}>
+							</Card>
+						))}
+					</div>
+					<div className="grid grid-cols-1 gap-4">
+						{chunk(sorted, chunkSize)[1]?.map((project) => (
+							<Card key={project.name}>
               <ArticleComponent project={project} />
-            </Card>
-          ))}
-        </div>
-        <div className="grid grid-cols-1 gap-4">
-          {chunk(sorted, chunkSize)[2]?.map((project) => (
-            <Card key={project.name}>
+							</Card>
+						))}
+					</div>
+					<div className="grid grid-cols-1 gap-4">
+						{chunk(sorted, chunkSize)[2]?.map((project) => (
+							<Card key={project.name}>
               <ArticleComponent project={project} />
-            </Card>
-          ))}
-        </div>
-      </div>
-    </>
-  );
+							</Card>
+						))}
+					</div>
+				</div>
+		</>
+	);
 }

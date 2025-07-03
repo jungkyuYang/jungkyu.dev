@@ -98,11 +98,11 @@ export const FlipArticle = async ({ project }) => {
   return (
     <CardFlipContainer
       front={
-        <article className="effect-glow p-4 md:p-8 flex flex-col justify-center items-center h-full">
+        <article className="effect-glow bg-white dark:bg-zinc-900 p-4 md:p-8 flex flex-col justify-center items-center h-full">
           <span className="effect-glow-bar" />
           <div className="w-full">
             <div className="flex justify-between gap-2 items-center w-full">
-              <span className="text-xs duration-1000 text-zinc-200 group-hover:text-white group-hover:border-zinc-200 drop-shadow-orange">
+              <span className="text-xs duration-1000 !text-zinc-600 dark:!text-zinc-200 group-hover:!text-black dark:group-hover:!text-white group-hover:border-zinc-200 drop-shadow-orange">
                 <time
                   dateTime={
                     project.customCreatedAt
@@ -135,7 +135,7 @@ export const FlipArticle = async ({ project }) => {
                   ).replace(/-/g, ".")}
                 </time>
               </span>
-              <span className="text-zinc-500 text-xs flex items-center gap-1 ">
+              <span className="text-zinc-500 dark:text-zinc-400 text-xs flex items-center gap-1 ">
                 {project.vercel && (
                   <VercelInfo
                     info={{ ...project.vercel, owner: project.owner }}
@@ -151,12 +151,12 @@ export const FlipArticle = async ({ project }) => {
             </div>
 
             <h2
-              className="project-card-title z-20 text-2xl font-bold leading-tight duration-1000 lg:text-3xl text-white font-display cursor-pointer line-clamp-2 min-h-[2.6em] max-h-[2.6em] break-keep overflow-hidden"
+              className="project-card-title z-20 text-2xl font-bold leading-tight duration-1000 lg:text-3xl text-black dark:text-white font-display cursor-pointer line-clamp-2 min-h-[2.6em] max-h-[2.6em] break-keep overflow-hidden"
               title={`Click to view the ${project.homepage ? "app" : "repo"}.`}
             >
               <span>{project.title ?? project.name}</span>
             </h2>
-            <p className="z-20 mt-4 text-sm duration-1000 text-zinc-400 group-hover:text-zinc-200 line-clamp-5 min-h-[6.5rem] max-h-[6.5rem]">
+            <p className="z-20 mt-4 text-sm duration-1000 !text-zinc-700 dark:!text-zinc-400 group-hover:!text-black dark:group-hover:!text-zinc-200 line-clamp-5 min-h-[6.5rem] max-h-[6.5rem]">
               {project.customDescription ?? project.description}
             </p>
             {project.techStack && project.techStack.length > 0 && (
@@ -166,11 +166,11 @@ export const FlipArticle = async ({ project }) => {
               />
             )}
             <div className="flex justify-between items-center w-full mt-2 border-t-2 border-gray-700 border-opacity-50">
-              <span className="text-zinc-500 text-xs flex items-center gap-1">
+              <span className="text-zinc-500 dark:text-zinc-400 text-xs flex items-center gap-1">
                 {views} {alerts}
               </span>
               <span
-                className="text-zinc-500 text-xs align-middle flex items-center gap-1"
+                className="text-zinc-500 dark:text-zinc-400 text-xs align-middle flex items-center gap-1"
                 title="GitHub repository link."
               >
                 <FaGithub className="w-4 h-4" />
@@ -186,3 +186,4 @@ export const FlipArticle = async ({ project }) => {
     />
   );
 };
+ 

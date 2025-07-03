@@ -2,6 +2,13 @@
 
 @config './tailwind.config.js';
 
+body {
+  @apply bg-white text-black;
+}
+.dark body {
+  @apply bg-zinc-900 text-white;
+}
+
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,
   so we've added these compatibility styles to make sure everything still

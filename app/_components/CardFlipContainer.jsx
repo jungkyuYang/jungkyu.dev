@@ -59,7 +59,7 @@ export default function CardFlipContainer({ front, back }) {
         </div>
         {/* 뒷면: 모바일에서만 클릭 시 원상복구 */}
         <div
-          className="absolute inset-0 [transform:rotateY(180deg)] [backface-visibility:hidden] flex flex-col justify-center items-center bg-zinc-900 w-full h-full"
+          className="absolute inset-0 [transform:rotateY(180deg)] [backface-visibility:hidden] flex flex-col justify-center items-center bg-white dark:bg-zinc-900 w-full h-full"
           onClick={handleBackClick}
         >
           {back}
