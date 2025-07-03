@@ -1,8 +1,7 @@
 import { Card } from "../_components/card";
 import { FlipArticle } from "./FlipArticle";
 import { getOrgRepos } from "../_service/data";
-import Section from "../_components/Section";
-import ProjectGrid from "../_components/ProjectGrid";
+import ProjectSection from "../_components/ProjectSection";
 import * as CONSTANTS from "../_constants";
 import ProjectEmptySection from "../_components/ProjectEmptySection";
 
@@ -85,33 +84,27 @@ export default async function OrgProjects() {
 
   return (
     <div className="p-8">
-      <Section title="고정 프로젝트" showDivider={true}>
-        {fixedProjects.length === 0 ? (
-          <ProjectEmptySection message="고정 프로젝트를 열심히 준비중입니다." />
-        ) : (
-          <ProjectGrid
-            projects={fixedProjects}
-            ArticleComponent={FlipArticle}
-          />
-        )}
-      </Section>
-      <Section title="팀 프로젝트" showDivider={true}>
-        {teamProjects.length === 0 ? (
-          <ProjectEmptySection message="팀 프로젝트를 열심히 준비중입니다." />
-        ) : (
-          <ProjectGrid projects={teamProjects} ArticleComponent={FlipArticle} />
-        )}
-      </Section>
-      <Section title="개인 프로젝트" showDivider={false}>
-        {personalProjects.length === 0 ? (
-          <ProjectEmptySection message="개인 프로젝트를 열심히 준비중입니다." />
-        ) : (
-          <ProjectGrid
-            projects={personalProjects}
-            ArticleComponent={FlipArticle}
-          />
-        )}
-      </Section>
+      <ProjectSection
+        title="고정 프로젝트"
+        projects={fixedProjects}
+        ArticleComponent={FlipArticle}
+        showDivider={true}
+        emptyMessage="고정 프로젝트를 열심히 준비중입니다."
+      />
+      <ProjectSection
+        title="팀 프로젝트"
+        projects={teamProjects}
+        ArticleComponent={FlipArticle}
+        showDivider={true}
+        emptyMessage="팀 프로젝트를 열심히 준비중입니다."
+      />
+      <ProjectSection
+        title="개인 프로젝트"
+        projects={personalProjects}
+        ArticleComponent={FlipArticle}
+        showDivider={false}
+        emptyMessage="개인 프로젝트를 열심히 준비중입니다."
+      />
       {allProjects.length === 0 && (
         <div className="mt-8 text-zinc-400">
           레포가 없거나, 권한/토큰 문제일 수 있습니다.
