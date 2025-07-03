@@ -13,6 +13,23 @@ const navigation = [
   { name: "Contact", href: "/contact" },
 ];
 
+const portfolioImages = [
+  {
+    src: "/images/4yclingHomerun.webp",
+    alt: "KTwiz 사이트 개선 프로젝트",
+    title: "KTwiz 사이트 개선 프로젝트",
+    description: "KBO 구단 홈페이지 UI/UX 개선, 데이터 시각화 등",
+    link: "/projects/ktwiz",
+  },
+  {
+    src: "/images/replay.webp",
+    alt: "REPLAY 영상 커뮤니티",
+    title: "REPLAY 영상 커뮤니티",
+    description: "게임 영상 공유, 커뮤니티, 플레이리스트 기능",
+    link: "/projects/replay",
+  },
+];
+
 export default async function Home(props) {
   const searchParams = await props.searchParams;
 
@@ -112,6 +129,33 @@ const LandingComponent = async ({ searchParams: { customUsername } }) => {
           </Suspense>
         </h2>
       </div>
+
+      {/* 대표 포트폴리오 섹션 */}
+      <section className="my-12 w-full max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+        {portfolioImages.map((img) => (
+          <a
+            href={img.link}
+            key={img.src}
+            className="group block rounded-xl overflow-hidden shadow-lg hover:scale-105 transition"
+          >
+            <Image
+              src={img.src}
+              alt={img.alt}
+              width={800}
+              height={450}
+              className="w-full h-auto object-cover"
+            />
+            <div className="p-4 bg-white dark:bg-zinc-900">
+              <h3 className="text-xl font-bold !text-zinc-900 dark:!text-zinc-100">
+                {img.title}
+              </h3>
+              <p className="mt-2 !text-zinc-700 dark:!text-zinc-400">
+                {img.description}
+              </p>
+            </div>
+          </a>
+        ))}
+      </section>
     </div>
   );
 };

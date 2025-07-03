@@ -186,4 +186,3 @@ export const FlipArticle = async ({ project }) => {
     />
   );
 };
- 

@@ -81,7 +81,7 @@ export default async function Contacts(props) {
   });
 
   return (
-    <div className="min-h-screen flex flex-col bg-linear-to-tl from-zinc-900/0 via-zinc-900 to-zinc-900/0">
+    <div className="relative pb-16 min-h-screen flex flex-col">
       <Navigation />
       <main className="flex-1 flex items-center justify-center">
         <div className="container px-4 mx-auto">
@@ -109,11 +109,11 @@ export default async function Contacts(props) {
                     </span>{" "}
                     <div className="z-10 flex flex-col items-center">
                       <span
-                        className={`whitespace-nowrap text-xl font-medium duration-150 lg:text-3xl text-zinc-200 group-hover:text-white font-display ${emailTransform}`}
+                        className={`whitespace-nowrap text-xl font-medium duration-150 lg:text-3xl !text-zinc-900 dark:!text-zinc-100 group-hover:!text-white font-display ${emailTransform}`}
                       >
                         {s.handle}
                       </span>
-                      <span className="mt-4 text-sm text-center duration-1000 text-zinc-400 group-hover:text-zinc-200">
+                      <span className="mt-4 text-sm text-center duration-1000 !text-zinc-500 dark:!text-zinc-400 group-hover:!text-zinc-200">
                         {s.label}
                       </span>
                     </div>
