@@ -3,15 +3,12 @@ import { FlipArticle } from "./FlipArticle";
 import { getOrgRepos } from "../_service/data";
 import Section from "../_components/Section";
 import ProjectGrid from "../_components/ProjectGrid";
-import {
-  ORG_NAMES,
-  MAIN_PROJECT_TITLES,
-  DEV_FE3_PROJECT_NAMES,
-} from "../_constants/orgs";
-import { PROJECT_META } from "../_constants/projectMeta";
+import * as CONSTANTS from "../_constants";
 
 export default async function OrgProjects() {
-  const orgResults = await Promise.allSettled(ORG_NAMES.map(getOrgRepos));
+  const orgResults = await Promise.allSettled(
+    CONSTANTS.ORG_NAMES.map(getOrgRepos)
+  );
   const [cyclingHomerunRepos, preOnboardingIdleRepos, devFE3Repos] =
     orgResults.map((result) =>
       result.status === "fulfilled" ? result.value : []
@@ -22,7 +19,7 @@ export default async function OrgProjects() {
     .filter((repo) => repo.name === "4yclinghomerun-client")
     .map((repo) => ({
       ...repo,
-      ...(PROJECT_META[repo.name] || {}),
+      ...(CONSTANTS.PROJECT_META[repo.name] || {}),
     }));
 
   // preOnBorading-Idle 조직의 레포 전체 사용 후, 특정 레포 이름 변경
@@ -35,18 +32,18 @@ export default async function OrgProjects() {
     )
     .map((repo) => ({
       ...repo,
-      ...(PROJECT_META[repo.name] || {}),
+      ...(CONSTANTS.PROJECT_META[repo.name] || {}),
     }));
 
   // Dev-FE-3에서 toy-project1-team2, toy-project2-team4, toy-project3-team1만 사용
   const devFE3FilteredRepos = devFE3Repos.filter((repo) =>
-    DEV_FE3_PROJECT_NAMES.includes(repo.name)
+    CONSTANTS.DEV_FE3_PROJECT_NAMES.includes(repo.name)
   );
 
   // devFE3FilteredRepos의 각 레포에 title과 customDescription 추가
   const devFE3ProjectsWithMeta = devFE3FilteredRepos.map((repo) => ({
     ...repo,
-    ...(PROJECT_META[repo.name] || {}),
+    ...(CONSTANTS.PROJECT_META[repo.name] || {}),
   }));
 
   // 세 조직의 레포를 합침
@@ -67,7 +64,7 @@ export default async function OrgProjects() {
 
   // 프로젝트 분류
   const fixedProjects = allProjects.filter((p) =>
-    MAIN_PROJECT_TITLES.includes(p.title)
+    CONSTANTS.MAIN_PROJECT_TITLES.includes(p.title)
   );
   const teamProjects = allProjects.filter(
     (p) =>

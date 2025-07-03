@@ -21,7 +21,7 @@ import {
 } from "react-icons/si";
 import ExpoIcon from "../_components/ExpoIcon";
 
-export const techIcons = {
+export const TECH_ICONS = {
   TypeScript: <SiTypescript className="inline mr-1 text-blue-500" />,
   React: <SiReact className="inline mr-1 text-sky-400" />,
   "React Native": (

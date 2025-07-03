@@ -5,7 +5,7 @@ import { VercelInfo } from "../_components/vercel-info";
 import { getTrafficPageViews, getDependabotAlerts } from "../_service/data";
 import CardFlipContainer from "../_components/CardFlipContainer";
 import CardBackButtons from "../_components/CardBackButtons";
-import { techIcons } from "../_constants/techIcons";
+import * as CONSTANTS from "../_constants";
 
 export const FlipArticle = async ({ project }) => {
   const appLink = project.homepage ? project.homepage : project.html_url;
@@ -165,7 +165,7 @@ export const FlipArticle = async ({ project }) => {
                       key={tech}
                       className="flex items-center px-2 py-1 rounded bg-zinc-800 text-xs text-zinc-200 border border-zinc-700"
                     >
-                      {techIcons[tech] || null}
+                      {CONSTANTS.TECH_ICONS[tech] || null}
                       {tech}
                     </span>
                   ))}
