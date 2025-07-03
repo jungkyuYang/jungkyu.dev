@@ -4,6 +4,7 @@ import { getOrgRepos } from "../_service/data";
 import Section from "../_components/Section";
 import ProjectGrid from "../_components/ProjectGrid";
 import * as CONSTANTS from "../_constants";
+import ProjectEmptySection from "../_components/ProjectEmptySection";
 
 export default async function OrgProjects() {
   const orgResults = await Promise.allSettled(
@@ -85,16 +86,31 @@ export default async function OrgProjects() {
   return (
     <div className="p-8">
       <Section title="고정 프로젝트" showDivider={true}>
-        <ProjectGrid projects={fixedProjects} ArticleComponent={FlipArticle} />
+        {fixedProjects.length === 0 ? (
+          <ProjectEmptySection message="고정 프로젝트를 열심히 준비중입니다." />
+        ) : (
+          <ProjectGrid
+            projects={fixedProjects}
+            ArticleComponent={FlipArticle}
+          />
+        )}
       </Section>
       <Section title="팀 프로젝트" showDivider={true}>
-        <ProjectGrid projects={teamProjects} ArticleComponent={FlipArticle} />
+        {teamProjects.length === 0 ? (
+          <ProjectEmptySection message="팀 프로젝트를 열심히 준비중입니다." />
+        ) : (
+          <ProjectGrid projects={teamProjects} ArticleComponent={FlipArticle} />
+        )}
       </Section>
       <Section title="개인 프로젝트" showDivider={false}>
-        <ProjectGrid
-          projects={personalProjects}
-          ArticleComponent={FlipArticle}
-        />
+        {personalProjects.length === 0 ? (
+          <ProjectEmptySection message="개인 프로젝트를 열심히 준비중입니다." />
+        ) : (
+          <ProjectGrid
+            projects={personalProjects}
+            ArticleComponent={FlipArticle}
+          />
+        )}
       </Section>
       {allProjects.length === 0 && (
         <div className="mt-8 text-zinc-400">

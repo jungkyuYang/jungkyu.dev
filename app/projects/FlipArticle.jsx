@@ -6,6 +6,7 @@ import { getTrafficPageViews, getDependabotAlerts } from "../_service/data";
 import CardFlipContainer from "../_components/CardFlipContainer";
 import CardBackButtons from "../_components/CardBackButtons";
 import * as CONSTANTS from "../_constants";
+import TechStackCarousel from "../_components/TechStackCarousel";
 
 export const FlipArticle = async ({ project }) => {
   const appLink = project.homepage ? project.homepage : project.html_url;
@@ -149,29 +150,20 @@ export const FlipArticle = async ({ project }) => {
             </div>
 
             <h2
-              className="z-20 text-xl font-medium duration-1000 lg:text-3xl text-zinc-200 group-hover:text-white font-display cursor-pointer"
+              className="z-20 text-2xl font-bold leading-tight duration-1000 lg:text-3xl text-white font-display cursor-pointer line-clamp-2 min-h-[2.6em] max-h-[2.6em] break-keep overflow-hidden"
               title={`Click to view the ${project.homepage ? "app" : "repo"}.`}
             >
-              <span className="bg-linear-to-r from-purple-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-transparent bg-clip-text">
-                {project.title ?? project.name}
-              </span>
+              <span>{project.title ?? project.name}</span>
             </h2>
-            <div className="z-20 mt-4 text-sm duration-1000 text-zinc-400 group-hover:text-zinc-200">
+            <p className="z-20 mt-4 text-sm duration-1000 text-zinc-400 group-hover:text-zinc-200 line-clamp-5 min-h-[6.5rem] max-h-[6.5rem]">
               {project.customDescription ?? project.description}
-              {project.techStack && project.techStack.length > 0 && (
-                <div className="flex flex-wrap gap-2 mt-3">
-                  {project.techStack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="flex items-center px-2 py-1 rounded bg-zinc-800 text-xs text-zinc-200 border border-zinc-700"
-                    >
-                      {CONSTANTS.TECH_ICONS[tech] || null}
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
+            </p>
+            {project.techStack && project.techStack.length > 0 && (
+              <TechStackCarousel
+                techStack={project.techStack}
+                techIcons={CONSTANTS.TECH_ICONS}
+              />
+            )}
             <div className="flex justify-between items-center w-full mt-2 border-t-2 border-gray-700 border-opacity-50">
               <span className="text-zinc-500 text-xs flex items-center gap-1">
                 {views} {alerts}
