@@ -3,10 +3,10 @@ import { GoMail, GoPerson } from "react-icons/go";
 import Link from "next/link";
 import { FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { Navigation } from "../components/nav";
-import { Card } from "../components/card";
+import { Navigation } from "../_components/nav";
+import { Card } from "../_components/card";
 import data from "../../data.json";
-import { getUser, getSocialAccounts } from "../data";
+import { getUser, getSocialAccounts } from "../_service/data";
 
 // TODO: make it edge once Turbopack supports it.
 export const runtime = "nodejs";

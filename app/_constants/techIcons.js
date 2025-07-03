@@ -19,7 +19,7 @@ import {
   SiAmazons3,
   SiFirebase,
 } from "react-icons/si";
-import ExpoIcon from "../components/ExpoIcon";
+import ExpoIcon from "../_components/ExpoIcon";
 
 export const techIcons = {
   TypeScript: <SiTypescript className="inline mr-1 text-blue-500" />,

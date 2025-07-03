@@ -1,14 +1,14 @@
-import { Card } from "../components/card";
+import { Card } from "../_components/card";
 import { FlipArticle } from "./FlipArticle";
-import { getOrgRepos } from "../data";
-import Section from "../components/Section";
-import ProjectGrid from "../components/ProjectGrid";
+import { getOrgRepos } from "../_service/data";
+import Section from "../_components/Section";
+import ProjectGrid from "../_components/ProjectGrid";
 import {
   ORG_NAMES,
   MAIN_PROJECT_TITLES,
   DEV_FE3_PROJECT_NAMES,
-} from "../constants/orgs";
-import { PROJECT_META } from "../constants/projectMeta";
+} from "../_constants/orgs";
+import { PROJECT_META } from "../_constants/projectMeta";
 
 export default async function OrgProjects() {
   const orgResults = await Promise.allSettled(ORG_NAMES.map(getOrgRepos));

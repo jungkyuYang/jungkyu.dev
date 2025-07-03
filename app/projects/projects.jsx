@@ -1,10 +1,10 @@
-import { Card } from "../components/card";
+import { Card } from "../_components/card";
 // import { UserTimeline } from "../components/timeline";
 import { Article } from "./article";
 import { FlipArticle } from "./FlipArticle";
 import data from "../../data.json";
 import chunk from "lodash/chunk";
-import { getRepos, getPinnedRepos, getVercelProjects } from "../data";
+import { getRepos, getPinnedRepos, getVercelProjects } from "../_service/data";
 
 export default async function ProjectsComponent({ username }) {
   const [repositories, pinnedNames, vercelProjects] = await Promise.all([

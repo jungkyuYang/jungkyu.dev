@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { FaGithub } from "react-icons/fa";
 import { GoDependabot, GoEye, GoEyeClosed, GoStar } from "react-icons/go";
-import { VercelInfo } from "../components/vercel-info";
-import { getTrafficPageViews, getDependabotAlerts } from "../data";
-import CardFlipContainer from "../components/CardFlipContainer";
-import CardBackButtons from "../components/CardBackButtons";
-import { techIcons } from "../constants/techIcons";
+import { VercelInfo } from "../_components/vercel-info";
+import { getTrafficPageViews, getDependabotAlerts } from "../_service/data";
+import CardFlipContainer from "../_components/CardFlipContainer";
+import CardBackButtons from "../_components/CardBackButtons";
+import { techIcons } from "../_constants/techIcons";
 
 export const FlipArticle = async ({ project }) => {
   const appLink = project.homepage ? project.homepage : project.html_url;

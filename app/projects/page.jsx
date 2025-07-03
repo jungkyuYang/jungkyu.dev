@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { Navigation } from "../components/nav";
+import { Navigation } from "../_components/nav";
 import data from "../../data.json";
 import ProjectsComponent from "./projects";
 import OrgProjects from "./OrgProjects";

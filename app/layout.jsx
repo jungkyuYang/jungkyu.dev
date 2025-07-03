@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import LocalFont from "next/font/local";
 import Script from "next/script";
 import data from "../data.json";
-import AnalyticsProvider from "./providers/AnalyticsProvider";
+import AnalyticsProvider from "./_providers/AnalyticsProvider";
 
 const username = process.env.GITHUB_USERNAME || data.githubUsername;
 const displayName = data.displayName || username;
