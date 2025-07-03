@@ -137,16 +137,16 @@
   }
 }
 
-/* Tailwind 그라디언트 유틸리티 무력화 (body 선택자 우선순위 사용, !important 없이) */
-body .to-blue-500 {
+/* Project 카드의 title에만 Tailwind 그라디언트 유틸리티 무력화 */
+.project-card-title.to-blue-500 {
   --tw-gradient-to: initial;
   --tw-gradient-stops: initial;
 }
-body .from-blue-500 {
+.project-card-title.from-blue-500 {
   --tw-gradient-from: initial;
   --tw-gradient-stops: initial;
 }
-body .via-blue-500 {
+.project-card-title.via-blue-500 {
   --tw-gradient-via: initial;
   --tw-gradient-stops: initial;
 }

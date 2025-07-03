@@ -98,7 +98,8 @@ export const FlipArticle = async ({ project }) => {
   return (
     <CardFlipContainer
       front={
-        <article className="p-4 md:p-8 flex flex-col justify-center items-center h-full">
+        <article className="effect-glow p-4 md:p-8 flex flex-col justify-center items-center h-full">
+          <span className="effect-glow-bar" />
           <div className="w-full">
             <div className="flex justify-between gap-2 items-center w-full">
               <span className="text-xs duration-1000 text-zinc-200 group-hover:text-white group-hover:border-zinc-200 drop-shadow-orange">
@@ -150,7 +151,7 @@ export const FlipArticle = async ({ project }) => {
             </div>
 
             <h2
-              className="z-20 text-2xl font-bold leading-tight duration-1000 lg:text-3xl text-white font-display cursor-pointer line-clamp-2 min-h-[2.6em] max-h-[2.6em] break-keep overflow-hidden"
+              className="project-card-title z-20 text-2xl font-bold leading-tight duration-1000 lg:text-3xl text-white font-display cursor-pointer line-clamp-2 min-h-[2.6em] max-h-[2.6em] break-keep overflow-hidden"
               title={`Click to view the ${project.homepage ? "app" : "repo"}.`}
             >
               <span>{project.title ?? project.name}</span>
