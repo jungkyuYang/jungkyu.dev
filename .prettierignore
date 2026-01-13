@@ -1,0 +1,16 @@
+# Build outputs
+.next
+out
+dist
+build
+
+# Dependencies
+node_modules
+
+# Environment variables
+.env*
+
+# Common files
+public
+*.log
+package-lock.json
