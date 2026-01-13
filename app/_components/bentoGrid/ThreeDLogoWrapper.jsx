@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+
 import { ThreeDLogo } from './ThreeDLogo';
 
 export const ThreeDLogoWrapper = ({ name }) => {

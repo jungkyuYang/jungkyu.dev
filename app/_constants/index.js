@@ -1,4 +1,3 @@
-export * from "./orgs";
-export * from "./projectMeta";
-export * from "./techIcons";
- 
+export * from './orgs';
+export * from './projectMeta';
+export * from './techIcons';

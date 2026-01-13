@@ -1,7 +1,7 @@
-"use client";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+'use client';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 export default function TechStackCarousel({ techStack, techIcons }) {
   const isInfinite = techStack.length > 3;
@@ -13,7 +13,7 @@ export default function TechStackCarousel({ techStack, techIcons }) {
     slidesToScroll: 1,
     autoplay: isInfinite,
     autoplaySpeed: 0,
-    cssEase: "linear",
+    cssEase: 'linear',
     arrows: false,
     pauseOnHover: true,
     variableWidth: true,
@@ -54,11 +54,11 @@ export default function TechStackCarousel({ techStack, techIcons }) {
   return (
     <div
       className="mt-3 overflow-x-auto whitespace-nowrap flex-nowrap no-scrollbar"
-      style={{ scrollbarWidth: "none" }}
+      style={{ scrollbarWidth: 'none' }}
     >
-      <Slider {...settings} style={{ width: "max-content" }}>
+      <Slider {...settings} style={{ width: 'max-content' }}>
         {techStack.map((tech, idx) => (
-          <div key={tech + idx} style={{ width: "auto" }}>
+          <div key={tech + idx} style={{ width: 'auto' }}>
             <span className="inline-flex items-center px-2 py-1 rounded bg-zinc-800 text-xs text-zinc-200 border border-zinc-700 mx-1 whitespace-nowrap">
               {techIcons?.[tech] || null}
               {tech}

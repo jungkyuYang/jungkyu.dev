@@ -3,8 +3,10 @@ export const GitHubStats = ({ stats }) => {
   const { metrics, chart } = stats;
 
   return (
-    <section className="flex h-full w-full flex-col p-3 select-none overflow-hidden" aria-label="GitHub Activity Statistics">
-      
+    <section
+      className="flex h-full w-full flex-col p-3 select-none overflow-hidden"
+      aria-label="GitHub Activity Statistics"
+    >
       {/* 1. Header Area */}
       <header className="flex-none mb-3 border-b border-black/[0.05] dark:border-white/[0.05] pb-1.5">
         <div className="flex items-center justify-between w-full px-0.5">
@@ -16,7 +18,7 @@ export const GitHubStats = ({ stats }) => {
           </time>
         </div>
       </header>
-      
+
       {/* 2. Top Metrics */}
       <div className="flex-none flex justify-between px-0.5 mb-5">
         <article className="flex flex-col">
@@ -42,15 +44,14 @@ export const GitHubStats = ({ stats }) => {
 
       {/* 3. Integrated Skill Chart: 바와 리스트의 매칭 순서 동기화 */}
       <div className="flex-1 flex gap-5 px-1 items-center min-h-0">
-        
         {/* 통합 수직 스택 바: 아래(0)에서 위(100)로 쌓임 */}
         <div className="relative w-2.5 h-full max-h-[110px] bg-black/[0.05] dark:bg-white/[0.05] rounded-full overflow-hidden flex flex-col-reverse ring-1 ring-inset ring-black/[0.02]">
           {chart.data.map((item, idx) => (
-            <div 
+            <div
               key={idx}
-              style={{ 
-                height: `${item.percent}%`, 
-                backgroundColor: item.color 
+              style={{
+                height: `${item.percent}%`,
+                backgroundColor: item.color,
               }}
               className="w-full border-t border-white/10 last:border-none"
             />
@@ -63,17 +64,17 @@ export const GitHubStats = ({ stats }) => {
             <li key={idx} className="relative flex items-center justify-between group">
               {/* 시각적 연결선: 바와 텍스트 사이의 다리 역할 */}
               <div className="absolute -left-4 w-3 h-[1px] bg-black/[0.1] dark:bg-white/[0.1]" />
-              
+
               <div className="flex items-center gap-2 overflow-hidden mr-2">
-                <div 
-                  className="w-1.5 h-1.5 rounded-full shrink-0" 
-                  style={{ backgroundColor: item.color }} 
+                <div
+                  className="w-1.5 h-1.5 rounded-full shrink-0"
+                  style={{ backgroundColor: item.color }}
                 />
                 <span className="text-[9.5px] font-bold text-[#515154] dark:text-[#A1A1A6] truncate leading-none">
                   {item.name}
                 </span>
               </div>
-              
+
               <span className="text-[9px] font-black text-[#1D1D1F] dark:text-[#F5F5F7] tabular-nums shrink-0">
                 {item.percent}%
               </span>
@@ -86,7 +87,10 @@ export const GitHubStats = ({ stats }) => {
 };
 // 스켈레톤 컴포넌트는 이전과 동일하게 유지
 export const GitHubStatsSkeleton = () => (
-  <section className="flex h-full w-full flex-col p-3 animate-pulse select-none overflow-hidden" aria-hidden="true">
+  <section
+    className="flex h-full w-full flex-col p-3 animate-pulse select-none overflow-hidden"
+    aria-hidden="true"
+  >
     <header className="flex-none mb-2 border-b border-black/[0.05] dark:border-white/[0.05] pb-1.5">
       <div className="flex items-center justify-between w-full px-0.5">
         <div className="h-2.5 w-20 bg-gray-200 dark:bg-zinc-800 rounded-sm" />

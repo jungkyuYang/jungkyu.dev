@@ -1,5 +1,6 @@
-import { unstable_cache } from "next/cache";
 import { cache } from 'react';
+
+import { unstable_cache } from 'next/cache';
 
 const revalidate = 60;
 const MINUTES_5 = 60 * 5;
@@ -8,60 +9,54 @@ const HOURS_12 = 60 * 60 * 12;
 
 // TODO: Implement option to switch between info for authenticated user and other users.
 export const getUser = cache(async (username) => {
-  console.log("Fetching user data for", username);
-  
+  console.log('Fetching user data for', username);
+
   // 이제 딱 한 번만 호출되므로 타이머 경고가 사라집니다.
   console.time(`getUser-${username}`);
-  
-  const res = await fetch("https://api.github.com/users/" + username, {
+
+  const res = await fetch('https://api.github.com/users/' + username, {
     headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
     next: { revalidate },
   });
 
   console.timeEnd(`getUser-${username}`);
-  
+
   return res.json();
 });
 
 export async function getRepos(username) {
-  console.log("Fetching repos for", username);
-  console.time("getRepos");
-  const res = await fetch(
-    "https://api.github.com/users/" + username + "/repos",
-    {
-      headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
-      next: { revalidate: HOURS_1 },
-    }
-  );
+  console.log('Fetching repos for', username);
+  console.time('getRepos');
+  const res = await fetch('https://api.github.com/users/' + username + '/repos', {
+    headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
+    next: { revalidate: HOURS_1 },
+  });
   if (!res.ok) {
-    console.error("GitHub API returned an error.", res.status, res.statusText);
+    console.error('GitHub API returned an error.', res.status, res.statusText);
     return [];
   }
-  console.timeEnd("getRepos");
+  console.timeEnd('getRepos');
   return res.json();
 }
 
 export async function getSocialAccounts(username) {
-  console.log("Fetching social accounts for", username);
-  console.time("getSocialAccounts");
-  const res = await fetch(
-    "https://api.github.com/users/" + username + "/social_accounts",
-    {
-      headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
-      next: { revalidate: HOURS_12 },
-    }
-  );
-  console.timeEnd("getSocialAccounts");
+  console.log('Fetching social accounts for', username);
+  console.time('getSocialAccounts');
+  const res = await fetch('https://api.github.com/users/' + username + '/social_accounts', {
+    headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
+    next: { revalidate: HOURS_12 },
+  });
+  console.timeEnd('getSocialAccounts');
   return res.json();
 }
 
 export const getPinnedRepos = unstable_cache(
   async (username) => {
-    console.log("Fetching pinned repos for", username);
-    console.time("getPinnedRepos");
+    console.log('Fetching pinned repos for', username);
+    console.time('getPinnedRepos');
     try {
-      const res = await fetch("https://api.github.com/graphql", {
-        method: "POST",
+      const res = await fetch('https://api.github.com/graphql', {
+        method: 'POST',
         headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
         body: JSON.stringify({
           query: `{user(login: "${username}") {pinnedItems(first: 6, types: REPOSITORY) {nodes {... on Repository {name}}}}}`,
@@ -69,16 +64,16 @@ export const getPinnedRepos = unstable_cache(
       });
 
       if (!res.ok) {
-        console.error("GitHub graphql returned an error.", res.status, res.statusText);
+        console.error('GitHub graphql returned an error.', res.status, res.statusText);
         return [];
       }
 
       const pinned = await res.json();
-      console.timeEnd("getPinnedRepos");
+      console.timeEnd('getPinnedRepos');
 
       // [핵심 수정] Optional Chaining을 사용하여 user가 null일 경우에도 에러가 나지 않게 함
       const nodes = pinned?.data?.user?.pinnedItems?.nodes;
-      
+
       if (!nodes) {
         console.warn(`No pinned items or user found for: ${username}`);
         return [];
@@ -86,21 +81,21 @@ export const getPinnedRepos = unstable_cache(
 
       return nodes.map((node) => node.name);
     } catch (error) {
-      console.error("getPinnedRepos unexpected error:", error);
+      console.error('getPinnedRepos unexpected error:', error);
       return [];
     }
   },
-  ["getPinnedRepos"],
-  { revalidate: HOURS_12 }
+  ['getPinnedRepos'],
+  { revalidate: HOURS_12 },
 );
 
 export const getUserOrganizations = unstable_cache(
   async (username) => {
-    console.log("Fetching organizations for", username);
-    console.time("getUserOrganizations");
+    console.log('Fetching organizations for', username);
+    console.time('getUserOrganizations');
     try {
-      const res = await fetch("https://api.github.com/graphql", {
-        method: "POST",
+      const res = await fetch('https://api.github.com/graphql', {
+        method: 'POST',
         headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
         body: JSON.stringify({
           query: `{user(login: "${username}") {organizations(first: 6) {nodes {name,websiteUrl,url,avatarUrl,description}}}}`,
@@ -108,10 +103,10 @@ export const getUserOrganizations = unstable_cache(
       });
 
       const orgs = await res.json();
-      console.timeEnd("getUserOrganizations");
+      console.timeEnd('getUserOrganizations');
 
       if (!res.ok) {
-        console.error("GitHub graphql returned an error.", res.status, res.statusText, orgs);
+        console.error('GitHub graphql returned an error.', res.status, res.statusText, orgs);
         return { data: { user: { organizations: { nodes: [] } } } };
       }
 
@@ -122,29 +117,29 @@ export const getUserOrganizations = unstable_cache(
 
       return orgs;
     } catch (error) {
-      console.error("getUserOrganizations unexpected error:", error);
+      console.error('getUserOrganizations unexpected error:', error);
       return { data: { user: { organizations: { nodes: [] } } } };
     }
   },
-  ["getUserOrganizations"],
-  { revalidate: HOURS_12 }
+  ['getUserOrganizations'],
+  { revalidate: HOURS_12 },
 );
 
 export const getVercelProjects = async () => {
   if (!process.env.VC_TOKEN) {
-    console.log("No Vercel token found - no projects will be shown.");
+    console.log('No Vercel token found - no projects will be shown.');
     return { projects: [] };
   }
-  console.log("Fetching Vercel projects");
-  console.time("getVercelProjects");
-  const res = await fetch("https://api.vercel.com/v9/projects", {
+  console.log('Fetching Vercel projects');
+  console.time('getVercelProjects');
+  const res = await fetch('https://api.vercel.com/v9/projects', {
     headers: { Authorization: `Bearer ${process.env.VC_TOKEN}` },
     next: { revalidate: HOURS_12 },
   });
-  console.timeEnd("getVercelProjects");
+  console.timeEnd('getVercelProjects');
   // eg. expired token.
   if (!res.ok) {
-    console.error("Vercel API returned an error.", res.status, res.statusText);
+    console.error('Vercel API returned an error.', res.status, res.statusText);
     return { projects: [] };
   }
   return res.json();
@@ -153,8 +148,8 @@ export const getVercelProjects = async () => {
 /** Cache revalidated every 12 hours. */
 export const getNextjsLatestRelease = unstable_cache(
   async () => {
-    const res = await fetch("https://api.github.com/graphql", {
-      method: "POST",
+    const res = await fetch('https://api.github.com/graphql', {
+      method: 'POST',
       headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
       next: { revalidate: HOURS_12 },
       body: JSON.stringify({
@@ -169,32 +164,25 @@ export const getNextjsLatestRelease = unstable_cache(
       }),
     });
     if (!res.ok) {
-      console.error(
-        "GitHub API returned an error.",
-        res.status,
-        res.statusText
-      );
+      console.error('GitHub API returned an error.', res.status, res.statusText);
       return {};
     }
     const nextjsLatest = await res.json();
 
     const result = {
-      tagName: nextjsLatest.data.repository.latestRelease.tagName.replace(
-        "v",
-        ""
-      ),
+      tagName: nextjsLatest.data.repository.latestRelease.tagName.replace('v', ''),
       updatedAt: nextjsLatest.data.repository.latestRelease.updatedAt,
     };
     return result;
   },
-  ["getNextjsLatestRelease"],
-  { revalidate: HOURS_1 }
+  ['getNextjsLatestRelease'],
+  { revalidate: HOURS_1 },
 );
 
 export const getRepositoryPackageJson = unstable_cache(
   async (username, reponame) => {
-    const res = await fetch("https://api.github.com/graphql", {
-      method: "POST",
+    const res = await fetch('https://api.github.com/graphql', {
+      method: 'POST',
       headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
       body: JSON.stringify({
         query: `{
@@ -213,64 +201,53 @@ export const getRepositoryPackageJson = unstable_cache(
       const packageJson = JSON.parse(response.data.repository.object.text);
       return packageJson;
     } catch (error) {
-      console.error("Error parsing package.json", username, reponame, error);
+      console.error('Error parsing package.json', username, reponame, error);
       return null;
     }
   },
-  ["getRepositoryPackageJson"],
-  { revalidate: HOURS_1 }
+  ['getRepositoryPackageJson'],
+  { revalidate: HOURS_1 },
 );
 
 export const getRecentUserActivity = async (username) => {
-  console.log("Fetching recent activity for", username);
-  
+  console.log('Fetching recent activity for', username);
+
   // 레이블에 username을 추가하여 유니크하게 만듭니다.
   const timerLabel = `getRecentUserActivity-${username}-${Math.random().toString(36).slice(2, 7)}`;
   console.time(timerLabel);
 
-  const res = await fetch(
-    "https://api.github.com/users/" + username + "/events?per_page=100",
-    {
-      headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
-      next: { revalidate: MINUTES_5 },
-    }
-  );
+  const res = await fetch('https://api.github.com/users/' + username + '/events?per_page=100', {
+    headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
+    next: { revalidate: MINUTES_5 },
+  });
   const response = await res.json();
   // Check pagination
-  if (res.headers.get("link")) {
+  if (res.headers.get('link')) {
     let page = 2;
     let nextLink = res.headers
-      .get("link")
-      .split(",")
+      .get('link')
+      .split(',')
       .find((link) => link.includes('rel="next"'));
     while (nextLink) {
       const nextRes = await fetch(
-        "https://api.github.com/users/" +
-          username +
-          "/events?per_page=100&page=" +
-          page,
+        'https://api.github.com/users/' + username + '/events?per_page=100&page=' + page,
         {
           headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
           next: { revalidate: MINUTES_5 },
-        }
+        },
       );
       const nextResponse = await nextRes.json();
       response.push(...nextResponse);
       nextLink = nextRes.headers
-        .get("link")
-        .split(",")
+        .get('link')
+        .split(',')
         .find((link) => link.includes('rel="next"'));
       page++;
     }
   }
 
   if (!res.ok) {
-    console.error(
-      "GitHub API /users returned an error.",
-      res.status,
-      res.statusText,
-      response
-    );
+    console.error('GitHub API /users returned an error.', res.status, res.statusText, response);
     return [];
   }
   console.timeEnd(timerLabel);
@@ -279,15 +256,11 @@ export const getRecentUserActivity = async (username) => {
 
 export const getTrafficPageViews = async (username, reponame) => {
   const res = await fetch(
-    "https://api.github.com/repos/" +
-      username +
-      "/" +
-      reponame +
-      "/traffic/views",
+    'https://api.github.com/repos/' + username + '/' + reponame + '/traffic/views',
     {
       headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
       next: { revalidate: HOURS_1 },
-    }
+    },
   );
   const response = await res.json();
 
@@ -296,9 +269,7 @@ export const getTrafficPageViews = async (username, reponame) => {
   // Today date in format YYYY-MM-DD.
   const today = new Date().toISOString().slice(0, 10);
   // Last day with at least one view.
-  const todayUniques =
-    response.views?.find((day) => day.timestamp.startsWith(today))?.uniques ||
-    0;
+  const todayUniques = response.views?.find((day) => day.timestamp.startsWith(today))?.uniques || 0;
 
   return { sumUniques, todayUniques };
 };
@@ -306,15 +277,11 @@ export const getTrafficPageViews = async (username, reponame) => {
 export const getDependabotAlerts = unstable_cache(
   async (username, reponame) => {
     const res = await fetch(
-      "https://api.github.com/repos/" +
-        username +
-        "/" +
-        reponame +
-        "/dependabot/alerts",
+      'https://api.github.com/repos/' + username + '/' + reponame + '/dependabot/alerts',
       {
         headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
         next: { revalidate: HOURS_12 },
-      }
+      },
     );
 
     const response = await res.json();
@@ -324,10 +291,8 @@ export const getDependabotAlerts = unstable_cache(
       return [];
     }
     const openAlertsBySeverity = response.reduce((acc, alert) => {
-      if (alert.state === "open") {
-        acc[alert.security_advisory.severity] = acc[
-          alert.security_advisory.severity
-        ]
+      if (alert.state === 'open') {
+        acc[alert.security_advisory.severity] = acc[alert.security_advisory.severity]
           ? acc[alert.security_advisory.severity] + 1
           : 1;
       }
@@ -336,8 +301,8 @@ export const getDependabotAlerts = unstable_cache(
 
     return openAlertsBySeverity;
   },
-  ["getDependabotAlerts"],
-  { revalidate: HOURS_12 }
+  ['getDependabotAlerts'],
+  { revalidate: HOURS_12 },
 );
 
 /**
@@ -378,32 +343,26 @@ export const checkAppJsxExistence = unstable_cache(
         res.isRouterApp = true;
       }
     } catch (error) {
-      console.error(
-        `Error checking _app.jsx existence in ${repoName}: ${error.message}`
-      );
+      console.error(`Error checking _app.jsx existence in ${repoName}: ${error.message}`);
     }
 
     return res;
   },
-  ["checkAppJsxExistence"],
-  { revalidate: HOURS_1 }
+  ['checkAppJsxExistence'],
+  { revalidate: HOURS_1 },
 );
 
 export async function getOrgRepos(orgName) {
-  console.log("Fetching repos for organization:", orgName);
-  console.time("getOrgRepos:" + orgName);
+  console.log('Fetching repos for organization:', orgName);
+  console.time('getOrgRepos:' + orgName);
   const res = await fetch(`https://api.github.com/orgs/${orgName}/repos`, {
     headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
     next: { revalidate: HOURS_1 },
   });
   if (!res.ok) {
-    console.error(
-      "GitHub API returned an error for org repos.",
-      res.status,
-      res.statusText
-    );
+    console.error('GitHub API returned an error for org repos.', res.status, res.statusText);
     return [];
   }
-  console.timeEnd("getOrgRepos:" + orgName);
+  console.timeEnd('getOrgRepos:' + orgName);
   return res.json();
 }

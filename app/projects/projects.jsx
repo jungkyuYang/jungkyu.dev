@@ -1,8 +1,8 @@
-import { Card } from "../_components/card";
-import { Article } from "./article";
-import { FlipArticle } from "./FlipArticle";
-import data from "../../data.json";
-import { getRepos, getPinnedRepos, getVercelProjects } from "../_services/data";
+import { Article } from './article';
+import { FlipArticle } from './FlipArticle';
+import data from '../../data.json';
+import { Card } from '../_components/card';
+import { getRepos, getPinnedRepos, getVercelProjects } from '../_services/data';
 
 export default async function ProjectsComponent({ username }) {
   // 1. 데이터 병렬 로딩
@@ -34,10 +34,13 @@ export default async function ProjectsComponent({ username }) {
     .sort((a, b) => (b.stargazers_count || 0) - (a.stargazers_count || 0));
 
   const regularProjects = repositories
-    .filter((p) => 
-      !p.private && !p.fork && !p.archived && 
-      !(pinnedNames || []).includes(p.name) &&
-      !data.projects.blacklist.includes(p.name)
+    .filter(
+      (p) =>
+        !p.private &&
+        !p.fork &&
+        !p.archived &&
+        !(pinnedNames || []).includes(p.name) &&
+        !data.projects.blacklist.includes(p.name),
     )
     .sort((a, b) => new Date(b.updated_at ?? 0).getTime() - new Date(a.updated_at ?? 0).getTime());
 
@@ -46,14 +49,13 @@ export default async function ProjectsComponent({ username }) {
 
   // 4. 컴포넌트 결정
   const githubUsername = data.githubUsername || data.projects.githubUsername;
-  const ArticleComponent = githubUsername === "jungkyuYang" ? FlipArticle : Article;
+  const ArticleComponent = githubUsername === 'jungkyuYang' ? FlipArticle : Article;
 
   // 5. 공통 그리드 설정 (사이즈 통일: 3열 고정 및 높이 정렬)
-  const gridLayout = "grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 items-stretch";
+  const gridLayout = 'grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 items-stretch';
 
   return (
     <div className="w-full space-y-16 pb-16">
-      
       {/* SECTION 1: Featured Projects (Pinned) */}
       {heroProjects.length > 0 && (
         <section className="space-y-6">
@@ -63,7 +65,7 @@ export default async function ProjectsComponent({ username }) {
             </h2>
             <div className="w-full h-px bg-zinc-200 dark:bg-zinc-800" />
           </div>
-          
+
           <div className={gridLayout}>
             {heroProjects.map((project) => (
               <Card key={project.name}>

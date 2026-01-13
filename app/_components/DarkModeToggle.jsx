@@ -1,8 +1,9 @@
-"use client";
+'use client';
 
-import { MdDarkMode, MdLightMode } from "react-icons/md";
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+
+import { useTheme } from 'next-themes';
+import { MdDarkMode, MdLightMode } from 'react-icons/md';
 
 export default function DarkModeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
@@ -16,12 +17,12 @@ export default function DarkModeToggle() {
 
   return (
     <button
-      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+      onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
       className="text-2xl p-2 rounded-full hover:bg-zinc-200/30 dark:hover:bg-zinc-700/40 transition-colors"
       aria-label="다크모드 토글"
       type="button"
     >
-      {resolvedTheme === "dark" ? <MdDarkMode /> : <MdLightMode />}
+      {resolvedTheme === 'dark' ? <MdDarkMode /> : <MdLightMode />}
     </button>
   );
 }

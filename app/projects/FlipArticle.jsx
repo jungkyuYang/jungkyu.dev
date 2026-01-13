@@ -1,16 +1,16 @@
-import Link from "next/link";
-import { FaGithub } from "react-icons/fa";
-import { GoDependabot, GoEye, GoEyeClosed, GoStar } from "react-icons/go";
-import { VercelInfo } from "../_components/vercel-info";
-import { getTrafficPageViews, getDependabotAlerts } from "../_services/data";
-import CardFlipContainer from "../_components/CardFlipContainer";
-import CardBackButtons from "../_components/CardBackButtons";
-import * as CONSTANTS from "../_constants";
-import TechStackCarousel from "../_components/TechStackCarousel";
+import Link from 'next/link';
+
+import { FaGithub } from 'react-icons/fa';
+import { GoDependabot, GoEye, GoEyeClosed, GoStar } from 'react-icons/go';
+
+import CardBackButtons from '../_components/CardBackButtons';
+import CardFlipContainer from '../_components/CardFlipContainer';
+import TechStackCarousel from '../_components/TechStackCarousel';
+import { VercelInfo } from '../_components/vercel-info';
+import * as CONSTANTS from '../_constants';
+import { getTrafficPageViews, getDependabotAlerts } from '../_services/data';
 
 export const FlipArticle = async ({ project }) => {
-  const appLink = project.homepage ? project.homepage : project.html_url;
-
   /** Repository visitors info. */
   let views = (
     <span
@@ -27,35 +27,31 @@ export const FlipArticle = async ({ project }) => {
   );
   const isGitHubUser = process.env.GITHUB_USERNAME === project.owner.login;
   if (isGitHubUser) {
-    const [{ todayUniques, sumUniques } = {}, openAlertsBySeverity] =
-      await Promise.all([
-        getTrafficPageViews(project.owner.login, project.name),
-        getDependabotAlerts(project.owner.login, project.name),
-      ]);
+    const [{ todayUniques, sumUniques } = {}, openAlertsBySeverity] = await Promise.all([
+      getTrafficPageViews(project.owner.login, project.name),
+      getDependabotAlerts(project.owner.login, project.name),
+    ]);
     views = (
       <span
         title="Unique repository visitors: Last 14 days / Today."
         className="flex items-center gap-1"
       >
-        <GoEye className="w-4 h-4" />{" "}
-        {Intl.NumberFormat("en-US", { notation: "compact" }).format(sumUniques)}
-        /
-        {Intl.NumberFormat("en-US", { notation: "compact" }).format(
-          todayUniques
-        )}
+        <GoEye className="w-4 h-4" />{' '}
+        {Intl.NumberFormat('en-US', { notation: 'compact' }).format(sumUniques)}/
+        {Intl.NumberFormat('en-US', { notation: 'compact' }).format(todayUniques)}
       </span>
     );
 
     const alertColor =
       openAlertsBySeverity.critical > 0
-        ? "red"
+        ? 'red'
         : openAlertsBySeverity.high > 0
-        ? "orange"
-        : openAlertsBySeverity.medium > 0
-        ? "yellow"
-        : openAlertsBySeverity.low > 0
-        ? "blue"
-        : "gray";
+          ? 'orange'
+          : openAlertsBySeverity.medium > 0
+            ? 'yellow'
+            : openAlertsBySeverity.low > 0
+              ? 'blue'
+              : 'gray';
     const alertCountTotal =
       (openAlertsBySeverity.critical || 0) +
       (openAlertsBySeverity.high || 0) +
@@ -64,14 +60,12 @@ export const FlipArticle = async ({ project }) => {
     const alertTitle =
       alertCountTotal > 0
         ? `Open Dependabot alerts: ` + JSON.stringify(openAlertsBySeverity)
-        : "No open Dependabot alerts.";
+        : 'No open Dependabot alerts.';
 
     alerts = (
       <span title={alertTitle} className="flex items-center gap-1">
-        <GoDependabot className="w-4 h-4 danger" fill={alertColor} />{" "}
-        {Intl.NumberFormat("en-US", { notation: "compact" }).format(
-          alertCountTotal
-        )}
+        <GoDependabot className="w-4 h-4 danger" fill={alertColor} />{' '}
+        {Intl.NumberFormat('en-US', { notation: 'compact' }).format(alertCountTotal)}
       </span>
     );
   }
@@ -79,19 +73,19 @@ export const FlipArticle = async ({ project }) => {
   // 카드 뒷면 버튼 배열 생성
   const buttons = [
     project.homepage && {
-      label: "배포 사이트 바로가기",
+      label: '배포 사이트 바로가기',
       url: project.homepage,
-      type: "external",
+      type: 'external',
     },
     project.html_url && {
-      label: "깃허브 레포 바로가기",
+      label: '깃허브 레포 바로가기',
       url: project.html_url,
-      type: "external",
+      type: 'external',
     },
     {
-      label: "자세히 보기",
+      label: '자세히 보기',
       url: `/projects/${project.name}`,
-      type: "internal",
+      type: 'internal',
     },
   ].filter(Boolean);
 
@@ -113,10 +107,8 @@ export const FlipArticle = async ({ project }) => {
                 >
                   {(project.customCreatedAt
                     ? project.customCreatedAt
-                    : new Date(project.created_at)
-                        .toISOString()
-                        .substring(0, 10)
-                  ).replace(/-/g, ".")}
+                    : new Date(project.created_at).toISOString().substring(0, 10)
+                  ).replace(/-/g, '.')}
                 </time>
                 <span className="mx-1">~</span>
                 <time
@@ -129,22 +121,18 @@ export const FlipArticle = async ({ project }) => {
                 >
                   {(project.customUpdatedAt
                     ? project.customUpdatedAt
-                    : new Date(project.updated_at)
-                        .toISOString()
-                        .substring(0, 10)
-                  ).replace(/-/g, ".")}
+                    : new Date(project.updated_at).toISOString().substring(0, 10)
+                  ).replace(/-/g, '.')}
                 </time>
               </span>
               <span className="text-zinc-500 dark:text-zinc-400 text-xs flex items-center gap-1 ">
                 {project.vercel && (
-                  <VercelInfo
-                    info={{ ...project.vercel, owner: project.owner }}
-                  />
+                  <VercelInfo info={{ ...project.vercel, owner: project.owner }} />
                 )}
                 <span title="Total stars." className="flex items-center gap-1">
-                  <GoStar className="w-4 h-4" />{" "}
-                  {Intl.NumberFormat("en-US", { notation: "compact" }).format(
-                    project.stargazers_count
+                  <GoStar className="w-4 h-4" />{' '}
+                  {Intl.NumberFormat('en-US', { notation: 'compact' }).format(
+                    project.stargazers_count,
                   )}
                 </span>
               </span>
@@ -152,7 +140,7 @@ export const FlipArticle = async ({ project }) => {
 
             <h2
               className="project-card-title z-20 text-2xl font-bold leading-tight duration-1000 lg:text-3xl text-black dark:text-white font-display cursor-pointer line-clamp-2 min-h-[2.6em] max-h-[2.6em] break-keep overflow-hidden"
-              title={`Click to view the ${project.homepage ? "app" : "repo"}.`}
+              title={`Click to view the ${project.homepage ? 'app' : 'repo'}.`}
             >
               <span>{project.title ?? project.name}</span>
             </h2>
@@ -160,10 +148,7 @@ export const FlipArticle = async ({ project }) => {
               {project.customDescription ?? project.description}
             </p>
             {project.techStack && project.techStack.length > 0 && (
-              <TechStackCarousel
-                techStack={project.techStack}
-                techIcons={CONSTANTS.TECH_ICONS}
-              />
+              <TechStackCarousel techStack={project.techStack} techIcons={CONSTANTS.TECH_ICONS} />
             )}
             <div className="flex justify-between items-center w-full mt-2 border-t-2 border-gray-700 border-opacity-50">
               <span className="text-zinc-500 dark:text-zinc-400 text-xs flex items-center gap-1">

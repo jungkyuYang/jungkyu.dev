@@ -1,44 +1,41 @@
-import Image from "next/image";
+import Image from 'next/image';
+
+import { MdUpgrade } from 'react-icons/md';
+import { RiTailwindCssFill } from 'react-icons/ri';
+import { SiReactbootstrap } from 'react-icons/si';
+
+import Popover from './popover';
 import {
   getNextjsLatestRelease,
   getRepositoryPackageJson,
   checkAppJsxExistence,
-} from "../_services/data";
-import Popover from "./popover";
-import { RiTailwindCssFill } from "react-icons/ri";
-import { SiReactbootstrap } from "react-icons/si";
-import { MdUpgrade } from "react-icons/md";
+} from '../_services/data';
 
 export const VercelInfo = async ({ info }) => {
   const nextjsLatestRelease = await getNextjsLatestRelease();
   const pJson = await getRepositoryPackageJson(info.owner.login, info.name);
-  const { isRouterPages, isRouterApp } = await checkAppJsxExistence(
-    info.owner.login,
-    info.name
-  );
-  const nextjsVersion = pJson?.dependencies?.next
-    .replace("^", "")
-    .replace("~", "");
-  let labelNext = "Next.js project";
+  const { isRouterPages, isRouterApp } = await checkAppJsxExistence(info.owner.login, info.name);
+  const nextjsVersion = pJson?.dependencies?.next.replace('^', '').replace('~', '');
+  let labelNext = 'Next.js project';
 
   if (isRouterPages && isRouterApp) {
-    labelNext = labelNext + " using both Pages and App";
+    labelNext = labelNext + ' using both Pages and App';
   } else if (isRouterPages && !isRouterApp) {
-    labelNext = labelNext + " using Pages";
+    labelNext = labelNext + ' using Pages';
   } else if (!isRouterPages && isRouterApp) {
-    labelNext = labelNext + " using App Router";
+    labelNext = labelNext + ' using App Router';
   } else if (!isRouterPages && !isRouterApp) {
-    labelNext = labelNext + " using neither Pages nor App Router";
+    labelNext = labelNext + ' using neither Pages nor App Router';
   }
 
-  let isUsingTurbopack = pJson?.scripts?.dev?.includes("--turbo") || false;
+  let isUsingTurbopack = pJson?.scripts?.dev?.includes('--turbo') || false;
   const turboIcon = isUsingTurbopack ? (
     <Popover
       button={
         <Image
           height={16}
           width={16}
-          style={{ fontSize: "medium" }}
+          style={{ fontSize: 'medium' }}
           src="turbo-benchmark-icon-dark.svg"
           alt="Turbo icon"
         />
@@ -50,11 +47,9 @@ export const VercelInfo = async ({ info }) => {
   // Icons copied from https://vercel.com/design/brands
 
   const upgradeIcon =
-    info.framework === "nextjs" &&
-    nextjsVersion &&
-    nextjsVersion < nextjsLatestRelease.tagName ? (
+    info.framework === 'nextjs' && nextjsVersion && nextjsVersion < nextjsLatestRelease.tagName ? (
       <Popover
-        button={<MdUpgrade color="white" size={"20"} className="-mb-1" />}
+        button={<MdUpgrade color="white" size={'20'} className="-mb-1" />}
         content={
           <span>
             <p>
@@ -73,22 +68,19 @@ export const VercelInfo = async ({ info }) => {
           aria-label="Vercel logomark"
           height="16"
           role="img"
-          style={{ width: "auto", overflow: "visible" }}
+          style={{ width: 'auto', overflow: 'visible' }}
           viewBox="0 0 74 64"
         >
-          <path
-            d="M37.5896 0.25L74.5396 64.25H0.639648L37.5896 0.25Z"
-            fill="white"
-          ></path>
+          <path d="M37.5896 0.25L74.5396 64.25H0.639648L37.5896 0.25Z" fill="white"></path>
         </svg>
       }
-      content={"Vercel on node: " + info.nodeVersion}
+      content={'Vercel on node: ' + info.nodeVersion}
     />
   );
 
   // Currently only Next.js
   const frameworkIcon =
-    info.framework === "nextjs" ? (
+    info.framework === 'nextjs' ? (
       <Popover
         button={
           <svg
@@ -102,7 +94,7 @@ export const VercelInfo = async ({ info }) => {
             <mask
               height="180"
               maskUnits="userSpaceOnUse"
-              style={{ maskType: "alpha" }}
+              style={{ maskType: 'alpha' }}
               width="180"
               x="0"
               y="0"
@@ -181,18 +173,18 @@ function getUILibrary(pJson) {
   const uiLibIcons = [];
 
   if (pJson?.devDependencies?.tailwindcss) {
-    uiLibIcons.push({ icon: <RiTailwindCssFill />, text: "Tailwind CSS" });
+    uiLibIcons.push({ icon: <RiTailwindCssFill />, text: 'Tailwind CSS' });
   }
-  if (pJson?.dependencies["react-bootstrap"]) {
+  if (pJson?.dependencies['react-bootstrap']) {
     uiLibIcons.push({
       icon: <SiReactbootstrap color="" />,
-      text: "React Bootstrap",
+      text: 'React Bootstrap',
     });
   }
-  if (pJson?.dependencies["@primer/react"]) {
+  if (pJson?.dependencies['@primer/react']) {
     uiLibIcons.push({
       icon: <span className="text-2xl">🛠</span>,
-      text: "Primer",
+      text: 'Primer',
     });
   }
 

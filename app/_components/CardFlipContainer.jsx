@@ -1,7 +1,8 @@
-"use client";
+'use client';
 
-import { useState, useEffect, useRef } from "react";
-import useOutsideClick from "../_hooks/useOutsideClick";
+import { useState, useEffect, useRef } from 'react';
+
+import useOutsideClick from '../_hooks/useOutsideClick';
 
 export default function CardFlipContainer({ front, back }) {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -10,7 +11,7 @@ export default function CardFlipContainer({ front, back }) {
 
   useEffect(() => {
     // 모바일 환경 감지 (최초 렌더링 시 1회만)
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       setIsMobile(window.innerWidth < 768);
     }
   }, []);
@@ -20,7 +21,7 @@ export default function CardFlipContainer({ front, back }) {
     () => {
       if (isMobile && isFlipped) setIsFlipped(false);
     },
-    isMobile && isFlipped
+    isMobile && isFlipped,
   );
 
   // 앞면 클릭 시 플립(모바일만)
@@ -40,21 +41,15 @@ export default function CardFlipContainer({ front, back }) {
   };
 
   return (
-    <div
-      ref={cardRef}
-      className="relative group [perspective:1200px] w-full h-full"
-    >
+    <div ref={cardRef} className="relative group [perspective:1200px] w-full h-full">
       <div
         className={`transition-transform duration-500 [transform-style:preserve-3d] w-full h-full
-          ${isFlipped ? "[transform:rotateY(180deg)]" : ""}
+          ${isFlipped ? '[transform:rotateY(180deg)]' : ''}
           group-hover:[transform:rotateY(180deg)]
         `}
       >
         {/* 앞면: 모바일에서만 클릭 시 플립 */}
-        <div
-          className="[backface-visibility:hidden] w-full h-full"
-          onClick={handleFrontClick}
-        >
+        <div className="[backface-visibility:hidden] w-full h-full" onClick={handleFrontClick}>
           {front}
         </div>
         {/* 뒷면: 모바일에서만 클릭 시 원상복구 */}

@@ -1,7 +1,8 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Card } from "./card";
+import { useState } from 'react';
+
+import { Card } from './card';
 
 export const EmailCard = ({ email, icon, emailParts, emailTransform }) => {
   const [copied, setCopied] = useState(false);
@@ -11,14 +12,14 @@ export const EmailCard = ({ email, icon, emailParts, emailTransform }) => {
       // 1. 클립보드 복사
       await navigator.clipboard.writeText(email);
       setCopied(true);
-      
+
       // 2. 메일 앱 호출 (현재 탭 유지)
       window.location.href = `mailto:${email}`;
 
       // 3. 1.5초 후 복구
       setTimeout(() => setCopied(false), 1500);
     } catch (err) {
-      console.error("Failed to copy!", err);
+      console.error('Failed to copy!', err);
     }
   };
 
@@ -51,8 +52,12 @@ export const EmailCard = ({ email, icon, emailParts, emailTransform }) => {
           */}
           <div className="relative flex items-center justify-center w-full min-h-[60px] lg:min-h-[80px]">
             {/* 평상시: 이메일 주소 */}
-            <div className={`flex flex-col items-center transition-all duration-300 ${copied ? 'opacity-0 scale-95 translate-y-1' : 'opacity-100 scale-100 translate-y-0'}`}>
-              <span className={`text-xl font-medium duration-150 lg:text-2xl xl:text-3xl !text-zinc-900 dark:!text-zinc-100 group-hover:!text-white font-display ${emailTransform}`}>
+            <div
+              className={`flex flex-col items-center transition-all duration-300 ${copied ? 'opacity-0 scale-95 translate-y-1' : 'opacity-100 scale-100 translate-y-0'}`}
+            >
+              <span
+                className={`text-xl font-medium duration-150 lg:text-2xl xl:text-3xl !text-zinc-900 dark:!text-zinc-100 group-hover:!text-white font-display ${emailTransform}`}
+              >
                 {emailParts[0]}
               </span>
               <span className="text-sm md:text-base lg:text-lg opacity-60 font-sans tracking-tighter !text-zinc-900 dark:!text-zinc-100 group-hover:!text-white">
@@ -61,7 +66,9 @@ export const EmailCard = ({ email, icon, emailParts, emailTransform }) => {
             </div>
 
             {/* 복사 시: COPIED! (적절한 크기로 튀지 않게 강조) */}
-            <span className={`absolute text-xl lg:text-2xl font-bold text-blue-500 transition-all duration-300 ${copied ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-105 -translate-y-1'}`}>
+            <span
+              className={`absolute text-xl lg:text-2xl font-bold text-blue-500 transition-all duration-300 ${copied ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-105 -translate-y-1'}`}
+            >
               COPIED!
             </span>
           </div>

@@ -1,15 +1,16 @@
-"use client";
-import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+'use client';
+import { useEffect } from 'react';
 
-const GA_MEASUREMENT_ID = "G-3SJJSW4ND6";
+import { usePathname } from 'next/navigation';
+
+const GA_MEASUREMENT_ID = 'G-3SJJSW4ND6';
 
 export default function AnalyticsProvider() {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (typeof window !== "undefined" && typeof window.gtag === "function") {
-      window.gtag("config", GA_MEASUREMENT_ID, {
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      window.gtag('config', GA_MEASUREMENT_ID, {
         page_path: pathname,
       });
     }

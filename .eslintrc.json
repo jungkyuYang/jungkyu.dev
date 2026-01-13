@@ -1,0 +1,28 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "next/typescript", // 미리 추가해 두면 TS 파일 생성 시 바로 린트가 먹힙니다.
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["import"],
+  "rules": {
+    "prettier/prettier": "error",
+    "react/no-unescaped-entities": "off",
+    "no-unused-vars": "warn",
+    "import/order": [
+      "error",
+      {
+        "groups": [["builtin", "external"], "internal", ["parent", "sibling"], "index"],
+        "pathGroups": [
+          { "pattern": "react", "group": "external", "position": "before" },
+          { "pattern": "next/**", "group": "external", "position": "before" },
+          { "pattern": "@/_**", "group": "internal", "position": "before" },
+          { "pattern": "@/**", "group": "internal" }
+        ],
+        "pathGroupsExcludedImportTypes": ["react", "next"],
+        "newlines-between": "always",
+        "alphabetize": { "order": "asc", "caseInsensitive": true }
+      }
+    ]
+  }
+}

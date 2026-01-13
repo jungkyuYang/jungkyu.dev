@@ -1,13 +1,14 @@
-import React, { Suspense } from "react";
-import data from "../../data.json";
-import ProjectsComponent from "./projects";
-import OrgProjects from "./OrgProjects";
+import React, { Suspense } from 'react';
+
+import OrgProjects from './OrgProjects';
+import ProjectsComponent from './projects';
+import data from '../../data.json';
 
 export default async function ProjectsPage(props) {
   const searchParams = await props.searchParams;
   const { customUsername } = searchParams;
   const username = customUsername || process.env.GITHUB_USERNAME || data.githubUsername;
-  const isJungkyu = username === "jungkyuYang";
+  const isJungkyu = username === 'jungkyuYang';
 
   /**
    * 스켈레톤 UI (시각적 일관성 유지)
@@ -32,7 +33,6 @@ export default async function ProjectsPage(props) {
   return (
     // 1. 페이지 본문을 대표하는 시맨틱 태그 <article>
     <article className="flex-1 animate-fade-in">
-      
       {/* 2. 제목 및 설명 섹션 (단순 div로 처리) */}
       <section className="max-w-2xl mb-12">
         <h2 className="text-3xl font-bold tracking-tight !text-zinc-900 dark:!text-zinc-100 sm:text-4xl">
@@ -46,11 +46,7 @@ export default async function ProjectsPage(props) {
       {/* 3. 프로젝트 리스트 섹션 */}
       <section>
         <Suspense fallback={<ProjectsSkeleton />}>
-          {isJungkyu ? (
-            <OrgProjects />
-          ) : (
-            <ProjectsComponent username={username} />
-          )}
+          {isJungkyu ? <OrgProjects /> : <ProjectsComponent username={username} />}
         </Suspense>
       </section>
     </article>

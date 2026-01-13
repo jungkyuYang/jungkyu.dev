@@ -1,23 +1,23 @@
-import Link from "next/link";
-import Image from "next/image";
-import { getUserOrganizations } from "../_services/data";
+import Image from 'next/image';
+import Link from 'next/link';
+
+import { getUserOrganizations } from '../_services/data';
 
 export const ProfileOrganizations = async ({ username }) => {
-  const organizations = (await getUserOrganizations(username)).data.user
-    ?.organizations.nodes;
+  const organizations = (await getUserOrganizations(username)).data.user?.organizations.nodes;
 
   return (
     <p>
       I'm building stuff
       {organizations?.length > 0 ? (
         <>
-          {" "}
-          at{" "}
+          {' '}
+          at{' '}
           <span className="mt-3 overflow-hidden">
             {organizations.map((org, i, a) => (
               <span key={org.name}>
-                {i > 0 && i < a.length - 1 && ", "}
-                {i > 0 && i === a.length - 1 && " and "}
+                {i > 0 && i < a.length - 1 && ', '}
+                {i > 0 && i === a.length - 1 && ' and '}
                 <Link
                   target="_blank"
                   href={org.websiteUrl || org.url}
@@ -28,9 +28,7 @@ export const ProfileOrganizations = async ({ username }) => {
                     className="ms-1 inline-block rounded-md"
                     src={org.avatarUrl}
                     alt={org.name}
-                    title={[org.name, org.description]
-                      .filter((o) => !!o)
-                      .join(": ")}
+                    title={[org.name, org.description].filter((o) => !!o).join(': ')}
                     width={24}
                     height={24}
                   />
@@ -40,7 +38,7 @@ export const ProfileOrganizations = async ({ username }) => {
           </span>
         </>
       ) : (
-        "."
+        '.'
       )}
     </p>
   );

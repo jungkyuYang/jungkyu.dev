@@ -1,21 +1,17 @@
-import { Card } from "../_components/card";
-import { FlipArticle } from "./FlipArticle";
-import { getOrgRepos } from "../_services/data";
-import ProjectSection from "../_components/ProjectSection";
-import * as CONSTANTS from "../_constants";
+import { FlipArticle } from './FlipArticle';
+import ProjectSection from '../_components/ProjectSection';
+import * as CONSTANTS from '../_constants';
+import { getOrgRepos } from '../_services/data';
 
 export default async function OrgProjects() {
-  const orgResults = await Promise.allSettled(
-    CONSTANTS.ORG_NAMES.map(getOrgRepos)
+  const orgResults = await Promise.allSettled(CONSTANTS.ORG_NAMES.map(getOrgRepos));
+  const [cyclingHomerunRepos, preOnboardingIdleRepos, devFE3Repos] = orgResults.map((result) =>
+    result.status === 'fulfilled' ? result.value : [],
   );
-  const [cyclingHomerunRepos, preOnboardingIdleRepos, devFE3Repos] =
-    orgResults.map((result) =>
-      result.status === "fulfilled" ? result.value : []
-    );
 
   // Team-4yclingHomerun에서 '4yclinghomerun-client' 레포만 선택
   const cyclingHomerunMainProject = cyclingHomerunRepos
-    .filter((repo) => repo.name === "4yclinghomerun-client")
+    .filter((repo) => repo.name === '4yclinghomerun-client')
     .map((repo) => ({
       ...repo,
       ...(CONSTANTS.PROJECT_META[repo.name] || {}),
@@ -27,7 +23,7 @@ export default async function OrgProjects() {
     .sort(
       (a, b) =>
         new Date(b.updated_at ?? Number.POSITIVE_INFINITY).getTime() -
-        new Date(a.updated_at ?? Number.POSITIVE_INFINITY).getTime()
+        new Date(a.updated_at ?? Number.POSITIVE_INFINITY).getTime(),
     )
     .map((repo) => ({
       ...repo,
@@ -36,7 +32,7 @@ export default async function OrgProjects() {
 
   // Dev-FE-3에서 toy-project1-team2, toy-project2-team4, toy-project3-team1만 사용
   const devFE3FilteredRepos = devFE3Repos.filter((repo) =>
-    CONSTANTS.DEV_FE3_PROJECT_NAMES.includes(repo.name)
+    CONSTANTS.DEV_FE3_PROJECT_NAMES.includes(repo.name),
   );
 
   // devFE3FilteredRepos의 각 레포에 title과 customDescription 추가
@@ -62,23 +58,21 @@ export default async function OrgProjects() {
   });
 
   // 프로젝트 분류
-  const fixedProjects = allProjects.filter((p) =>
-    CONSTANTS.MAIN_PROJECT_TITLES.includes(p.title)
-  );
+  const fixedProjects = allProjects.filter((p) => CONSTANTS.MAIN_PROJECT_TITLES.includes(p.title));
   const teamProjects = allProjects.filter(
     (p) =>
       !fixedProjects.includes(p) &&
-      (p.owner?.login === "preOnBorading-Idle" ||
-        p.owner?.login === "Dev-FE-3" ||
-        p.title?.includes("투두리스트") ||
-        p.title?.includes("무한스크롤") ||
-        p.title?.includes("캐싱/디바운스") ||
-        p.title?.includes("직원관리") ||
-        p.title?.includes("학원운영") ||
-        p.title?.includes("영상 공유"))
+      (p.owner?.login === 'preOnBorading-Idle' ||
+        p.owner?.login === 'Dev-FE-3' ||
+        p.title?.includes('투두리스트') ||
+        p.title?.includes('무한스크롤') ||
+        p.title?.includes('캐싱/디바운스') ||
+        p.title?.includes('직원관리') ||
+        p.title?.includes('학원운영') ||
+        p.title?.includes('영상 공유')),
   );
   const personalProjects = allProjects.filter(
-    (p) => !fixedProjects.includes(p) && !teamProjects.includes(p)
+    (p) => !fixedProjects.includes(p) && !teamProjects.includes(p),
   );
 
   return (
@@ -105,9 +99,7 @@ export default async function OrgProjects() {
         emptyMessage="개인 프로젝트를 열심히 준비중입니다."
       />
       {allProjects.length === 0 && (
-        <div className="mt-8 text-zinc-400">
-          레포가 없거나, 권한/토큰 문제일 수 있습니다.
-        </div>
+        <div className="mt-8 text-zinc-400">레포가 없거나, 권한/토큰 문제일 수 있습니다.</div>
       )}
     </div>
   );

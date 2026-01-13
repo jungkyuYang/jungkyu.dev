@@ -1,11 +1,13 @@
-import "../global.css";
-import { Inter } from "next/font/google";
-import LocalFont from "next/font/local";
-import data from "../data.json";
-import AnalyticsProvider from "./_providers/AnalyticsProvider";
-import ThemeClientProvider from "./_providers/ThemeClientProvider"; 
-import { Navigation } from "./_components/Navigation";
-import { Suspense } from "react";
+import '../global.css';
+import { Suspense } from 'react';
+
+import { Inter } from 'next/font/google';
+import LocalFont from 'next/font/local';
+
+import data from '../data.json';
+import { Navigation } from './_components/Navigation';
+import AnalyticsProvider from './_providers/AnalyticsProvider';
+import ThemeClientProvider from './_providers/ThemeClientProvider';
 
 const username = process.env.GITHUB_USERNAME || data.githubUsername;
 const displayName = data.displayName || username;
@@ -17,64 +19,68 @@ export const metadata = {
     template: `%s | ${data.displayName}'s portfolio`, // 하위 페이지에서 %s 자리에 타이틀이 들어옵/니다.
   },
   description: `GitHub portfolio for ${displayName} - Explore my projects and tech stacks.`,
-  metadataBase: new URL("https://your-portfolio-domain.com"), // 실제 도메인이 있다면 설정 (OG 이미지 경로 기준)
+  metadataBase: new URL('https://your-portfolio-domain.com'), // 실제 도메인이 있다면 설정 (OG 이미지 경로 기준)
   robots: {
     index: true,
     follow: true,
     googleBot: {
       index: true,
       follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
     },
   },
   openGraph: {
     title: `${displayName}'s Portfolio`,
     description: `Software Engineer Portfolio built with Next.js`,
-    url: "./",
+    url: './',
     siteName: `${displayName}'s Portfolio`,
-    locale: "ko_KR",
-    type: "website",
+    locale: 'ko_KR',
+    type: 'website',
   },
   twitter: {
-    card: "summary_large_image",
+    card: 'summary_large_image',
     title: `${displayName}`,
     description: `Check out my dev projects and activity.`,
   },
   icons: [
     {
-      url: "/favicon.ico",
-      rel: "icon",
-      sizes: "any",
-      type: "image/svg+xml",
+      url: '/favicon.ico',
+      rel: 'icon',
+      sizes: 'any',
+      type: 'image/svg+xml',
     },
   ],
 };
 
 const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
+  subsets: ['latin'],
+  variable: '--font-inter',
 });
 
 const calSans = LocalFont({
-  src: "../public/fonts/CalSans-SemiBold.ttf",
-  variable: "--font-calsans",
+  src: '../public/fonts/CalSans-SemiBold.ttf',
+  variable: '--font-calsans',
 });
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="ko" className={[inter.variable, calSans.variable].join(" ")} suppressHydrationWarning>
+    <html
+      lang="ko"
+      className={[inter.variable, calSans.variable].join(' ')}
+      suppressHydrationWarning
+    >
       <body
         className={`
           bg-white text-black dark:bg-black dark:text-white
           h-screen overflow-hidden flex flex-col
-          ${process.env.NODE_ENV === "development" ? "debug-screens" : ""}
+          ${process.env.NODE_ENV === 'development' ? 'debug-screens' : ''}
         `}
       >
         <ThemeClientProvider>
           <AnalyticsProvider />
-          
+
           <header className="shrink-0">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <Suspense fallback={<div className="h-16 w-full" />}>
@@ -88,7 +94,6 @@ export default function RootLayout({ children }) {
               {children}
             </div>
           </main>
-          
         </ThemeClientProvider>
       </body>
     </html>

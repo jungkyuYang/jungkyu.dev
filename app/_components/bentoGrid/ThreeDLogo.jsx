@@ -1,10 +1,19 @@
 'use client';
 
 import React, { Suspense, useRef, useState, useEffect } from 'react';
-import { createPortal } from 'react-dom'; // 1. 포탈 추가
+
+import {
+  Text3D,
+  Center,
+  Environment,
+  Float,
+  MeshTransmissionMaterial,
+  PresentationControls,
+  Preload,
+} from '@react-three/drei';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Text3D, Center, Environment, Float, MeshTransmissionMaterial, PresentationControls, Preload } from '@react-three/drei';
 import { motion, AnimatePresence } from 'framer-motion';
+import { createPortal } from 'react-dom'; // 1. 포탈 추가
 import * as THREE from 'three';
 
 // 로고 메쉬 로직 (동일)
@@ -26,7 +35,11 @@ function LogoMesh({ name, isInitial, isActive }) {
   });
 
   return (
-    <Float speed={isInitial ? 4 : 1.5} rotationIntensity={isInitial ? 1 : 0.2} floatIntensity={isInitial ? 1.5 : 0.2}>
+    <Float
+      speed={isInitial ? 4 : 1.5}
+      rotationIntensity={isInitial ? 1 : 0.2}
+      floatIntensity={isInitial ? 1.5 : 0.2}
+    >
       <Center>
         <Text3D
           ref={meshRef}
@@ -52,7 +65,7 @@ function LogoMesh({ name, isInitial, isActive }) {
   );
 }
 
-export const ThreeDLogo = ({ name = "LOGO", isActive }) => {
+export const ThreeDLogo = ({ name = 'LOGO', isActive }) => {
   const [isInitial, setIsInitial] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -62,7 +75,7 @@ export const ThreeDLogo = ({ name = "LOGO", isActive }) => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     handleResize();
     window.addEventListener('resize', handleResize);
-    
+
     const timer = setTimeout(() => setIsInitial(false), 2500);
     return () => {
       clearTimeout(timer);
@@ -83,16 +96,16 @@ export const ThreeDLogo = ({ name = "LOGO", isActive }) => {
               key="portal-logo-container"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0, filter: "blur(20px)" }}
+              exit={{ opacity: 0, filter: 'blur(20px)' }}
               transition={{ duration: 0.8 }}
               // fixed inset-0으로 화면 전체 장악
               className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/40 backdrop-blur-md"
               style={{ pointerEvents: 'auto' }}
             >
               <div className="w-screen h-screen">
-                <Canvas 
+                <Canvas
                   key="initial-canvas"
-                  camera={{ position: [0, 0, 5], fov: 50 }} 
+                  camera={{ position: [0, 0, 5], fov: 50 }}
                   style={{ width: '100vw', height: '100vh' }}
                 >
                   <Suspense fallback={null}>
@@ -108,7 +121,7 @@ export const ThreeDLogo = ({ name = "LOGO", isActive }) => {
             </motion.div>
           )}
         </AnimatePresence>,
-        document.body
+        document.body,
       )}
 
       {/* 2. 안착 레이어 (BentoCard 내부) */}
@@ -118,16 +131,16 @@ export const ThreeDLogo = ({ name = "LOGO", isActive }) => {
             key="settled-logo-container"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: "easeOut" }}
+            transition={{ duration: 1, ease: 'easeOut' }}
             className="w-full h-full flex items-center justify-center"
           >
             <Canvas
               key="settled-canvas"
               shadows
               dpr={[1, 1.5]}
-              camera={{ 
-                position: isMobile ? [0, 5, 22] : [5, 10, 20], 
-                fov: isMobile ? 40 : 35 
+              camera={{
+                position: isMobile ? [0, 5, 22] : [5, 10, 20],
+                fov: isMobile ? 40 : 35,
               }}
               style={{ width: '100%', height: '100%' }}
             >

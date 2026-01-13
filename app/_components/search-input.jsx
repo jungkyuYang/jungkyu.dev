@@ -1,7 +1,8 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import { GoSearch } from "react-icons/go";
+import React, { useState } from 'react';
+
+import { GoSearch } from 'react-icons/go';
 
 const UserSearch = ({ user }) => {
   const [username, setUsername] = useState(user);
@@ -46,16 +47,13 @@ const UserSearch = ({ user }) => {
             value={username}
             onChange={handleUsernameChange}
             onKeyDown={(e) => {
-              if (e.key === "Enter") {
+              if (e.key === 'Enter') {
                 handleSearch();
               }
             }}
           />
-          <span
-            className="absolute mr-2 w-10 cursor-pointer"
-            onClick={handleSearch}
-          >
-            {loading ? "..." : <GoSearch size={32} />}
+          <span className="absolute mr-2 w-10 cursor-pointer" onClick={handleSearch}>
+            {loading ? '...' : <GoSearch size={32} />}
           </span>
         </div>
       </div>

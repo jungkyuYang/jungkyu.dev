@@ -1,16 +1,15 @@
-# Build outputs
+# 빌드 결과물
 .next
 out
-dist
 build
 
-# Dependencies
+# 패키지 매니저 및 로그
 node_modules
-
-# Environment variables
-.env*
-
-# Common files
-public
-*.log
 package-lock.json
+npm-debug.log
+
+# 공공 리소스 (최적화된 이미지 등은 건드리지 않음)
+public
+
+# 기타 환경 설정
+.env*

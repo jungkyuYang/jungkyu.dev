@@ -1,23 +1,22 @@
-import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
-import { GoMail, GoPerson } from "react-icons/go";
-import Link from "next/link";
-import { Card } from "../_components/card";
-import { EmailCard } from "../_components/EmailCard";
-import data from "../../data.json";
-import { getUser, getSocialAccounts } from "../_services/data";
+import Link from 'next/link';
 
-export const runtime = "nodejs";
+import { FaGithub, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
+import { GoMail, GoPerson } from 'react-icons/go';
+
+import data from '../../data.json';
+import { Card } from '../_components/card';
+import { EmailCard } from '../_components/EmailCard';
+import { getUser, getSocialAccounts } from '../_services/data';
+
+export const runtime = 'nodejs';
 
 export default async function Contacts(props) {
   const searchParams = await props.searchParams;
   const { customUsername } = searchParams;
   const username = customUsername || process.env.GITHUB_USERNAME || data.githubUsername;
-  
-  const [user, githubSocials] = await Promise.all([
-    getUser(username),
-    getSocialAccounts(username)
-  ]);
+
+  const [user, githubSocials] = await Promise.all([getUser(username), getSocialAccounts(username)]);
 
   const email = user.email || data.email;
   const contacts = [];
@@ -26,7 +25,7 @@ export default async function Contacts(props) {
     contacts.push({
       icon: <GoMail size={20} />,
       href: `mailto:${email}`,
-      label: "Email",
+      label: 'Email',
       handle: email,
     });
   }
@@ -34,24 +33,29 @@ export default async function Contacts(props) {
   contacts.push({
     icon: <FaGithub size={20} />,
     href: `https://github.com/${username}`,
-    label: "Github",
+    label: 'Github',
     handle: username,
   });
 
   githubSocials.forEach((s) => {
-    const handle = s.url.split("/").filter(Boolean).pop();
+    const handle = s.url.split('/').filter(Boolean).pop();
     switch (s.provider) {
-      case "linkedin":
+      case 'linkedin':
         contacts.push({ icon: <FaLinkedin size={20} />, href: s.url, label: s.provider, handle });
         break;
-      case "twitter":
+      case 'twitter':
         contacts.push({ icon: <FaXTwitter size={20} />, href: s.url, label: s.provider, handle });
         break;
-      case "instagram":
+      case 'instagram':
         contacts.push({ icon: <FaInstagram size={20} />, href: s.url, label: s.provider, handle });
         break;
       default:
-        contacts.push({ icon: <GoPerson size={20} />, href: s.url, label: "Link", handle: "Profile" });
+        contacts.push({
+          icon: <GoPerson size={20} />,
+          href: s.url,
+          label: 'Link',
+          handle: 'Profile',
+        });
         break;
     }
   });
@@ -61,15 +65,15 @@ export default async function Contacts(props) {
       <div className="w-full h-full flex items-center">
         <section className="grid w-full grid-cols-1 gap-8 mx-auto sm:grid-cols-2 lg:grid-cols-3 lg:gap-16 items-stretch">
           {contacts.map((s) => {
-            const isEmail = s.label === "Email";
-            
+            const isEmail = s.label === 'Email';
+
             if (isEmail) {
               return (
-                <EmailCard 
+                <EmailCard
                   key={s.label}
                   email={s.handle}
                   icon={s.icon}
-                  emailParts={s.handle.split("@")}
+                  emailParts={s.handle.split('@')}
                   emailTransform="sm:rotate-45 md:rotate-0 lg:rotate-45 xl:rotate-0"
                 />
               );
@@ -82,7 +86,10 @@ export default async function Contacts(props) {
                   target="_blank"
                   className="p-4 relative flex flex-col items-center gap-4 duration-700 group md:gap-8 py-12 md:py-20 lg:py-24"
                 >
-                  <span className="absolute w-px h-2/3 bg-linear-to-b from-zinc-500 via-zinc-500/50 to-transparent" aria-hidden="true" />
+                  <span
+                    className="absolute w-px h-2/3 bg-linear-to-b from-zinc-500 via-zinc-500/50 to-transparent"
+                    aria-hidden="true"
+                  />
                   <span className="relative z-10 flex items-center justify-center w-12 h-12 text-sm duration-1000 border rounded-full text-zinc-200 group-hover:text-white group-hover:bg-zinc-900 border-zinc-500 bg-zinc-900 group-hover:border-zinc-200 drop-shadow-orange">
                     {s.icon}
                   </span>

@@ -1,10 +1,10 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 export default function CardBackButtons({ buttons = [] }) {
   return (
     <div className="flex flex-col gap-2 items-center w-full px-4">
       {buttons.map((btn, idx) =>
-        btn.type === "external" ? (
+        btn.type === 'external' ? (
           <a
             key={idx}
             href={btn.url}
@@ -22,7 +22,7 @@ export default function CardBackButtons({ buttons = [] }) {
           >
             {btn.label}
           </Link>
-        )
+        ),
       )}
     </div>
   );
