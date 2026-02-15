@@ -23,10 +23,13 @@ const nextConfig = {
             }
         ).then(res => res.json()).then(data => data.login),
     },
-    images: {
+images: {
         remotePatterns: [
+            // 모든 GitHub 관련 이미지 도메인 허용
+            { protocol: 'https', hostname: 'github.com' },
+            { protocol: 'https', hostname: '**.github.com' },
+            { protocol: 'https', hostname: 'avatars.githubusercontent.com' },
             { protocol: 'https', hostname: '**.githubusercontent.com' },
-            { protocol: 'https', hostname: '**.github.com' }
         ],
     },
 };

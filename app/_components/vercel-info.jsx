@@ -3,7 +3,7 @@ import {
   getNextjsLatestRelease,
   getRepositoryPackageJson,
   checkAppJsxExistence,
-} from "../_service/data";
+} from "../_services/data";
 import Popover from "./popover";
 import { RiTailwindCssFill } from "react-icons/ri";
 import { SiReactbootstrap } from "react-icons/si";

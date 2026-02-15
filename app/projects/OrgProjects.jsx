@@ -1,9 +1,8 @@
 import { Card } from "../_components/card";
 import { FlipArticle } from "./FlipArticle";
-import { getOrgRepos } from "../_service/data";
+import { getOrgRepos } from "../_services/data";
 import ProjectSection from "../_components/ProjectSection";
 import * as CONSTANTS from "../_constants";
-import ProjectEmptySection from "../_components/ProjectEmptySection";
 
 export default async function OrgProjects() {
   const orgResults = await Promise.allSettled(

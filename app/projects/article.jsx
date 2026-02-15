@@ -2,7 +2,7 @@ import Link from "next/link";
 import { FaGithub } from "react-icons/fa";
 import { GoDependabot, GoEye, GoEyeClosed, GoStar } from "react-icons/go";
 import { VercelInfo } from "../_components/vercel-info";
-import { getTrafficPageViews, getDependabotAlerts } from "../_service/data";
+import { getTrafficPageViews, getDependabotAlerts } from "../_services/data";
 
 export const Article = async ({ project }) => {
   const appLink = project.homepage ? project.homepage : project.html_url;

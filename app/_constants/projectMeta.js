@@ -62,6 +62,8 @@ export const PROJECT_META = {
     title: "영상 공유 커뮤니티 모바일 플랫폼",
     customDescription:
       "로그인·영상 등록·썸네일 업로드·프로필 설정·댓글·좋아요·구독 등 게이머 사용자들이 자신만의 Youtube 영상 리스트를 등록하고 소통하는 커뮤니티 플랫폼으로서, 의존성이 분리된 코드 구현 및 UX 개선에 목적을 두었습니다.",
+      customCreatedAt: "2025-03-26",
+      customUpdatedAt: "2025-04-18",
     techStack: [
       "TypeScript",
       "React",

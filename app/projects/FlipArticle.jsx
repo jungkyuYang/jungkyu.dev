@@ -2,7 +2,7 @@ import Link from "next/link";
 import { FaGithub } from "react-icons/fa";
 import { GoDependabot, GoEye, GoEyeClosed, GoStar } from "react-icons/go";
 import { VercelInfo } from "../_components/vercel-info";
-import { getTrafficPageViews, getDependabotAlerts } from "../_service/data";
+import { getTrafficPageViews, getDependabotAlerts } from "../_services/data";
 import CardFlipContainer from "../_components/CardFlipContainer";
 import CardBackButtons from "../_components/CardBackButtons";
 import * as CONSTANTS from "../_constants";

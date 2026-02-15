@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { getUserOrganizations } from "../_service/data";
+import { getUserOrganizations } from "../_services/data";
 
 export const ProfileOrganizations = async ({ username }) => {
   const organizations = (await getUserOrganizations(username)).data.user

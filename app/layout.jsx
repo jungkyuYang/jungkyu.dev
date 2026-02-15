@@ -1,10 +1,11 @@
 import "../global.css";
 import { Inter } from "next/font/google";
 import LocalFont from "next/font/local";
-import Script from "next/script";
 import data from "../data.json";
 import AnalyticsProvider from "./_providers/AnalyticsProvider";
-import ThemeClientProvider from "./_providers/ThemeClientProvider";
+import ThemeClientProvider from "./_providers/ThemeClientProvider"; 
+import { Navigation } from "./_components/Navigation";
+import { Suspense } from "react";
 
 const username = process.env.GITHUB_USERNAME || data.githubUsername;
 const displayName = data.displayName || username;
@@ -12,10 +13,11 @@ const displayName = data.displayName || username;
 /** @type {import('next').Metadata} */
 export const metadata = {
   title: {
-    default: [username, "'s portfolio"].join(""),
-    template: "%s | " + data.displayName + "'s portfolio",
+    default: `${username}'s portfolio`,
+    template: `%s | ${data.displayName}'s portfolio`, // 하위 페이지에서 %s 자리에 타이틀이 들어옵/니다.
   },
-  description: "GitHub portfolio for " + displayName,
+  description: `GitHub portfolio for ${displayName} - Explore my projects and tech stacks.`,
+  metadataBase: new URL("https://your-portfolio-domain.com"), // 실제 도메인이 있다면 설정 (OG 이미지 경로 기준)
   robots: {
     index: true,
     follow: true,
@@ -27,6 +29,19 @@ export const metadata = {
       "max-snippet": -1,
     },
   },
+  openGraph: {
+    title: `${displayName}'s Portfolio`,
+    description: `Software Engineer Portfolio built with Next.js`,
+    url: "./",
+    siteName: `${displayName}'s Portfolio`,
+    locale: "ko_KR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${displayName}`,
+    description: `Check out my dev projects and activity.`,
+  },
   icons: [
     {
       url: "/favicon.ico",
@@ -36,6 +51,7 @@ export const metadata = {
     },
   ],
 };
+
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -48,29 +64,31 @@ const calSans = LocalFont({
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="ko" className={[inter.variable, calSans.variable].join(" ")}>
-      <head>
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-VMP41WGVX2"
-          strategy="afterInteractive"
-        />
-        <Script id="gtag-init" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-VMP41WGVX2');
-          `}
-        </Script>
-      </head>
+    <html lang="ko" className={[inter.variable, calSans.variable].join(" ")} suppressHydrationWarning>
       <body
-        className={`bg-white text-black dark:bg-zinc-900 dark:text-white ${
-          process.env.NODE_ENV === "development" ? "debug-screens" : ""
-        }`}
+        className={`
+          bg-white text-black dark:bg-black dark:text-white
+          h-screen overflow-hidden flex flex-col
+          ${process.env.NODE_ENV === "development" ? "debug-screens" : ""}
+        `}
       >
         <ThemeClientProvider>
           <AnalyticsProvider />
-          {children}
+          
+          <header className="shrink-0">
+            <div className="mx-auto max-w-7xl px-6 lg:px-8">
+              <Suspense fallback={<div className="h-16 w-full" />}>
+                <Navigation />
+              </Suspense>
+            </div>
+          </header>
+
+          <main className="flex-1 min-h-0 overflow-y-auto">
+            <div className="mx-auto max-w-7xl px-6 lg:px-8 h-full flex flex-col pt-4">
+              {children}
+            </div>
+          </main>
+          
         </ThemeClientProvider>
       </body>
     </html>
