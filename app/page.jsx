@@ -13,6 +13,8 @@ import { GitHubStatsSkeleton } from "./_components/bentoGrid/GitHubStats";
 import { ContactWrapper } from "./_components/bentoGrid/ContactWrapper";
 import { ContactSkeleton } from "./_components/bentoGrid/Contact";
 import { TechStackWrapper } from "./_components/bentoGrid/TechStackWrapper";
+import { AnalyticsWrapper } from "./_components/bentoGrid/AnalyticsWrapper";
+import { ThreeDLogoSlot } from "./_components/bentoGrid/ThreeDLogoSlot";
 
 export default async function Home(props) {
   const searchParams = await props.searchParams;
@@ -128,13 +130,25 @@ const LandingComponent = async ({ searchParams: { customUsername } }) => {
     </BentoCard>
 
     {/* 2. 중앙 로고/오브제 (1x2) */}
-    <BentoCard span="lg:col-span-1 lg:row-span-2" className="items-center justify-center">
-      <p>Logo Slot</p>
-    </BentoCard>
+    <BentoCard 
+  span="lg:col-span-1 lg:row-span-2" 
+  // z-50으로 다른 카드보다 위로 올리고, overflow-visible로 삐져나오게 함
+  className="relative bg-transparent border-none shadow-none z-50 overflow-visible"
+>
+  <Suspense fallback={null}>
+    <ThreeDLogoSlot name={username.toUpperCase()} />
+  </Suspense>
+</BentoCard>
 
     {/* 3. Think Different / GA 지표 (2x1) */}
     <BentoCard span="lg:col-span-2 lg:row-span-1">
-       <p>GA Real-time Analytics</p>
+    <Suspense fallback={
+    <div className="p-6 h-full flex items-center justify-center animate-pulse text-[10px] font-black text-zinc-400 uppercase tracking-widest">
+      Loading Analytics...
+    </div>
+  }>
+    <AnalyticsWrapper />
+  </Suspense>
     </BentoCard>
 
     {/* 4. performance (1x2) - 우측 세로형 */}

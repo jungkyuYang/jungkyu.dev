@@ -35,7 +35,7 @@ export const Contact = ({ socialLinks = [] }) => {
             Connect
           </h2>
           <p className="text-[14px] font-bold text-zinc-900 dark:text-zinc-100 tracking-tight transition-all">
-            {isCopied ? "Email Copied!" : "Socials"}
+            {isCopied ? "HELLO :D" : "Socials"}
           </p>
         </div>
         
@@ -49,7 +49,7 @@ export const Contact = ({ socialLinks = [] }) => {
             <span className={`relative inline-flex rounded-full h-1.5 w-1.5 ${isCopied ? 'bg-blue-500' : 'bg-emerald-500'}`}></span>
           </span>
           <span className={`text-[9px] font-black uppercase tracking-tight ${isCopied ? 'text-blue-600 dark:text-blue-400' : 'text-zinc-500 dark:text-zinc-400'}`}>
-            {isCopied ? "Done" : "Online"}
+            {isCopied ? "Copy!" : "Online"}
           </span>
         </div>
       </header>
