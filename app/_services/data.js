@@ -1,5 +1,5 @@
-// Note: This API will be replaced by use cache when it reaches stability.
 import { unstable_cache } from "next/cache";
+import { cache } from 'react';
 
 const revalidate = 60;
 const MINUTES_5 = 60 * 5;
@@ -7,16 +7,21 @@ const HOURS_1 = 60 * 60;
 const HOURS_12 = 60 * 60 * 12;
 
 // TODO: Implement option to switch between info for authenticated user and other users.
-export async function getUser(username) {
+export const getUser = cache(async (username) => {
   console.log("Fetching user data for", username);
-  console.time("getUser");
+  
+  // 이제 딱 한 번만 호출되므로 타이머 경고가 사라집니다.
+  console.time(`getUser-${username}`);
+  
   const res = await fetch("https://api.github.com/users/" + username, {
     headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
     next: { revalidate },
   });
-  console.timeEnd("getUser");
+
+  console.timeEnd(`getUser-${username}`);
+  
   return res.json();
-}
+});
 
 export async function getRepos(username) {
   console.log("Fetching repos for", username);
@@ -218,7 +223,11 @@ export const getRepositoryPackageJson = unstable_cache(
 
 export const getRecentUserActivity = async (username) => {
   console.log("Fetching recent activity for", username);
-  console.time("getRecentUserActivity");
+  
+  // 레이블에 username을 추가하여 유니크하게 만듭니다.
+  const timerLabel = `getRecentUserActivity-${username}-${Math.random().toString(36).slice(2, 7)}`;
+  console.time(timerLabel);
+
   const res = await fetch(
     "https://api.github.com/users/" + username + "/events?per_page=100",
     {
@@ -264,7 +273,7 @@ export const getRecentUserActivity = async (username) => {
     );
     return [];
   }
-  console.timeEnd("getRecentUserActivity");
+  console.timeEnd(timerLabel);
   return response;
 };
 
