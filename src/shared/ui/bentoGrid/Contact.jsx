@@ -98,3 +98,29 @@ export const Contact = ({ socialLinks = [] }) => {
     </section>
   );
 };
+
+export const ContactSkeleton = () => {
+  return (
+    <section className="flex flex-col px-2 py-1 h-full w-full justify-between animate-pulse">
+      {/* Header Skeleton */}
+      <header className="flex justify-between items-start pt-1 px-1">
+        <div className="flex flex-col gap-1.5">
+          <div className="h-2 w-12 bg-zinc-200 dark:bg-zinc-800 rounded" />
+          <div className="h-4 w-20 bg-zinc-200 dark:bg-zinc-800 rounded" />
+        </div>
+        <div className="h-5 w-16 bg-zinc-200 dark:bg-zinc-800 rounded-full" />
+      </header>
+
+      {/* Buttons Skeleton */}
+      <nav className="mt-auto">
+        <ul className="grid grid-cols-3 gap-2.5 mb-1">
+          {[1, 2, 3].map((i) => (
+            <li key={i}>
+              <div className="aspect-square rounded-[1.2rem] bg-zinc-100 dark:bg-zinc-900/50 border border-zinc-200/20 dark:border-white/5" />
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </section>
+  );
+};
