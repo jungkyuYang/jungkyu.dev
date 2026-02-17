@@ -30,7 +30,7 @@ const nextConfig = async (phase) => {
       },
     },
     env: {
-      GITHUB_USERNAME: githubUsername || 'your-default-id', // 에러 대비 기본값
+      GITHUB_USERNAME: githubUsername || 'jungkyuYang', // 에러 대비 기본값
     },
     images: {
       dangerouslyAllowSVG: true,
@@ -43,8 +43,6 @@ const nextConfig = async (phase) => {
         {
           protocol: 'https',
           hostname: 'cdn.simpleicons.org',
-          port: '',
-          pathname: '/**',
         },
       ],
     },

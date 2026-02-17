@@ -63,6 +63,7 @@ export const TechStack = ({ mainItems, libraries }) => {
                       alt={item.name}
                       width={20}
                       height={20}
+                      unoptimized
                       className="w-5 h-5 md:w-4.5 md:h-4.5 grayscale group-hover:grayscale-0 transition-all duration-500"
                     />
                   </div>
