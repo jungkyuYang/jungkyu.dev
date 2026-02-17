@@ -27,7 +27,7 @@ const ICONS = {
 };
 
 const TechBadge = ({ children }) => (
-  <span className="inline-flex items-center rounded-md border border-black/[0.08] dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.05] px-2 py-0.5 text-[9px] font-bold text-neutral-600 dark:text-neutral-400 whitespace-nowrap transition-all">
+  <span className="inline-flex items-center rounded-md border border-black/[0.08] dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.05] px-2 py-0.5 text-[9px] font-bold text-neutral-600 dark:text-neutral-400 whitespace-nowrap">
     {children}
   </span>
 );
@@ -60,12 +60,11 @@ export const MainProjectContent = ({ project, isLoading }) => {
   }
 
   return (
-    <article className="group relative flex h-full w-full flex-col bg-transparent overflow-hidden">
-      {/* 1. Header (이미지 영역) - 부모 곡률(32px)에 맞춘 중첩 곡률 적용 */}
-      <section className="relative flex-1 w-full min-h-0 overflow-hidden rounded-[30px]">
-        {/* 텍스트 가독성을 위한 상단 그라데이션 */}
-        <div className="absolute inset-x-0 top-0 z-30 bg-gradient-to-b from-black/80 via-black/20 to-transparent p-6 pt-8">
-          <h2 className="text-xl font-extrabold tracking-tight text-white md:text-2xl drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
+    <article className="group relative flex h-full w-full flex-col bg-transparent overflow-hidden p-3 justify-between gap-3">
+      {/* 1. Header (이미지 & 제목) - shrink를 적용하여 하단 영역 보호 */}
+      <section className="relative flex-[1.2] min-h-0 w-full overflow-hidden rounded-[24px] shrink">
+        <div className="absolute inset-x-0 top-0 z-30 bg-gradient-to-b from-black/90 via-black/40 to-transparent p-5 pt-6">
+          <h2 className="text-sm font-extrabold tracking-tight text-white md:text-xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] line-clamp-2">
             {project.title}
           </h2>
         </div>
@@ -80,10 +79,10 @@ export const MainProjectContent = ({ project, isLoading }) => {
         />
       </section>
 
-      {/* 2. Body (내용 영역) - 하단에만 적절한 여백 부여 */}
-      <section className="flex flex-none flex-col px-5 py-5">
-        {/* Metadata */}
-        <div className="mb-2 flex items-center gap-2 shrink-0">
+      {/* 2. Body (기간, 상세 정보 & 버튼) */}
+      <section className="flex flex-none flex-col gap-2 md:gap-3 px-1 pb-1">
+        {/* 기간 (Period): sm, md에서도 노출 */}
+        <div className="flex items-center gap-2 shrink-0">
           <span className="text-[9px] font-black uppercase tracking-[0.12em] text-apple-blue shrink-0">
             Period
           </span>
@@ -93,27 +92,22 @@ export const MainProjectContent = ({ project, isLoading }) => {
           </span>
         </div>
 
-        {/* Description */}
-        <p className="mb-3 text-[12px] font-medium leading-relaxed text-neutral-600 dark:text-[#A1A1A6] line-clamp-2">
+        {/* 상세 설명 (Description): lg 이상에서만 노출 */}
+        <p className="hidden lg:block text-[12px] font-medium leading-relaxed text-neutral-600 dark:text-[#A1A1A6] line-clamp-2">
           {project.description}
         </p>
 
-        {/* Tech Stack List */}
-        <div className="flex flex-wrap gap-1.5 mb-4 content-start">
+        {/* 기술 스택 (Tech Stack): lg 이상에서만 노출 */}
+        <div className="hidden lg:flex flex-wrap gap-1.5 content-start">
           {project.techStack?.map((tech) => (
             <TechBadge key={tech}>{tech}</TechBadge>
           ))}
         </div>
 
-        {/* Action Buttons */}
-        <footer className="flex gap-2">
+        {/* 버튼 그룹: 무조건 노출 */}
+        <footer className="flex gap-2 shrink-0 pt-1">
           {project.deployUrl && (
-            <ActionButton
-              href={project.deployUrl}
-              icon={ICONS.EXTERNAL}
-              label="Live"
-              variant="primary"
-            />
+            <ActionButton href={project.deployUrl} icon={ICONS.EXTERNAL} label="Live" />
           )}
           {project.githubUrl && (
             <ActionButton
@@ -133,14 +127,23 @@ export const MainProjectContent = ({ project, isLoading }) => {
  * 3. Skeleton Component
  */
 const MainProjectSkeleton = () => (
-  <div className="flex h-full w-full flex-col animate-pulse bg-transparent">
-    <div className="flex-1 w-full bg-neutral-200 dark:bg-neutral-800 rounded-t-[30px]" />
-    <div className="flex flex-none flex-col px-5 py-5 gap-3">
-      <div className="h-2 w-20 bg-neutral-200 dark:bg-neutral-800 rounded" />
-      <div className="h-4 w-full bg-neutral-200 dark:bg-neutral-800 rounded" />
-      <div className="flex gap-2">
-        <div className="h-9 flex-1 bg-neutral-200 dark:bg-neutral-800 rounded-full" />
-        <div className="h-9 flex-1 bg-neutral-200 dark:bg-neutral-800 rounded-full" />
+  <div className="flex h-full w-full flex-col p-3 justify-between gap-3 animate-pulse bg-transparent">
+    <div className="flex-[1.2] min-h-0 w-full bg-neutral-200 dark:bg-neutral-800/50 rounded-[24px]" />
+
+    <div className="flex flex-none flex-col gap-3 px-1">
+      {/* 기간 영역 스켈레톤 (항상 노출) */}
+      <div className="h-2 w-20 bg-neutral-200 dark:bg-neutral-800/50 rounded" />
+
+      {/* 설명 & 스택 스켈레톤 (lg 이상에서만 노출) */}
+      <div className="hidden lg:flex flex-col gap-3">
+        <div className="h-3 w-full bg-neutral-200 dark:bg-neutral-800/50 rounded" />
+        <div className="h-3 w-2/3 bg-neutral-200 dark:bg-neutral-800/50 rounded" />
+      </div>
+
+      {/* 버튼 스켈레톤 (항상 노출) */}
+      <div className="flex gap-2 pt-1">
+        <div className="h-9 flex-1 bg-neutral-200 dark:bg-neutral-800/50 rounded-full" />
+        <div className="h-9 flex-1 bg-neutral-200 dark:bg-neutral-800/50 rounded-full" />
       </div>
     </div>
   </div>
