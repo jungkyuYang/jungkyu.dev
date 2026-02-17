@@ -14,7 +14,7 @@ import { ContactWrapper } from "./_components/bentoGrid/ContactWrapper";
 import { ContactSkeleton } from "./_components/bentoGrid/Contact";
 import { TechStackWrapper } from "./_components/bentoGrid/TechStackWrapper";
 import { AnalyticsWrapper } from "./_components/bentoGrid/AnalyticsWrapper";
-import { ThreeDLogoSlot } from "./_components/bentoGrid/ThreeDLogoSlot";
+import { ThreeDLogoWrapper } from "./_components/bentoGrid/ThreeDLogoWrapper";
 
 export default async function Home(props) {
   const searchParams = await props.searchParams;
@@ -132,11 +132,9 @@ const LandingComponent = async ({ searchParams: { customUsername } }) => {
     {/* 2. 중앙 로고/오브제 (1x2) */}
     <BentoCard 
   span="lg:col-span-1 lg:row-span-2" 
-  // z-50으로 다른 카드보다 위로 올리고, overflow-visible로 삐져나오게 함
-  className="relative bg-transparent border-none shadow-none z-50 overflow-visible"
 >
-  <Suspense fallback={null}>
-    <ThreeDLogoSlot name={username.toUpperCase()} />
+<Suspense fallback={<div className="w-full h-full flex items-center justify-center text-white/10">Loading...</div>}>
+    <ThreeDLogoWrapper name={username.toUpperCase()} />
   </Suspense>
 </BentoCard>
 
