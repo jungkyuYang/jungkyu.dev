@@ -1,33 +1,16 @@
-// _components/bentoGrid/AnalyticsWrapper.jsx
 import { Analytics } from './Analytics';
 
-// const getBaseUrl = () => {
-//   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-//   return process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
-// };
+const getBaseUrl = () => {
+  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  return 'http://localhost:3000';
+};
 
 async function getGAData() {
-  // 1. 배포된 실제 주소를 하드코딩합니다.
-  // (끝에 /를 넣지 않도록 주의하세요)
-  const baseUrl = 'https://jungkyu-dev-pro.vercel.app';
-
-  try {
-    const res = await fetch(`${baseUrl}/api/analytics`, {
-      next: { revalidate: 3600 },
-      // 서버 내부 호출 시 타임아웃 방지를 위해 추가
-      cache: 'no-store',
-    });
-
-    if (!res.ok) {
-      console.error(`Fetch failed with status: ${res.status}`);
-      throw new Error('Failed to fetch GA data');
-    }
-
-    return res.json();
-  } catch (err) {
-    console.error('Full fetch error:', err);
-    throw err;
-  }
+  const baseUrl = getBaseUrl();
+  const res = await fetch(`${baseUrl}/api/analytics`, { next: { revalidate: 3600 } });
+  if (!res.ok) throw new Error('Failed to fetch GA data');
+  return res.json();
 }
 
 export const AnalyticsWrapper = async () => {
