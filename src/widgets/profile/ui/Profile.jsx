@@ -5,10 +5,10 @@ import { ProfileSummary } from './ProfileSummary';
 export const Profile = ({ username, user }) => {
   return (
     <>
-      {/* 상단 장식 라인 */}
+      {/* 상단 장식 라인: 라이트 모드에서 검은색에 가까운 zinc-800으로 대비 극대화 */}
       <div
         aria-hidden="true"
-        className="animate-glow animate-fade-left hidden h-px w-full bg-linear-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0 md:block"
+        className="animate-glow animate-fade-left hidden h-px w-full bg-linear-to-r from-transparent via-zinc-800/50 to-transparent md:block dark:via-zinc-300/50"
       />
 
       {/* 이름 & 아바타 영역 */}
@@ -22,10 +22,10 @@ export const Profile = ({ username, user }) => {
       {/* 하단 장식 라인 */}
       <div
         aria-hidden="true"
-        className="animate-glow animate-fade-right hidden h-px w-full bg-linear-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0 md:block"
+        className="animate-glow animate-fade-right hidden h-px w-full bg-linear-to-r from-transparent via-zinc-800/50 to-transparent md:block dark:via-zinc-300/50"
       />
 
-      {/* 요약/Bio 영역: 불필요한 wrapper div를 제거하고 ProfileSummary가 직접 정렬되도록 함 */}
+      {/* 요약/Bio 영역 */}
       <div className="animate-fade-in my-[16px] justify-items-center px-4">
         <ProfileSummary name={user?.name} bio={user?.bio} />
       </div>
