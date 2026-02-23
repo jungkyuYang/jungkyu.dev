@@ -1,3 +1,4 @@
+// src/widgets/navigation/lib/useNavigation.js
 'use client';
 
 import { useCallback, useMemo } from 'react';
@@ -11,7 +12,7 @@ export const useNavigation = () => {
   const pathname = usePathname();
   const customUsername = searchParams.get('customUsername');
 
-  // 1. 사용자 정보 로직 (useMemo로 최적화)
+  // 1. 사용자 정보 로직
   const { username, avatarUrl } = useMemo(
     () => ({
       username: customUsername || data.githubUsername,
@@ -20,7 +21,7 @@ export const useNavigation = () => {
     [customUsername],
   );
 
-  // 2. 경로 생성 함수 (useCallback으로 최적화)
+  // 2. 경로 생성 함수
   const getHref = useCallback(
     (path) => {
       return path + (customUsername ? `?customUsername=${customUsername}` : '');
@@ -28,7 +29,7 @@ export const useNavigation = () => {
     [customUsername],
   );
 
-  // 3. 메뉴 데이터 (여기서 관리하면 UI가 더 순수해짐)
+  // 3. 메뉴 데이터
   const menuItems = useMemo(
     () => [
       { label: 'Projects', path: '/projects' },
@@ -37,12 +38,22 @@ export const useNavigation = () => {
     [],
   );
 
+  // 4. TryYourself 전용 데이터 (UI 분리 핵심)
+  const tryYourself = useMemo(
+    () => ({
+      href: customUsername ? '/' : '/search',
+      label: customUsername ? `Showing: ${customUsername} ❌` : 'Try yourself',
+    }),
+    [customUsername],
+  );
+
   return {
     username,
     avatarUrl,
     customUsername,
     getHref,
     pathname,
-    menuItems, // 👈 추가
+    menuItems,
+    tryYourself, // 👈 추가된 판단 로직
   };
 };
