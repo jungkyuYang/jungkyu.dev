@@ -18,7 +18,7 @@ export default function DarkModeToggle() {
   return (
     <button
       onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-      className="text-2xl p-2 rounded-full hover:bg-zinc-200/30 dark:hover:bg-zinc-700/40 transition-colors"
+      className="rounded-full p-2 text-2xl transition-colors hover:bg-zinc-200/30 dark:hover:bg-zinc-700/40"
       aria-label="다크모드 토글"
       type="button"
     >

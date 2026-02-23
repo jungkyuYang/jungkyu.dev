@@ -16,7 +16,7 @@ const TryYourself = ({ customUsername }) => {
   return (
     <Link
       href={href}
-      className="text-xs md:text-sm duration-500 !text-zinc-900 dark:!text-zinc-100 border-dashed p-1.5 md:p-2 rounded-sm border-2 border-zinc-500 hover:border-zinc-300 whitespace-nowrap transition-all"
+      className="rounded-sm border-2 border-dashed border-zinc-500 p-1.5 text-xs whitespace-nowrap !text-zinc-900 transition-all duration-500 hover:border-zinc-300 md:p-2 md:text-sm dark:!text-zinc-100"
     >
       {customUsername ? `Showing: ${customUsername} ❌` : 'Try yourself'}
     </Link>
@@ -38,19 +38,19 @@ export const Navigation = () => {
   const isHome = pathname === '/';
 
   return (
-    <nav className="pt-8 md:pt-16 animate-fade-in w-full">
+    <nav className="animate-fade-in w-full pt-8 md:pt-16">
       {/* flex-col: 모바일에서는 수직으로 쌓임
           md:flex-row: 태블릿 이상부터는 수평 정렬
       */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between w-full gap-6 md:gap-0">
+      <div className="flex w-full flex-col justify-between gap-6 md:flex-row md:items-center md:gap-0">
         {/* 왼쪽 영역: 뒤로가기 + 유저 정보 */}
-        <div className="flex items-center justify-between md:justify-start gap-4">
+        <div className="flex items-center justify-between gap-4 md:justify-start">
           {!isHome ? (
             <Link
               href={getHref('/')}
-              className="duration-500 !text-zinc-500 hover:!text-zinc-900 dark:hover:!text-zinc-100 group flex items-center gap-3 shrink-0"
+              className="group flex shrink-0 items-center gap-3 !text-zinc-500 duration-500 hover:!text-zinc-900 dark:hover:!text-zinc-100"
             >
-              <GoArrowLeft className="w-6 h-6 group-hover:-translate-x-1 transition-transform" />
+              <GoArrowLeft className="h-6 w-6 transition-transform group-hover:-translate-x-1" />
 
               <div className="flex items-center gap-3">
                 <Image
@@ -58,25 +58,25 @@ export const Navigation = () => {
                   alt={username}
                   width={32}
                   height={32}
-                  className="rounded-full border border-zinc-500/50 group-hover:border-zinc-900 dark:group-hover:border-zinc-100 transition-colors shrink-0"
+                  className="shrink-0 rounded-full border border-zinc-500/50 transition-colors group-hover:border-zinc-900 dark:group-hover:border-zinc-100"
                 />
-                <span className="font-display text-lg md:text-2xl tracking-tight !text-zinc-900 dark:!text-zinc-100 truncate max-w-[150px] md:max-w-none">
+                <span className="font-display max-w-[150px] truncate text-lg tracking-tight !text-zinc-900 md:max-w-none md:text-2xl dark:!text-zinc-100">
                   {username}
                 </span>
               </div>
             </Link>
           ) : (
-            <div className="hidden md:block w-10" />
+            <div className="hidden w-10 md:block" />
           )}
 
           {/* 모바일에서만 다크모드 토글을 이름 옆으로 배치하고 싶을 때 사용 (선택 사항) */}
-          <div className="md:hidden flex items-center gap-2 justify-flex-end">
+          <div className="justify-flex-end flex items-center gap-2 md:hidden">
             <DarkModeToggle />
           </div>
         </div>
 
         {/* 오른쪽 영역: 메뉴 아이템들 */}
-        <ul className="flex items-center justify-center md:justify-end gap-4 md:gap-8">
+        <ul className="flex items-center justify-center gap-4 md:justify-end md:gap-8">
           <li className="shrink-0">
             <TryYourself customUsername={customUsername} />
           </li>
@@ -85,7 +85,7 @@ export const Navigation = () => {
             <li>
               <Link
                 href={getHref('/projects')}
-                className="text-base md:text-lg duration-500 !text-zinc-900 dark:!text-zinc-100 hover:!text-zinc-700 dark:hover:!text-zinc-300 transition-colors"
+                className="text-base !text-zinc-900 transition-colors duration-500 hover:!text-zinc-700 md:text-lg dark:!text-zinc-100 dark:hover:!text-zinc-300"
               >
                 Projects <LoadingIndicator />
               </Link>
@@ -93,7 +93,7 @@ export const Navigation = () => {
             <li>
               <Link
                 href={getHref('/contact')}
-                className="text-base md:text-lg duration-500 !text-zinc-900 dark:!text-zinc-100 hover:!text-zinc-700 dark:hover:!text-zinc-300 transition-colors"
+                className="text-base !text-zinc-900 transition-colors duration-500 hover:!text-zinc-700 md:text-lg dark:!text-zinc-100 dark:hover:!text-zinc-300"
               >
                 Contact <LoadingIndicator />
               </Link>

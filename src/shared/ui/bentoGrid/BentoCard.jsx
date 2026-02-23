@@ -17,16 +17,7 @@ export const BentoCard = ({ children, span, className = '' }) => {
         transition: { duration: 0.2 },
       }}
       whileTap={{ scale: 0.98 }} // 클릭 시 눌리는 느낌
-      className={`
-        relative overflow-hidden rounded-[32px] 
-        border border-black/[0.05] dark:border-white/[0.05]
-        bg-white/80 dark:bg-[#1D1D1F]/80 backdrop-blur-xl
-        shadow-[0_8px_30px_rgb(0,0,0,0.04)]
-        dark:shadow-[0_20px_40px_rgba(0,0,0,0.3)]
-        transition-shadow duration-300 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)]
-        flex flex-col p-2
-        ${span} ${className}
-      `}
+      className={`relative flex flex-col overflow-hidden rounded-[32px] border border-black/[0.05] bg-white/80 p-2 shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-xl transition-shadow duration-300 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] dark:border-white/[0.05] dark:bg-[#1D1D1F]/80 dark:shadow-[0_20px_40px_rgba(0,0,0,0.3)] ${span} ${className} `}
     >
       {/* 3. Spotlight 효과를 위한 오버레이 (선택사항) */}
       <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-br from-white/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />

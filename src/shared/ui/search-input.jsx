@@ -32,18 +32,18 @@ const UserSearch = ({ user }) => {
 
   return (
     <div className="w-96">
-      <div className="relative p-6 flex-auto">
+      <div className="relative flex-auto p-6">
         <label
-          className="block text-black dark:text-white text-sm font-bold mb-1"
+          className="mb-1 block text-sm font-bold text-black dark:text-white"
           htmlFor="username"
         >
           GitHub username
         </label>
-        <div className="flex justify-end items-center relative">
+        <div className="relative flex items-center justify-end">
           <input
             placeholder="Search GitHub"
             type="text"
-            className="bg-gray-800 border border-gray-600 rounded-lg p-4 w-full text-black dark:text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-lg border border-gray-600 bg-gray-800 p-4 text-black placeholder-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:text-white"
             value={username}
             onChange={handleUsernameChange}
             onKeyDown={(e) => {
@@ -61,13 +61,13 @@ const UserSearch = ({ user }) => {
       {loading ? null : (
         <>
           {userExists > 1 ? (
-            <span className="bg-linear-to-r from-purple-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-transparent bg-clip-text px-6">
+            <span className="bg-linear-to-r from-purple-400 to-blue-500 bg-clip-text px-6 text-transparent hover:from-pink-500 hover:to-yellow-500">
               <a href={`/?customUsername=${username}`}>
                 Preview user: <span className="font-bold">{username}</span>
               </a>
             </span>
           ) : (
-            <span className=" px-6">
+            <span className="px-6">
               {userExists !== -1 && newUsername && newUsername !== user ? (
                 <span className="text-red-500">
                   User <strong>{newUsername}</strong> not found.

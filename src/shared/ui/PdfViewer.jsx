@@ -15,9 +15,9 @@ export default function PdfViewer({ fileUrl }) {
 
   return (
     /* 컨테이너: 애니메이션 제거, 단순하고 깔끔한 보더와 그림자만 적용 */
-    <div className="w-full rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 overflow-hidden shadow-sm">
+    <div className="w-full overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-950">
       {/* 반응형 높이 설정: 모바일에서는 조금 더 작게, 데스크톱에서는 넉넉하게 */}
-      <div className="relative h-[500px] md:h-[calc(100vh-400px)] w-full bg-zinc-50 dark:bg-zinc-900 overflow-hidden">
+      <div className="relative h-[500px] w-full overflow-hidden bg-zinc-50 md:h-[calc(100vh-400px)] dark:bg-zinc-900">
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js">
           <Viewer
             fileUrl={fileUrl}
@@ -29,12 +29,12 @@ export default function PdfViewer({ fileUrl }) {
       </div>
 
       {/* 하단 다운로드 바 (옵션): 깔끔한 텍스트 링크 형태 */}
-      <div className="flex justify-between items-center px-4 py-2 bg-zinc-50 dark:bg-zinc-900/50 border-t border-zinc-200 dark:border-zinc-800">
-        <span className="text-xs text-zinc-400 font-medium">PDF Preview Mode</span>
+      <div className="flex items-center justify-between border-t border-zinc-200 bg-zinc-50 px-4 py-2 dark:border-zinc-800 dark:bg-zinc-900/50">
+        <span className="text-xs font-medium text-zinc-400">PDF Preview Mode</span>
         <a
           href={fileUrl}
           download
-          className="text-xs text-zinc-600 dark:text-zinc-300 hover:text-blue-500 transition-colors font-semibold"
+          className="text-xs font-semibold text-zinc-600 transition-colors hover:text-blue-500 dark:text-zinc-300"
         >
           파일 다운로드
         </a>

@@ -24,28 +24,28 @@ export default async function ProjectDetailPage({ params }) {
   return (
     <article className="animate-fade-in">
       {/* 제목 및 요약 정보 영역 */}
-      <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
         <div className="flex-1">
-          <h1 className="text-3xl md:text-5xl font-bold tracking-tight mb-4 break-keep">
+          <h1 className="mb-4 text-3xl font-bold tracking-tight break-keep md:text-5xl">
             {info.title}
           </h1>
-          <p className="text-zinc-500 dark:text-zinc-400 max-w-2xl text-sm md:text-base leading-relaxed">
+          <p className="max-w-2xl text-sm leading-relaxed text-zinc-500 md:text-base dark:text-zinc-400">
             {info.description}
           </p>
         </div>
 
-        <div className="flex gap-2 h-fit pb-1">
-          <span className="px-3 py-1 bg-zinc-100 dark:bg-zinc-800 rounded-full text-xs font-medium border border-zinc-200 dark:border-zinc-700 whitespace-nowrap">
+        <div className="flex h-fit gap-2 pb-1">
+          <span className="rounded-full border border-zinc-200 bg-zinc-100 px-3 py-1 text-xs font-medium whitespace-nowrap dark:border-zinc-700 dark:bg-zinc-800">
             Documentation
           </span>
-          <span className="px-3 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-full text-xs font-medium border border-blue-100 dark:border-blue-900/30 whitespace-nowrap">
+          <span className="rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-xs font-medium whitespace-nowrap text-blue-600 dark:border-blue-900/30 dark:bg-blue-900/20 dark:text-blue-400">
             PDF
           </span>
         </div>
       </div>
 
       {/* 실제 콘텐츠 영역 */}
-      <section className="bg-zinc-50 dark:bg-zinc-900/30 rounded-2xl p-1 border border-zinc-200 dark:border-zinc-800 shadow-sm overflow-hidden mb-12">
+      <section className="mb-12 overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-50 p-1 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/30">
         <ProjectPdfSection pdfUrl={pdfUrl} />
       </section>
     </article>

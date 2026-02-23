@@ -41,20 +41,17 @@ export default function CardFlipContainer({ front, back }) {
   };
 
   return (
-    <div ref={cardRef} className="relative group [perspective:1200px] w-full h-full">
+    <div ref={cardRef} className="group relative h-full w-full [perspective:1200px]">
       <div
-        className={`transition-transform duration-500 [transform-style:preserve-3d] w-full h-full
-          ${isFlipped ? '[transform:rotateY(180deg)]' : ''}
-          group-hover:[transform:rotateY(180deg)]
-        `}
+        className={`h-full w-full transition-transform duration-500 [transform-style:preserve-3d] ${isFlipped ? '[transform:rotateY(180deg)]' : ''} group-hover:[transform:rotateY(180deg)]`}
       >
         {/* 앞면: 모바일에서만 클릭 시 플립 */}
-        <div className="[backface-visibility:hidden] w-full h-full" onClick={handleFrontClick}>
+        <div className="h-full w-full [backface-visibility:hidden]" onClick={handleFrontClick}>
           {front}
         </div>
         {/* 뒷면: 모바일에서만 클릭 시 원상복구 */}
         <div
-          className="absolute inset-0 [transform:rotateY(180deg)] [backface-visibility:hidden] flex flex-col justify-center items-center bg-white dark:bg-zinc-900 w-full h-full"
+          className="absolute inset-0 flex h-full w-full [transform:rotateY(180deg)] flex-col items-center justify-center bg-white [backface-visibility:hidden] dark:bg-zinc-900"
           onClick={handleBackClick}
         >
           {back}

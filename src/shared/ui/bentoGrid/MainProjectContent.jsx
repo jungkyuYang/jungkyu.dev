@@ -27,7 +27,7 @@ const ICONS = {
 };
 
 const TechBadge = ({ children }) => (
-  <span className="inline-flex items-center rounded-md border border-black/[0.08] dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.05] px-2 py-0.5 text-[9px] font-bold text-neutral-600 dark:text-neutral-400 whitespace-nowrap">
+  <span className="inline-flex items-center rounded-md border border-black/[0.08] bg-black/[0.02] px-2 py-0.5 text-[9px] font-bold whitespace-nowrap text-neutral-600 dark:border-white/10 dark:bg-white/[0.05] dark:text-neutral-400">
     {children}
   </span>
 );
@@ -43,7 +43,7 @@ const ActionButton = ({ href, icon, label, variant = 'primary' }) => {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`flex-1 flex items-center justify-center gap-2 rounded-full py-2.5 text-[11px] font-bold transition-all active:scale-[0.96] ${variants[variant]}`}
+      className={`flex flex-1 items-center justify-center gap-2 rounded-full py-2.5 text-[11px] font-bold transition-all active:scale-[0.96] ${variants[variant]}`}
     >
       <span>{label}</span>
       {icon}
@@ -60,11 +60,11 @@ export const MainProjectContent = ({ project, isLoading }) => {
   }
 
   return (
-    <article className="group relative flex h-full w-full flex-col bg-transparent overflow-hidden p-3 justify-between gap-3">
+    <article className="group relative flex h-full w-full flex-col justify-between gap-3 overflow-hidden bg-transparent p-3">
       {/* 1. Header (이미지 & 제목) - shrink를 적용하여 하단 영역 보호 */}
-      <section className="relative flex-[1.2] min-h-0 w-full overflow-hidden rounded-[24px] shrink">
+      <section className="relative min-h-0 w-full flex-[1.2] shrink overflow-hidden rounded-[24px]">
         <div className="absolute inset-x-0 top-0 z-30 bg-gradient-to-b from-black/90 via-black/40 to-transparent p-5 pt-6">
-          <h2 className="text-sm font-extrabold tracking-tight text-white md:text-xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] line-clamp-2">
+          <h2 className="line-clamp-2 text-sm font-extrabold tracking-tight text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] md:text-xl">
             {project.title}
           </h2>
         </div>
@@ -75,37 +75,37 @@ export const MainProjectContent = ({ project, isLoading }) => {
           fill
           priority
           sizes="(max-width: 768px) 100vw, 50vw"
-          className="object-cover brightness-[0.9] dark:brightness-[0.8] transition-transform duration-700 group-hover:scale-105"
+          className="object-cover brightness-[0.9] transition-transform duration-700 group-hover:scale-105 dark:brightness-[0.8]"
         />
       </section>
 
       {/* 2. Body (기간, 상세 정보 & 버튼) */}
-      <section className="flex flex-none flex-col gap-2 md:gap-3 px-1 pb-1">
+      <section className="flex flex-none flex-col gap-2 px-1 pb-1 md:gap-3">
         {/* 기간 (Period): sm, md에서도 노출 */}
-        <div className="flex items-center gap-2 shrink-0">
-          <span className="text-[9px] font-black uppercase tracking-[0.12em] text-apple-blue shrink-0">
+        <div className="flex shrink-0 items-center gap-2">
+          <span className="text-apple-blue shrink-0 text-[9px] font-black tracking-[0.12em] uppercase">
             Period
           </span>
           <div className="h-[1px] flex-1 bg-black/[0.05] dark:bg-white/[0.05]" />
-          <span className="text-neutral-500 dark:text-neutral-400 text-[10px] font-medium">
+          <span className="text-[10px] font-medium text-neutral-500 dark:text-neutral-400">
             {project.period}
           </span>
         </div>
 
         {/* 상세 설명 (Description): lg 이상에서만 노출 */}
-        <p className="hidden lg:block text-[12px] font-medium leading-relaxed text-neutral-600 dark:text-[#A1A1A6] line-clamp-2">
+        <p className="line-clamp-2 hidden text-[12px] leading-relaxed font-medium text-neutral-600 lg:block dark:text-[#A1A1A6]">
           {project.description}
         </p>
 
         {/* 기술 스택 (Tech Stack): lg 이상에서만 노출 */}
-        <div className="hidden lg:flex flex-wrap gap-1.5 content-start">
+        <div className="hidden flex-wrap content-start gap-1.5 lg:flex">
           {project.techStack?.map((tech) => (
             <TechBadge key={tech}>{tech}</TechBadge>
           ))}
         </div>
 
         {/* 버튼 그룹: 무조건 노출 */}
-        <footer className="flex gap-2 shrink-0 pt-1">
+        <footer className="flex shrink-0 gap-2 pt-1">
           {project.deployUrl && (
             <ActionButton href={project.deployUrl} icon={ICONS.EXTERNAL} label="Live" />
           )}
@@ -127,23 +127,23 @@ export const MainProjectContent = ({ project, isLoading }) => {
  * 3. Skeleton Component
  */
 const MainProjectSkeleton = () => (
-  <div className="flex h-full w-full flex-col p-3 justify-between gap-3 animate-pulse bg-transparent">
-    <div className="flex-[1.2] min-h-0 w-full bg-neutral-200 dark:bg-neutral-800/50 rounded-[24px]" />
+  <div className="flex h-full w-full animate-pulse flex-col justify-between gap-3 bg-transparent p-3">
+    <div className="min-h-0 w-full flex-[1.2] rounded-[24px] bg-neutral-200 dark:bg-neutral-800/50" />
 
     <div className="flex flex-none flex-col gap-3 px-1">
       {/* 기간 영역 스켈레톤 (항상 노출) */}
-      <div className="h-2 w-20 bg-neutral-200 dark:bg-neutral-800/50 rounded" />
+      <div className="h-2 w-20 rounded bg-neutral-200 dark:bg-neutral-800/50" />
 
       {/* 설명 & 스택 스켈레톤 (lg 이상에서만 노출) */}
-      <div className="hidden lg:flex flex-col gap-3">
-        <div className="h-3 w-full bg-neutral-200 dark:bg-neutral-800/50 rounded" />
-        <div className="h-3 w-2/3 bg-neutral-200 dark:bg-neutral-800/50 rounded" />
+      <div className="hidden flex-col gap-3 lg:flex">
+        <div className="h-3 w-full rounded bg-neutral-200 dark:bg-neutral-800/50" />
+        <div className="h-3 w-2/3 rounded bg-neutral-200 dark:bg-neutral-800/50" />
       </div>
 
       {/* 버튼 스켈레톤 (항상 노출) */}
       <div className="flex gap-2 pt-1">
-        <div className="h-9 flex-1 bg-neutral-200 dark:bg-neutral-800/50 rounded-full" />
-        <div className="h-9 flex-1 bg-neutral-200 dark:bg-neutral-800/50 rounded-full" />
+        <div className="h-9 flex-1 rounded-full bg-neutral-200 dark:bg-neutral-800/50" />
+        <div className="h-9 flex-1 rounded-full bg-neutral-200 dark:bg-neutral-800/50" />
       </div>
     </div>
   </div>

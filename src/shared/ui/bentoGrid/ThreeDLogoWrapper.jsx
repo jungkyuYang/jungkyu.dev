@@ -40,7 +40,7 @@ export const ThreeDLogoWrapper = ({ name = 'LOGO' }) => {
   };
 
   return (
-    <div className="relative w-full h-full flex items-center justify-center">
+    <div className="relative flex h-full w-full items-center justify-center">
       {/* 1. 쇼타임 레이어 (Portal) */}
       {createPortal(
         <AnimatePresence>
@@ -60,7 +60,7 @@ export const ThreeDLogoWrapper = ({ name = 'LOGO' }) => {
       {/* 2. 안착 레이어 (Local) */}
       <AnimatePresence>
         {!isInitial && (
-          <motion.div key="card-settled" className="w-full h-full flex items-center justify-center">
+          <motion.div key="card-settled" className="flex h-full w-full items-center justify-center">
             <ThreeDLogo name={name} options={activeOptions} isActive={false} />
           </motion.div>
         )}

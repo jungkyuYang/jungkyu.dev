@@ -154,7 +154,7 @@ export const VercelInfo = async ({ info }) => {
     ) : null;
 
   return (
-    <span className="text-zinc-500 text-xs flex items-center gap-1 me-2">
+    <span className="me-2 flex items-center gap-1 text-xs text-zinc-500">
       <span>{upgradeIcon}</span>
       <span>{frameworkIcon}</span>
       <span>{vercelIcon}</span>

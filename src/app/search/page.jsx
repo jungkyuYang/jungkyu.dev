@@ -11,16 +11,16 @@ export default async function SearchPage(props) {
   const username = customUsername || process.env.GITHUB_USERNAME;
 
   return (
-    <article className="flex-1 flex flex-col items-center justify-center w-full animate-fade-in">
+    <article className="animate-fade-in flex w-full flex-1 flex-col items-center justify-center">
       {/* 장식용 라인 */}
-      <div className="hidden w-full h-px animate-glow md:block animate-fade-left bg-linear-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" />
+      <div className="animate-glow animate-fade-left hidden h-px w-full bg-linear-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0 md:block" />
 
       {/* 검색 섹션 */}
-      <section className="z-10 py-10 w-full flex justify-center">
+      <section className="z-10 flex w-full justify-center py-10">
         <UserSearch user={username} />
       </section>
 
-      <div className="hidden w-full h-px animate-glow md:block animate-fade-right bg-linear-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" />
+      <div className="animate-glow animate-fade-right hidden h-px w-full bg-linear-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0 md:block" />
 
       <p className="mt-4 text-sm text-zinc-500">Type a GitHub username to see their portfolio</p>
 

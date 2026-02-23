@@ -17,12 +17,12 @@ export const FlipArticle = async ({ project }) => {
       title="Can't get traffic data for someone else's repo."
       className="flex items-center gap-1"
     >
-      <GoEyeClosed className="w-4 h-4" />
+      <GoEyeClosed className="h-4 w-4" />
     </span>
   );
   let alerts = (
     <span title="Can't get alerts data for someone else's repo.">
-      <GoDependabot className="w-4 h-4" />
+      <GoDependabot className="h-4 w-4" />
     </span>
   );
   const isGitHubUser = process.env.GITHUB_USERNAME === project.owner.login;
@@ -36,7 +36,7 @@ export const FlipArticle = async ({ project }) => {
         title="Unique repository visitors: Last 14 days / Today."
         className="flex items-center gap-1"
       >
-        <GoEye className="w-4 h-4" />{' '}
+        <GoEye className="h-4 w-4" />{' '}
         {Intl.NumberFormat('en-US', { notation: 'compact' }).format(sumUniques)}/
         {Intl.NumberFormat('en-US', { notation: 'compact' }).format(todayUniques)}
       </span>
@@ -64,7 +64,7 @@ export const FlipArticle = async ({ project }) => {
 
     alerts = (
       <span title={alertTitle} className="flex items-center gap-1">
-        <GoDependabot className="w-4 h-4 danger" fill={alertColor} />{' '}
+        <GoDependabot className="danger h-4 w-4" fill={alertColor} />{' '}
         {Intl.NumberFormat('en-US', { notation: 'compact' }).format(alertCountTotal)}
       </span>
     );
@@ -92,11 +92,11 @@ export const FlipArticle = async ({ project }) => {
   return (
     <CardFlipContainer
       front={
-        <article className="effect-glow bg-white dark:bg-zinc-900 p-4 md:p-8 flex flex-col justify-center items-center h-full">
+        <article className="effect-glow flex h-full flex-col items-center justify-center bg-white p-4 md:p-8 dark:bg-zinc-900">
           <span className="effect-glow-bar" />
           <div className="w-full">
-            <div className="flex justify-between gap-2 items-center w-full">
-              <span className="text-xs duration-1000 !text-zinc-600 dark:!text-zinc-200 group-hover:!text-black dark:group-hover:!text-white group-hover:border-zinc-200 drop-shadow-orange">
+            <div className="flex w-full items-center justify-between gap-2">
+              <span className="drop-shadow-orange text-xs !text-zinc-600 duration-1000 group-hover:border-zinc-200 group-hover:!text-black dark:!text-zinc-200 dark:group-hover:!text-white">
                 <time
                   dateTime={
                     project.customCreatedAt
@@ -125,12 +125,12 @@ export const FlipArticle = async ({ project }) => {
                   ).replace(/-/g, '.')}
                 </time>
               </span>
-              <span className="text-zinc-500 dark:text-zinc-400 text-xs flex items-center gap-1 ">
+              <span className="flex items-center gap-1 text-xs text-zinc-500 dark:text-zinc-400">
                 {project.vercel && (
                   <VercelInfo info={{ ...project.vercel, owner: project.owner }} />
                 )}
                 <span title="Total stars." className="flex items-center gap-1">
-                  <GoStar className="w-4 h-4" />{' '}
+                  <GoStar className="h-4 w-4" />{' '}
                   {Intl.NumberFormat('en-US', { notation: 'compact' }).format(
                     project.stargazers_count,
                   )}
@@ -139,26 +139,26 @@ export const FlipArticle = async ({ project }) => {
             </div>
 
             <h2
-              className="project-card-title z-20 text-2xl font-bold leading-tight duration-1000 lg:text-3xl text-black dark:text-white font-display cursor-pointer line-clamp-2 min-h-[2.6em] max-h-[2.6em] break-keep overflow-hidden"
+              className="project-card-title font-display z-20 line-clamp-2 max-h-[2.6em] min-h-[2.6em] cursor-pointer overflow-hidden text-2xl leading-tight font-bold break-keep text-black duration-1000 lg:text-3xl dark:text-white"
               title={`Click to view the ${project.homepage ? 'app' : 'repo'}.`}
             >
               <span>{project.title ?? project.name}</span>
             </h2>
-            <p className="z-20 mt-4 text-sm duration-1000 !text-zinc-700 dark:!text-zinc-400 group-hover:!text-black dark:group-hover:!text-zinc-200 line-clamp-5 min-h-[6.5rem] max-h-[6.5rem]">
+            <p className="z-20 mt-4 line-clamp-5 max-h-[6.5rem] min-h-[6.5rem] text-sm !text-zinc-700 duration-1000 group-hover:!text-black dark:!text-zinc-400 dark:group-hover:!text-zinc-200">
               {project.customDescription ?? project.description}
             </p>
             {project.techStack && project.techStack.length > 0 && (
               <TechStackCarousel techStack={project.techStack} techIcons={CONSTANTS.TECH_ICONS} />
             )}
-            <div className="flex justify-between items-center w-full mt-2 border-t-2 border-gray-700 border-opacity-50">
-              <span className="text-zinc-500 dark:text-zinc-400 text-xs flex items-center gap-1">
+            <div className="border-opacity-50 mt-2 flex w-full items-center justify-between border-t-2 border-gray-700">
+              <span className="flex items-center gap-1 text-xs text-zinc-500 dark:text-zinc-400">
                 {views} {alerts}
               </span>
               <span
-                className="text-zinc-500 dark:text-zinc-400 text-xs align-middle flex items-center gap-1"
+                className="flex items-center gap-1 align-middle text-xs text-zinc-500 dark:text-zinc-400"
                 title="GitHub repository link."
               >
-                <FaGithub className="w-4 h-4" />
+                <FaGithub className="h-4 w-4" />
                 <Link href={project.html_url} className="hover:text-blue-800">
                   {project.name}
                 </Link>

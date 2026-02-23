@@ -53,13 +53,13 @@ export default function TechStackCarousel({ techStack, techIcons }) {
 
   return (
     <div
-      className="mt-3 overflow-x-auto whitespace-nowrap flex-nowrap no-scrollbar"
+      className="no-scrollbar mt-3 flex-nowrap overflow-x-auto whitespace-nowrap"
       style={{ scrollbarWidth: 'none' }}
     >
       <Slider {...settings} style={{ width: 'max-content' }}>
         {techStack.map((tech, idx) => (
           <div key={tech + idx} style={{ width: 'auto' }}>
-            <span className="inline-flex items-center px-2 py-1 rounded bg-zinc-800 text-xs text-zinc-200 border border-zinc-700 mx-1 whitespace-nowrap">
+            <span className="mx-1 inline-flex items-center rounded border border-zinc-700 bg-zinc-800 px-2 py-1 text-xs whitespace-nowrap text-zinc-200">
               {techIcons?.[tech] || null}
               {tech}
             </span>

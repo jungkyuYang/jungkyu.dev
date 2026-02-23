@@ -75,7 +75,7 @@ export const AnalyticsWrapper = async () => {
   } catch (error) {
     console.error(error);
     return (
-      <div className="p-5 text-[10px] font-black opacity-50 uppercase tracking-widest">
+      <div className="p-5 text-[10px] font-black tracking-widest uppercase opacity-50">
         Network Stats Offline
       </div>
     );

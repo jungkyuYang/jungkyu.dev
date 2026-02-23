@@ -12,7 +12,7 @@ export const Analytics = ({ totalUsers, todayUsers, chartData }) => {
   }, []);
 
   if (!mounted) {
-    return <div className="w-full h-full animate-pulse rounded-3xl" />;
+    return <div className="h-full w-full animate-pulse rounded-3xl" />;
   }
 
   const dateTicks =
@@ -44,33 +44,33 @@ export const Analytics = ({ totalUsers, todayUsers, chartData }) => {
 
   return (
     // select-none으로 텍스트 드래그만 방지
-    <div className="w-full h-full flex flex-col p-4 md:p-6 overflow-hidden select-none">
+    <div className="flex h-full w-full flex-col overflow-hidden p-4 select-none md:p-6">
       {/* 헤더 */}
-      <header className="flex justify-between items-center shrink-0 min-w-0 gap-2 mb-2">
-        <div className="flex flex-col min-w-0">
-          <h3 className="text-[9px] md:text-[10px] font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-widest truncate">
+      <header className="mb-2 flex min-w-0 shrink-0 items-center justify-between gap-2">
+        <div className="flex min-w-0 flex-col">
+          <h3 className="truncate text-[9px] font-black tracking-widest text-zinc-400 uppercase md:text-[10px] dark:text-zinc-500">
             GA Audience Total
           </h3>
           <div className="flex items-baseline gap-1 font-black text-zinc-900 dark:text-zinc-100">
-            <span className="text-xl sm:text-2xl md:text-3xl lg:text-4xl tabular-nums tracking-tighter leading-none">
+            <span className="text-xl leading-none tracking-tighter tabular-nums sm:text-2xl md:text-3xl lg:text-4xl">
               {totalUsers?.toLocaleString() || 0}
             </span>
-            <span className="text-[8px] md:text-[9px] text-zinc-400 uppercase">Total</span>
+            <span className="text-[8px] text-zinc-400 uppercase md:text-[9px]">Total</span>
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-center bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20 shrink-0">
-          <span className="text-[7px] md:text-[8px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-tighter">
+        <div className="flex shrink-0 flex-col items-center justify-center rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1">
+          <span className="text-[7px] font-black tracking-tighter text-emerald-600 uppercase md:text-[8px] dark:text-emerald-400">
             Today
           </span>
-          <span className="text-xs sm:text-sm md:text-base font-black text-emerald-600 dark:text-emerald-400 tabular-nums leading-none">
+          <span className="text-xs leading-none font-black text-emerald-600 tabular-nums sm:text-sm md:text-base dark:text-emerald-400">
             +{todayUsers?.toLocaleString() || 0}
           </span>
         </div>
       </header>
 
       {/* 그래프 영역: cursor-default를 주어 클릭 가능한 요소가 아님을 암시 */}
-      <div className="flex-1 w-full min-h-0 flex flex-col relative cursor-default">
+      <div className="relative flex min-h-0 w-full flex-1 cursor-default flex-col">
         {chartData && chartData.length > 0 ? (
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={chartData} margin={{ top: 5, right: 0, left: 0, bottom: 5 }}>
@@ -100,9 +100,9 @@ export const Analytics = ({ totalUsers, todayUsers, chartData }) => {
                 cursor={{ stroke: '#10b981', strokeWidth: 1 }}
                 content={({ active, payload }) =>
                   active && payload?.length ? (
-                    <div className="bg-zinc-900/95 backdrop-blur-sm text-white p-2 px-3 rounded-lg shadow-2xl text-[10px] border border-zinc-800">
-                      <p className="font-bold opacity-50 mb-0.5">{payload[0].payload.date}</p>
-                      <p className="text-emerald-400 font-black text-sm">
+                    <div className="rounded-lg border border-zinc-800 bg-zinc-900/95 p-2 px-3 text-[10px] text-white shadow-2xl backdrop-blur-sm">
+                      <p className="mb-0.5 font-bold opacity-50">{payload[0].payload.date}</p>
+                      <p className="text-sm font-black text-emerald-400">
                         {payload[0].value.toLocaleString()}
                       </p>
                     </div>
@@ -122,21 +122,21 @@ export const Analytics = ({ totalUsers, todayUsers, chartData }) => {
             </AreaChart>
           </ResponsiveContainer>
         ) : (
-          <div className="flex-1 flex items-center justify-center text-[9px] font-black text-zinc-400 uppercase tracking-widest italic animate-pulse">
+          <div className="flex flex-1 animate-pulse items-center justify-center text-[9px] font-black tracking-widest text-zinc-400 uppercase italic">
             Syncing...
           </div>
         )}
       </div>
 
       {/* 푸터 */}
-      <footer className="flex items-center justify-between border-t border-zinc-100 dark:border-zinc-800/50 pt-3 shrink-0">
-        <div className="flex items-center gap-2 text-zinc-400 min-w-0">
-          <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981] shrink-0" />
-          <span className="text-[8px] font-black uppercase tracking-widest truncate">
+      <footer className="flex shrink-0 items-center justify-between border-t border-zinc-100 pt-3 dark:border-zinc-800/50">
+        <div className="flex min-w-0 items-center gap-2 text-zinc-400">
+          <div className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" />
+          <span className="truncate text-[8px] font-black tracking-widest uppercase">
             Google Analytics
           </span>
         </div>
-        <div className="flex items-center gap-1 text-[10px] font-black text-emerald-500 italic shrink-0">
+        <div className="flex shrink-0 items-center gap-1 text-[10px] font-black text-emerald-500 italic">
           <span className="opacity-50">TREND</span>
           <span>UP ↗</span>
         </div>
