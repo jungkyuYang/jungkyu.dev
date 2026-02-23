@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 
-import { ContactPage } from '@/pages/contact/ui/ContactPage';
-import { ContactSkeleton } from '@/pages/contact/ui/ContactSkeleton';
+import { ContactPage } from '@/views/contact/ui/ContactPage';
+import { ContactSkeleton } from '@/views/contact/ui/ContactSkeleton';
 
 export default async function Page(props) {
   const searchParams = await props.searchParams;
