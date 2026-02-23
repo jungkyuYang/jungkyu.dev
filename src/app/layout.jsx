@@ -6,6 +6,7 @@ import LocalFont from 'next/font/local';
 import data from '@/shared/constants/data.json';
 import AnalyticsProvider from '@/shared/providers/AnalyticsProvider';
 import ThemeClientProvider from '@/shared/providers/ThemeClientProvider';
+import { NavigationWidget } from '@/widgets';
 import { LayoutContainer } from '@/widgets/layout/ui/LayoutContainer';
 
 const username = process.env.GITHUB_USERNAME || data.githubUsername;
@@ -99,7 +100,7 @@ export default function RootLayout({ children }) {
       <body className="min-h-screen">
         <ThemeClientProvider>
           <AnalyticsProvider />
-          <LayoutContainer>{children}</LayoutContainer>
+          <LayoutContainer nav={<NavigationWidget />}>{children}</LayoutContainer>
         </ThemeClientProvider>
       </body>
     </html>

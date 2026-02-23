@@ -14,6 +14,7 @@ const TARGET_LAYERS = [
   'src/entities',
   'src/features',
   'src/widgets',
+  'src/views',
 ];
 
 // 정교한 export 감지를 위한 정규표현식 (인라인 및 하단 export 대응)
