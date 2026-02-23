@@ -1,6 +1,6 @@
 import { getRepos, getPinnedRepos, getVercelProjects } from '@/shared/api/data';
 import data from '@/shared/constants/data.json';
-import { Card } from '@/shared/ui/card';
+import { Card } from '@/shared/ui/Card';
 
 import { Article } from './article';
 import { FlipArticle } from './FlipArticle';
@@ -61,10 +61,10 @@ export default async function ProjectsComponent({ username }) {
       {heroProjects.length > 0 && (
         <section className="space-y-6">
           <div className="flex items-center gap-4">
-            <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100 font-display shrink-0">
+            <h2 className="font-display shrink-0 text-2xl font-bold text-zinc-800 dark:text-zinc-100">
               Featured Projects
             </h2>
-            <div className="w-full h-px bg-zinc-200 dark:bg-zinc-800" />
+            <div className="h-px w-full bg-zinc-200 dark:bg-zinc-800" />
           </div>
 
           <div className={gridLayout}>
@@ -81,10 +81,10 @@ export default async function ProjectsComponent({ username }) {
       {regularProjects.length > 0 && (
         <section className="space-y-6">
           <div className="flex items-center gap-4">
-            <h2 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100 font-display shrink-0">
+            <h2 className="font-display shrink-0 text-2xl font-bold text-zinc-800 dark:text-zinc-100">
               All Projects
             </h2>
-            <div className="w-full h-px bg-zinc-200 dark:bg-zinc-800" />
+            <div className="h-px w-full bg-zinc-200 dark:bg-zinc-800" />
           </div>
 
           <div className={gridLayout}>
@@ -99,7 +99,7 @@ export default async function ProjectsComponent({ username }) {
 
       {/* 데이터가 아예 없을 경우 예외 처리 */}
       {allProjectsCount === 0 && (
-        <div className="text-center py-20">
+        <div className="py-20 text-center">
           <p className="text-zinc-500">No projects found for {username}.</p>
         </div>
       )}

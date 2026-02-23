@@ -1,22 +1,16 @@
 @import 'tailwindcss';
-
 @config '../../tailwind.config.cjs';
 
+/* 1. 사용자님의 원본 배경색 설정 유지 */
 body {
   @apply bg-white text-black;
 }
+
 .dark body {
   @apply bg-zinc-900 text-white;
 }
 
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
+/* 2. 전역 설정 및 보더 호환성 */
 @layer base {
   *,
   ::after,
@@ -25,171 +19,57 @@ body {
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
   }
-}
 
-@layer base {
+  html {
+    @apply overflow-y-auto;
+    scrollbar-gutter: stable;
+  }
+
   .text-edge-outline {
     -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
   }
 }
 
-/* 글자에만 자연스러운 반짝임 효과 */
-.shimmer-text {
-  background: linear-gradient(90deg, #fff 0%, #fff 40%, #ffe066 50%, #fff 60%, #fff 100%);
-  background-size: 200% 100%;
-  animation: shimmer-text-move 2.2s infinite linear;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-@keyframes shimmer-text-move {
-  0% {
-    background-position: 200% 0;
+/* 3. 컴포넌트 효과 (config 시스템과 연결) */
+@layer components {
+  /* 글자 반짝임 */
+  .shimmer-text {
+    @apply animate-shimmer-text bg-clip-text text-transparent;
+    background-image: linear-gradient(90deg, #fff 0%, #fff 40%, #ffe066 50%, #fff 60%, #fff 100%);
+    background-size: 200% 100%;
   }
-  100% {
-    background-position: -200% 0;
-  }
-}
 
-/* 텍스트 위에만 자연스럽게 빛이 흐르는 효과 */
-.shimmer-once {
-  position: relative;
-  overflow: hidden;
-}
-.shimmer-once::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 40%;
-  background: linear-gradient(120deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 80%);
-  opacity: 0.7;
-  pointer-events: none;
-  filter: blur(2px);
-  animation: shimmer-once-move 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-@keyframes shimmer-once-move {
-  0% {
-    left: -40%;
-    opacity: 0;
+  /* 텍스트 위 빛 흐름 */
+  .shimmer-once {
+    @apply relative overflow-hidden;
   }
-  10% {
-    opacity: 1;
+  .shimmer-once::after {
+    content: '';
+    @apply animate-shimmer-once pointer-events-none absolute inset-0 w-[40%];
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 80%);
+    filter: blur(2px);
   }
-  40% {
-    opacity: 0.7;
-  }
-  80% {
-    opacity: 0.3;
-  }
-  100% {
-    left: 100%;
-    opacity: 0;
-  }
-}
 
-/* Project 카드의 title에만 Tailwind 그라디언트 유틸리티 무력화 */
-.project-card-title.to-blue-500 {
-  --tw-gradient-to: initial;
-  --tw-gradient-stops: initial;
-}
-.project-card-title.from-blue-500 {
-  --tw-gradient-from: initial;
-  --tw-gradient-stops: initial;
-}
-.project-card-title.via-blue-500 {
-  --tw-gradient-via: initial;
-  --tw-gradient-stops: initial;
-}
+  /* 빛 스치는 이펙트 */
+  .effect-glow {
+    @apply relative overflow-hidden;
+  }
+  .effect-glow-bar {
+    @apply animate-effect-glow pointer-events-none absolute inset-0 z-[2] h-[200%] w-full opacity-0;
+    /* 라이트/다크 모드별 색상 고정 (Original 수치) */
+    background-image: linear-gradient(to right bottom, #f4f4f5 0%, transparent 100%);
+  }
+  .dark .effect-glow-bar {
+    background-image: linear-gradient(to right bottom, #ffffff 0%, transparent 100%);
+  }
 
-/* 빛이 스치는 이펙트 (styled-components 없이) */
-.effect-glow {
-  position: relative;
-  overflow: hidden;
-}
-.effect-glow-bar {
-  width: 100%;
-  height: 200%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  background-image: linear-gradient(
-    to right bottom,
-    var(--glow-color, #f4f4f5) 0%,
-    transparent 100%
-  );
-  animation: effect-glow-anima 5s linear infinite;
-  pointer-events: none;
-  z-index: 2;
-}
-.dark .effect-glow-bar {
-  --glow-color: white;
-}
-@keyframes effect-glow-anima {
-  0% {
-    opacity: 0;
-    background-image: linear-gradient(
-      to right bottom,
-      var(--glow-color, #f4f4f5) 0%,
-      transparent 100%
-    );
+  /* 스켈레톤 (Original 색상 유지) */
+  .skeleton-shimmer {
+    @apply relative overflow-hidden bg-[#e5e7eb] dark:bg-[#27272a];
   }
-  2% {
-    opacity: 0.3;
-  }
-  5% {
-    opacity: 0.5;
-  }
-  10% {
-    opacity: 0.7;
-  }
-  11% {
-    opacity: 0.7;
-  }
-  15% {
-    opacity: 0.5;
-  }
-  20% {
-    opacity: 0;
-  }
-  40% {
-    opacity: 0;
-  }
-}
-
-.skeleton-shimmer {
-  position: relative;
-  overflow: hidden;
-  background: #e5e7eb;
-}
-.dark .skeleton-shimmer {
-  background: #27272a;
-}
-.skeleton-shimmer::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -150px;
-  width: 150px;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, #f4f4f5, transparent);
-  animation: shimmer 1.2s infinite;
-}
-@keyframes shimmer {
-  100% {
-    left: 100%;
-  }
-}
-
-html {
-  overflow-y: scroll;
-}
-
-@supports (scrollbar-gutter: stable) {
-  html {
-    overflow-y: auto;
-    scrollbar-gutter: stable;
+  .skeleton-shimmer::after {
+    content: '';
+    @apply animate-skeleton-shimmer absolute top-0 -left-[150px] h-full w-[150px];
+    background: linear-gradient(90deg, transparent, #f4f4f5, transparent);
   }
 }

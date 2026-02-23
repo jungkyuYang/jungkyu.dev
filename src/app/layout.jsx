@@ -1,5 +1,4 @@
 import './global.css';
-import { Suspense } from 'react';
 
 import { Inter } from 'next/font/google';
 import LocalFont from 'next/font/local';
@@ -7,19 +6,36 @@ import LocalFont from 'next/font/local';
 import data from '@/shared/constants/data.json';
 import AnalyticsProvider from '@/shared/providers/AnalyticsProvider';
 import ThemeClientProvider from '@/shared/providers/ThemeClientProvider';
-import { Navigation } from '@/shared/ui/Navigation';
+import { LayoutContainer } from '@/widgets/layout/ui/LayoutContainer';
 
 const username = process.env.GITHUB_USERNAME || data.githubUsername;
 const displayName = data.displayName || username;
 
 /** @type {import('next').Metadata} */
 export const metadata = {
+  // 1. 기본 도메인 설정 (상대 경로 이미지를 절대 경로로 자동 변환)
+  metadataBase: new URL('https://jungkyu-dev-pro.vercel.app'),
+
+  // 2. 제목 설정 (template 활용)
   title: {
-    default: `${username}'s portfolio`,
-    template: `%s | ${data.displayName}'s portfolio`, // 하위 페이지에서 %s 자리에 타이틀이 들어옵/니다.
+    default: `${displayName} | Frontend Developer Portfolio`,
+    template: `%s | ${displayName}`,
   },
-  description: `GitHub portfolio for ${displayName} - Explore my projects and tech stacks.`,
-  metadataBase: new URL('https://your-portfolio-domain.com'), // 실제 도메인이 있다면 설정 (OG 이미지 경로 기준)
+
+  // 3. 설명 및 키워드 (변수 활용)
+  description: `프론트엔드 개발자 ${displayName}의 포트폴리오입니다. Next.js로 구축된 다양한 프로젝트와 기술 스택을 확인해보세요.`,
+  keywords: [
+    displayName,
+    '프론트엔드 개발자',
+    'Frontend Engineer',
+    'React',
+    'Next.js',
+    '포트폴리오',
+  ],
+  authors: [{ name: displayName }],
+  creator: displayName,
+
+  // 4. 검색 엔진 수집 최적화
   robots: {
     index: true,
     follow: true,
@@ -31,27 +47,40 @@ export const metadata = {
       'max-snippet': -1,
     },
   },
+
+  // 5. 오픈 그래프 (SNS 공유 최적화)
   openGraph: {
-    title: `${displayName}'s Portfolio`,
-    description: `Software Engineer Portfolio built with Next.js`,
+    title: `${displayName}의 포트폴리오`,
+    description: `프론트엔드 개발자 ${displayName}의 프로젝트와 성장 기록을 소개합니다.`,
     url: './',
-    siteName: `${displayName}'s Portfolio`,
+    siteName: `${displayName} 포트폴리오`,
     locale: 'ko_KR',
     type: 'website',
+    images: [
+      {
+        url: '/images/og-image.png', // public 폴더에 위치 필요
+        width: 1200,
+        height: 630,
+        alt: `${displayName} 포트폴리오 대표 이미지`,
+      },
+    ],
   },
+
+  // 6. 트위터 설정
   twitter: {
     card: 'summary_large_image',
-    title: `${displayName}`,
-    description: `Check out my dev projects and activity.`,
+    title: displayName,
+    description: `${displayName}의 개발 프로젝트 및 활동을 확인하세요.`,
+    images: ['/images/og-image.png'],
   },
-  icons: [
-    {
-      url: '/favicon.ico',
-      rel: 'icon',
-      sizes: 'any',
-      type: 'image/svg+xml',
-    },
-  ],
+
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/images/favicon.svg', type: 'image/svg+xml' },
+    ],
+    apple: '/images/apple-touch-icon.png',
+  },
 };
 
 const inter = Inter({
@@ -66,34 +95,11 @@ const calSans = LocalFont({
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="ko"
-      className={[inter.variable, calSans.variable].join(' ')}
-      suppressHydrationWarning
-    >
-      <body
-        className={`
-          bg-white text-black dark:bg-black dark:text-white
-          h-screen overflow-hidden flex flex-col
-          ${process.env.NODE_ENV === 'development' ? 'debug-screens' : ''}
-        `}
-      >
+    <html lang="ko" className={`${inter.variable} ${calSans.variable}`} suppressHydrationWarning>
+      <body className="min-h-screen">
         <ThemeClientProvider>
           <AnalyticsProvider />
-
-          <header className="shrink-0">
-            <div className="mx-auto max-w-7xl px-6 lg:px-8">
-              <Suspense fallback={<div className="h-16 w-full" />}>
-                <Navigation />
-              </Suspense>
-            </div>
-          </header>
-
-          <main className="flex-1 min-h-0 overflow-y-auto">
-            <div className="mx-auto max-w-7xl px-6 lg:px-8 h-full flex flex-col pt-4">
-              {children}
-            </div>
-          </main>
+          <LayoutContainer>{children}</LayoutContainer>
         </ThemeClientProvider>
       </body>
     </html>

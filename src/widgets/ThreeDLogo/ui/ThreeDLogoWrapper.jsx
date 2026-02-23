@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 
-import { useTheme } from 'next-themes'; // next-themes 추가
+import { useTheme } from 'next-themes';
 import { createPortal } from 'react-dom';
 
 import { LogoStoreContext, createLogoStore, useLogoStore } from '@/shared/model/useLogoStore';
@@ -18,13 +18,16 @@ export const ThreeDLogoWrapper = ({ name = 'LOGO', options = {} }) => {
 };
 
 function LogoWrapperInner({ name, options }) {
-  const { resolvedTheme } = useTheme(); // 🚀 현재 테마 상태 가져오기
-  const [isInitial, setIsInitial] = useState(true);
+  const { resolvedTheme } = useTheme();
+
+  // 💡 1. 기본값을 false로 두어 인트로 모드를 비활성화합니다.
+  // 나중에 쓰고 싶을 때 true로 바꾸거나, URL 쿼리 등에 연동하면 됩니다.
+  const [isInitial, setIsInitial] = useState(false);
+
   const [isMobile, setIsMobile] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   const setLogoState = useLogoStore((s) => s.setLogoState);
-  const prevOptionsRef = useRef(null);
   const slotRef = useRef(null);
 
   useEffect(() => {
@@ -33,18 +36,21 @@ function LogoWrapperInner({ name, options }) {
     handleResize();
     window.addEventListener('resize', handleResize);
 
-    const timer = setTimeout(() => setIsInitial(false), 2500);
+    // 💡 2. 인트로 모드가 활성화(true)일 때만 타이머가 작동하도록 보호
+    let timer;
+    if (isInitial) {
+      timer = setTimeout(() => setIsInitial(false), 2500);
+    }
+
     return () => {
-      clearTimeout(timer);
+      if (timer) clearTimeout(timer);
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [isInitial]);
 
-  // ── 테마 및 옵션 동기화 로직 ────────────────────────────────
   useEffect(() => {
     if (!mounted) return;
 
-    // 🎨 테마에 따른 폰트 색상 결정
     const isDark = resolvedTheme === 'dark';
     const themeColor = isDark ? '#ffffff' : '#1a1a1a';
 
@@ -53,9 +59,10 @@ function LogoWrapperInner({ name, options }) {
       isActive: isInitial,
       options: {
         ...options,
-        color: themeColor, // 🚀 여기에 다크모드 색상 반영
+        color: themeColor,
         visuals: {
           ...options.visuals,
+          // 인트로 상태 여부에 따른 스케일 차등 적용
           scale: isInitial ? (isMobile ? 1.2 : 1.5) : isMobile ? 1.6 : 1.0,
           isInitial,
         },
@@ -66,28 +73,28 @@ function LogoWrapperInner({ name, options }) {
         },
       },
     });
-
-    prevOptionsRef.current = JSON.stringify(options);
-  }, [name, options, isInitial, isMobile, setLogoState, mounted, resolvedTheme]); // 🚀 resolvedTheme 의존성 추가
+  }, [name, options, isInitial, isMobile, setLogoState, mounted, resolvedTheme]);
 
   if (!mounted) return null;
 
+  // 💡 3. 로직은 그대로 유지하되, 상태에 따라 Portal 여부만 결정
   const logoContent = (
     <div
       className={`transition-all duration-1000 ease-in-out ${
         isInitial
-          ? 'fixed inset-0 z-[9999] bg-white/40 dark:bg-black/40 backdrop-blur-3xl flex items-center justify-center'
-          : 'absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none'
+          ? 'fixed inset-0 z-[9999] flex items-center justify-center bg-white/40 backdrop-blur-3xl dark:bg-black/40'
+          : 'pointer-events-none absolute inset-0 flex h-full w-full items-center justify-center'
       }`}
     >
-      <div className="w-full h-full relative flex items-center justify-center">
+      <div className="relative flex h-full w-full items-center justify-center">
         <ThreeDLogo />
       </div>
     </div>
   );
 
   return (
-    <div ref={slotRef} className="relative w-full h-full">
+    <div ref={slotRef} className="relative h-full w-full">
+      {/* isInitial이 true일 때만 Body로 쏴주고, 평소에는 제자리에 둡니다. */}
       {isInitial ? createPortal(logoContent, document.body) : logoContent}
     </div>
   );

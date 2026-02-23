@@ -1,4 +1,4 @@
-import { Card } from './card';
+import { Card } from './Card';
 import ProjectEmptySection from './ProjectEmptySection';
 
 export default function ProjectSection({
@@ -13,11 +13,11 @@ export default function ProjectSection({
   const chunkSize = Math.ceil(projects.length / 3);
   return (
     <section className={`mb-16 ${className}`}>
-      <h2 className="text-xl font-bold mb-4 text-black dark:text-white">{title}</h2>
+      <h2 className="mb-4 text-xl font-bold text-black dark:text-white">{title}</h2>
       {projects.length === 0 ? (
         <ProjectEmptySection message={emptyMessage} />
       ) : (
-        <div className="grid grid-cols-1 gap-4 mx-auto lg:mx-0 md:grid-cols-3">
+        <div className="mx-auto grid grid-cols-1 gap-4 md:grid-cols-3 lg:mx-0">
           {[0, 1, 2].map((i) => (
             <div className="grid grid-cols-1 gap-4" key={i}>
               {projects.slice(chunkSize * i, chunkSize * (i + 1)).map((repo) => (
