@@ -1,5 +1,7 @@
 import './global.css';
 
+import { Suspense } from 'react';
+
 import { Inter } from 'next/font/google';
 import LocalFont from 'next/font/local';
 
@@ -100,7 +102,15 @@ export default function RootLayout({ children }) {
       <body className="min-h-screen">
         <ThemeClientProvider>
           <AnalyticsProvider />
-          <LayoutContainer nav={<NavigationWidget />}>{children}</LayoutContainer>
+          <LayoutContainer
+            nav={
+              <Suspense fallback={null}>
+                <NavigationWidget />
+              </Suspense>
+            }
+          >
+            {children}
+          </LayoutContainer>
         </ThemeClientProvider>
       </body>
     </html>
