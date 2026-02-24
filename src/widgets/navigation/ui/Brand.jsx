@@ -3,15 +3,20 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { cn } from '@/shared/lib/utils'; // 프로젝트의 cn 유틸리티 경로
+
 import { useNavContext } from './NavigationContext'; // 컨텍스트 훅 임포트
 
-export const Brand = ({ size = 32 }) => {
+export const Brand = ({ size = 32, className }) => {
   const { getHref, avatarUrl, username } = useNavContext();
 
   return (
     <Link
       href={getHref('/')}
-      className="group flex shrink-0 items-center gap-3 transition-opacity hover:opacity-80"
+      className={cn(
+        'group flex shrink-0 items-center gap-3 transition-opacity hover:opacity-80',
+        className, // 부모가 주는 md:order-2 등을 수용
+      )}
     >
       <div className="flex items-center gap-3">
         <Image

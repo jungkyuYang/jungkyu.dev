@@ -1,31 +1,33 @@
+// src/widgets/navigation/ui/DarkModeToggle.jsx
 'use client';
 
-import { useEffect, useState } from 'react';
-
-import { useTheme } from 'next-themes';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
 
-export const DarkModeToggle = () => {
-  const { resolvedTheme, setTheme } = useTheme();
-  const [isMounted, setIsMounted] = useState(false);
+import { cn } from '@/shared/lib/utils';
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+import { useThemeMode } from '../lib/useThemeMode'; // 만든 훅 가져오기
 
-  if (!isMounted)
-    return (
-      <div className="h-10 w-10 rounded-full bg-zinc-100/50 p-2 opacity-0 dark:bg-zinc-800/50" />
-    );
+export const DarkModeToggle = ({ className }) => {
+  const { isDark, toggleTheme, isMounted } = useThemeMode();
 
   return (
     <button
-      onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-      className="rounded-full p-2 text-2xl text-zinc-900 transition-colors hover:bg-zinc-200/30 dark:text-zinc-100 dark:hover:bg-zinc-700/40"
-      aria-label="Toggle Dark Mode"
+      onClick={toggleTheme}
       type="button"
+      aria-label="Toggle Dark Mode"
+      className={cn(
+        'rounded-full p-2 text-2xl text-zinc-900 transition-colors hover:bg-zinc-200/30 dark:text-zinc-100 dark:hover:bg-zinc-700/40',
+        'flex shrink-0 items-center justify-center',
+        className,
+      )}
     >
-      {resolvedTheme === 'dark' ? <MdDarkMode /> : <MdLightMode />}
+      {!isMounted ? (
+        <div className="h-6 w-6" /> // 아이콘 크기만큼 빈 공간 확보
+      ) : isDark ? (
+        <MdDarkMode />
+      ) : (
+        <MdLightMode />
+      )}
     </button>
   );
 };
