@@ -9,25 +9,23 @@ import { TryYourself } from './TryYourself';
 
 export const Navigation = () => {
   return (
-    <Layout.Root>
-      <Layout.LeftSide>
+    <Layout.NavigationRoot>
+      <Layout.NavigationLeftSide>
         <Brand />
-        {/* 모바일 전용 토글 영역 */}
-        <Layout.ActionArea isMobileOnly>
+        <Layout.NavigationActionArea isMobileOnly>
           <DarkModeToggle />
-        </Layout.ActionArea>
-      </Layout.LeftSide>
+        </Layout.NavigationActionArea>
+      </Layout.NavigationLeftSide>
 
-      <Layout.RightSide>
+      <Layout.NavigationRightSide>
         <TryYourself />
-        <Layout.MenuList>
+        <Layout.NavigationMenuList>
           <NavLinks />
-          {/* 데스크탑 전용 토글 영역 */}
-          <Layout.ActionArea>
+          <Layout.NavigationActionArea>
             <DarkModeToggle />
-          </Layout.ActionArea>
-        </Layout.MenuList>
-      </Layout.RightSide>
-    </Layout.Root>
+          </Layout.NavigationActionArea>
+        </Layout.NavigationMenuList>
+      </Layout.NavigationRightSide>
+    </Layout.NavigationRoot>
   );
 };
