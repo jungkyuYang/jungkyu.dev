@@ -1,8 +1,10 @@
+'use client';
+
 import Link from 'next/link';
 
 import { cn } from '@/shared/lib/utils';
 
-import { useNavContext } from './NavigationContext';
+import { useNavContext } from '../model/NavigationContext';
 
 export const TryYourself = ({ className }) => {
   const { tryYourself } = useNavContext();

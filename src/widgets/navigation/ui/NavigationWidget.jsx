@@ -1,8 +1,8 @@
 'use client';
 
 import { Navigation } from './Navigation';
-import { NavigationProvider } from './NavigationContext';
 import { useNavigation } from '../lib/useNavigation';
+import { NavigationProvider } from '../model/NavigationContext';
 
 export const NavigationWidget = () => {
   const navData = useNavigation();

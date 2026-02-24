@@ -4,7 +4,7 @@ import { FaGithub, FaInstagram, FaLinkedin, FaCheck } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import { GoMail, GoPerson } from 'react-icons/go';
 
-import { useCopy } from '@/shared/hooks/useCopy';
+import { useCopyToClipboard } from '@/shared/lib/hooks/use-copy-to-clipboard';
 
 const IconMap = {
   mail: <GoMail size={22} />,
@@ -16,7 +16,7 @@ const IconMap = {
 };
 
 export const Contact = ({ socialLinks = [] }) => {
-  const { isCopied, copy } = useCopy();
+  const { isCopied, copy } = useCopyToClipboard();
 
   const handleAction = (e, item) => {
     if (item.name === 'Email') {

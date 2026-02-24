@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 import { cn } from '@/shared/lib/utils'; // 프로젝트의 cn 유틸리티 경로
 
-import { useNavContext } from './NavigationContext'; // 컨텍스트 훅 임포트
+import { useNavContext } from '../model/NavigationContext'; // 컨텍스트 훅 임포트
 
 export const Brand = ({ size = 32, className }) => {
   const { getHref, avatarUrl, username } = useNavContext();

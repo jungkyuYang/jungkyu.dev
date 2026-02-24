@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 
-import useOutsideClick from '@/shared/hooks/useOutsideClick';
+import useOutsideClick from '@/shared/lib/hooks/useOutsideClick';
 
 export default function CardFlipContainer({ front, back }) {
   const [isFlipped, setIsFlipped] = useState(false);

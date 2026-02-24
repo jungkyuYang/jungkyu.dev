@@ -1,7 +1,6 @@
 export * from './Brand';
 export * from './DarkModeToggle';
 export * from './Navigation';
-export * from './NavigationContext';
 export * from './NavigationLayouts';
 export * from './NavigationWidget';
 export * from './NavLinks';

@@ -5,10 +5,12 @@ import { MdDarkMode, MdLightMode } from 'react-icons/md';
 
 import { cn } from '@/shared/lib/utils';
 
-import { useThemeMode } from '../lib/useThemeMode'; // 만든 훅 가져오기
+import { useThemeMode } from '../lib/useThemeMode';
 
 export const DarkModeToggle = ({ className }) => {
   const { isDark, toggleTheme, isMounted } = useThemeMode();
+
+  const icon = !isMounted || !isDark ? <MdLightMode /> : <MdDarkMode />;
 
   return (
     <button
@@ -21,13 +23,7 @@ export const DarkModeToggle = ({ className }) => {
         className,
       )}
     >
-      {!isMounted ? (
-        <div className="h-6 w-6" /> // 아이콘 크기만큼 빈 공간 확보
-      ) : isDark ? (
-        <MdDarkMode />
-      ) : (
-        <MdLightMode />
-      )}
+      {icon}
     </button>
   );
 };
