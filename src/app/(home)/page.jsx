@@ -1,7 +1,7 @@
 import { HomePage } from '@/views/home/ui/HomePage';
 
-export default async function Page(props) {
-  const searchParams = await props.searchParams;
+export default async function Page({ searchParams }) {
+  const { username } = await searchParams;
 
-  return <HomePage customUsername={searchParams.customUsername} />;
+  return <HomePage username={username} />;
 }

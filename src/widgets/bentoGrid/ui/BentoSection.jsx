@@ -14,7 +14,7 @@ import { MainProjectContent } from '@/shared/ui/bentoGrid/MainProjectContent';
 
 import { ProjectCard } from './ProjectCard';
 
-export const BentoSection = ({ username, projects }) => {
+export const BentoSection = ({ username, projects = [] }) => {
   const [main, second] = projects;
 
   return (

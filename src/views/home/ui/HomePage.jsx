@@ -1,13 +1,28 @@
-// src/pages/home/ui/HomePage.jsx
 import { getUser } from '@/shared/api/data';
 import data from '@/shared/constants/data.json';
+import { toUpper } from '@/shared/lib/format'; // 가공용 헬퍼 함수 가정
 
 import { HomeView } from './HomeView';
 
-export async function HomePage({ customUsername }) {
-  const username = customUsername || process.env.GITHUB_USERNAME || data.githubUsername;
-  const response = await getUser(username);
+export async function HomePage({ username }) {
+  const finalUsername = username || process.env.GITHUB_USERNAME || data.githubUsername;
+  const user = await getUser(finalUsername);
 
-  // 💡 가공하지 않고 response(GitHub 데이터)를 그대로 넘깁니다.
-  return <HomeView user={response} projects={data.projects} username={username} />;
+  const bentoUsername = toUpper(finalUsername);
+
+  const pageData = {
+    Profile: {
+      username: finalUsername,
+      user,
+    },
+    ProfileActivity: {
+      username: finalUsername,
+    },
+    BentoSection: {
+      username: bentoUsername,
+      projects: data.projects,
+    },
+  };
+
+  return <HomeView data={pageData} />;
 }

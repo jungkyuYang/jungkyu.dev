@@ -4,10 +4,10 @@ import Link from 'next/link';
 
 import { cn } from '@/shared/lib/utils';
 
-import { useNavContext } from '../model/NavigationContext';
+import { useNavigationContext } from '../model/NavigationContext';
 
 export const NavLinks = ({ className }) => {
-  const { menuItems, getHref } = useNavContext();
+  const { menuItems, getHref } = useNavigationContext();
 
   return (
     <>
