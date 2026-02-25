@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 /**
- * 자동 생성 대상 레이어 설정 (이미지에서 확인된 shared 세그먼트 포함)
+ * 자동 생성 대상 레이어 설정
  */
 const TARGET_LAYERS = [
   'src/shared/ui',
@@ -17,21 +17,36 @@ const TARGET_LAYERS = [
   'src/views',
 ];
 
-// 정교한 export 감지를 위한 정규표현식 (인라인 및 하단 export 대응)
+/**
+ * ✅ 자동 생성에서 제외할 경로 (SSR 충돌 및 라이브러리 의존성 문제 방지)
+ * 해당 폴더의 index.js는 수동으로 관리하거나 생성을 건너뜁니다.
+ */
+const IGNORE_PATHS = [
+  'src/widgets/pdf-preview/ui', // pdfjs-dist(canvas) 에러 방지를 위해 수동 관리
+];
+
+// 정교한 export 감지를 위한 정규표현식
 const exportRegex = /^export\s+(const|let|var|function|class|default|{)/m;
 
 function generateIndex(dir) {
+  // 1. 현재 경로가 제외 대상인지 확인
+  const relativePath = path.relative(process.cwd(), dir).replace(/\\/g, '/');
+  if (IGNORE_PATHS.includes(relativePath)) {
+    console.log(`⏩ Skipped (Ignore List): ${relativePath}`);
+    return;
+  }
+
   if (!fs.existsSync(dir)) return;
 
   const items = fs.readdirSync(dir, { withFileTypes: true });
   let exportLines = [];
-  const seenExports = new Set(); // 한 폴더 내 중복 export 방지
+  const seenExports = new Set(); // 중복 export 방지
 
   for (const item of items) {
     const fullPath = path.join(dir, item.name);
 
     if (item.isDirectory()) {
-      // 1. 하위 폴더 재귀 탐색
+      // 하위 폴더 재귀 탐색
       generateIndex(fullPath);
 
       // 하위 폴더에 index.js가 생성되었다면 현재 index에서 통합 export
@@ -43,7 +58,7 @@ function generateIndex(dir) {
         }
       }
     } else if (item.isFile() && /\.(js|jsx|ts|tsx)$/.test(item.name) && item.name !== 'index.js') {
-      // 2. 파일 내용 분석 (비공개 파일 필터링)
+      // 파일 내용 분석
       const content = fs.readFileSync(fullPath, 'utf8');
 
       if (exportRegex.test(content)) {
@@ -58,12 +73,11 @@ function generateIndex(dir) {
     }
   }
 
-  // 3. 파일 쓰기 (변화가 있을 때만 실행하여 빌드 최적화)
+  // 2. 파일 쓰기 (변화가 있을 때만 실행)
   if (exportLines.length > 0) {
     const finalContent = exportLines.join('\n') + '\n';
     const indexPath = path.join(dir, 'index.js');
 
-    // 기존 파일과 내용이 다를 때만 씀 (파일 수정 시간 보존)
     if (!fs.existsSync(indexPath) || fs.readFileSync(indexPath, 'utf8') !== finalContent) {
       fs.writeFileSync(indexPath, finalContent);
       console.log(`✅ Generated: ${path.relative(process.cwd(), indexPath)}`);

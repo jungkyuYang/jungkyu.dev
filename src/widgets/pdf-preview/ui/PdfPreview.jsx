@@ -1,4 +1,3 @@
-// src/widgets/project/ui/ProjectPdf.jsx
 'use client';
 
 import { PdfActions } from './PdfActions';

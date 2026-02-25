@@ -1,4 +1,3 @@
-// src/widgets/navigation/ui/Navigation.jsx
 'use client';
 
 import { Brand } from './Brand';
