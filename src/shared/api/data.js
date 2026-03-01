@@ -352,17 +352,26 @@ export const checkAppJsxExistence = unstable_cache(
   { revalidate: HOURS_1 },
 );
 
-export async function getOrgRepos(orgName) {
+export const getOrgRepos = cache(async (orgName) => {
+  const timerLabel = `getOrgRepos:${orgName}`;
+
   console.log('Fetching repos for organization:', orgName);
-  console.time('getOrgRepos:' + orgName);
-  const res = await fetch(`https://api.github.com/orgs/${orgName}/repos`, {
-    headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
-    next: { revalidate: HOURS_1 },
-  });
-  if (!res.ok) {
-    console.error('GitHub API returned an error for org repos.', res.status, res.statusText);
-    return [];
+  console.time(timerLabel);
+
+  try {
+    const res = await fetch(`https://api.github.com/orgs/${orgName}/repos`, {
+      headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
+      next: { revalidate: HOURS_1 }, // 3600초 등 정의된 상수 사용
+    });
+
+    if (!res.ok) {
+      console.error('GitHub API returned an error for org repos.', res.status, res.statusText);
+      return [];
+    }
+
+    return await res.json();
+  } finally {
+    // 🌟 에러가 나더라도 타이머는 종료되도록 finally에서 처리
+    console.timeEnd(timerLabel);
   }
-  console.timeEnd('getOrgRepos:' + orgName);
-  return res.json();
-}
+});

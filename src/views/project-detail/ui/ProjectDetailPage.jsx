@@ -1,4 +1,3 @@
-// src/pages/project-detail/ui/ProjectDetailPage.jsx
 import data from '@/shared/constants/data.json';
 
 import { ProjectDetailView } from './ProjectDetailView';

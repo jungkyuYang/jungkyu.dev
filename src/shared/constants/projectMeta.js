@@ -71,3 +71,12 @@ export const PROJECT_META = {
     ],
   },
 };
+
+export const TEAM_PROJECT_KEYWORDS = [
+  '투두리스트',
+  '무한스크롤',
+  '캐싱',
+  '직원관리',
+  '학원운영',
+  '영상 공유',
+];

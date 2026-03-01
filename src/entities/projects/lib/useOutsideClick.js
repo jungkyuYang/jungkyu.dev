@@ -1,18 +1,28 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
-// handler는 useCallback 등으로 메모이제이션해서 전달하는 것이 불필요한 리스너 재등록을 막을 수 있습니다.
-export default function useOutsideClick(ref, handler, enabled = true) {
+export function useOutsideClick(ref, handler, enabled = true) {
+  const handlerRef = useRef(handler);
+
+  useEffect(() => {
+    handlerRef.current = handler;
+  }, [handler]);
+
   useEffect(() => {
     if (!enabled) return;
+
     const listener = (event) => {
+      // ref가 없거나 클릭된 타겟이 ref 내부에 있다면 무시
       if (!ref.current || ref.current.contains(event.target)) return;
-      handler(event);
+
+      handlerRef.current(event);
     };
+
     document.addEventListener('mousedown', listener);
     document.addEventListener('touchstart', listener, { passive: true });
+
     return () => {
       document.removeEventListener('mousedown', listener);
       document.removeEventListener('touchstart', listener, { passive: true });
     };
-  }, [ref, handler, enabled]);
+  }, [ref, enabled]); // 이제 handler가 바뀌어도 리스너가 재등록되지 않음
 }

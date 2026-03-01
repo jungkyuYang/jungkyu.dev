@@ -1,54 +1,61 @@
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 
 import data from '@/shared/constants/data.json';
-import OrgProjects from '@/shared/ui/OrgProjects';
-import ProjectsComponent from '@/shared/ui/projects';
+import { PageHeader } from '@/shared/ui/PageHeader';
+import { WidgetErrorBoundary } from '@/shared/ui/WidgetErrorBoundary';
+import { FixedProjectsWidget, FixedProjectsSkeleton } from '@/widgets/fixed-projects';
+import { PersonalProjectsWidget, PersonalProjectsSkeleton } from '@/widgets/personal-projects';
+import { TeamProjectsWidget, TeamProjectsSkeleton } from '@/widgets/team-projects';
 
-export default async function ProjectsPage(props) {
-  const searchParams = await props.searchParams;
-  const { customUsername } = searchParams;
-  const username = customUsername || process.env.GITHUB_USERNAME || data.githubUsername;
-  const isJungkyu = username === 'jungkyuYang';
+const CONSTANTS = {
+  TITLE: 'Projects',
+  DEFAULT_DESCRIPTION: '그동안 쌓아온 경험과 고민이 담긴 프로젝트들을 소개합니다.',
+  USER_DESCRIPTION: (name) => `${name}님의 프로젝트 목록입니다.`,
+};
 
-  /**
-   * 스켈레톤 UI (시각적 일관성 유지)
-   */
-  function ProjectsSkeleton() {
-    return (
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:mx-0">
-        {[0, 1, 2].map((i) => (
-          <div className="grid grid-cols-1 gap-4" key={i}>
-            {[...Array(2)].map((_, j) => (
-              <div
-                key={j}
-                className="flex h-full min-h-[260px] animate-pulse flex-col rounded-2xl border border-zinc-200 bg-zinc-50/50 p-4 md:p-8 dark:border-zinc-800 dark:bg-zinc-900/50"
-              />
-            ))}
-          </div>
-        ))}
-      </div>
-    );
-  }
+export default async function ProjectsPage({ searchParams }) {
+  const { username } = await searchParams;
+  const targetUsername = username || data.githubUsername;
+
+  const isJungkyu = !username || username === data.githubUsername;
+
+  const displayDescription = username
+    ? CONSTANTS.USER_DESCRIPTION(username)
+    : CONSTANTS.DEFAULT_DESCRIPTION;
 
   return (
-    // 1. 페이지 본문을 대표하는 시맨틱 태그 <article>
     <article className="animate-fade-in flex-1">
-      {/* 2. 제목 및 설명 섹션 (단순 div로 처리) */}
-      <section className="mb-12 max-w-2xl">
-        <h2 className="text-3xl font-bold tracking-tight !text-zinc-900 sm:text-4xl dark:!text-zinc-100">
-          Projects
-        </h2>
-        <p className="mt-4 leading-relaxed !text-zinc-500 dark:!text-zinc-400">
-          {customUsername ? `${customUsername}'s projects` : data.description}
-        </p>
-      </section>
+      <PageHeader title={CONSTANTS.TITLE} description={displayDescription} />
 
-      {/* 3. 프로젝트 리스트 섹션 */}
-      <section>
-        <Suspense fallback={<ProjectsSkeleton />}>
-          {isJungkyu ? <OrgProjects /> : <ProjectsComponent username={username} />}
-        </Suspense>
-      </section>
+      <main className="flex flex-col gap-12 md:gap-8">
+        {isJungkyu ? (
+          <>
+            <WidgetErrorBoundary title="Main Focus">
+              <Suspense fallback={<FixedProjectsSkeleton />}>
+                <FixedProjectsWidget username={targetUsername} />
+              </Suspense>
+            </WidgetErrorBoundary>
+
+            <WidgetErrorBoundary title="Team Projects">
+              <Suspense fallback={<TeamProjectsSkeleton />}>
+                <TeamProjectsWidget username={targetUsername} />
+              </Suspense>
+            </WidgetErrorBoundary>
+
+            <WidgetErrorBoundary title="Personal Projects">
+              <Suspense fallback={<PersonalProjectsSkeleton />}>
+                <PersonalProjectsWidget username={targetUsername} />
+              </Suspense>
+            </WidgetErrorBoundary>
+          </>
+        ) : (
+          <WidgetErrorBoundary title="All Projects">
+            <Suspense fallback={<FixedProjectsSkeleton />}>
+              <FixedProjectsWidget username={targetUsername} isPublic={true} />
+            </Suspense>
+          </WidgetErrorBoundary>
+        )}
+      </main>
     </article>
   );
 }

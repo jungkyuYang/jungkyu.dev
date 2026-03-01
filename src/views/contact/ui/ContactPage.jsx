@@ -5,7 +5,6 @@ import { ContactView } from './ContactView';
 import { parseContacts } from '../lib/parse-contacts'; // 가공 로직 임포트
 
 export async function ContactPage({ username: propUsername }) {
-  // [1] 데이터 확보
   const targetUsername = propUsername || process.env.GITHUB_USERNAME || data.githubUsername;
 
   const [user, githubSocials] = await Promise.all([
@@ -13,7 +12,7 @@ export async function ContactPage({ username: propUsername }) {
     getSocialAccounts(targetUsername),
   ]);
 
-  const email = user.email || data.email;
+  const email = user.email;
 
   const parsedItems = parseContacts(targetUsername, email, githubSocials);
 
