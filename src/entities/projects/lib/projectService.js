@@ -63,7 +63,7 @@ export const getProcessedProjects = async (username) => {
     });
 
     // 개인 프로젝트 (data.json 기준)
-    const personalProjects = data.projects || [];
+    const personalProjects = data.personal || [];
 
     return {
       fixedProjects,
