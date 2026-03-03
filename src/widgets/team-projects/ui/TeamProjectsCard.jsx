@@ -5,7 +5,7 @@ import ProjectCardEntity from '@/entities/projects/ui/ProjectCardEntity';
 import { useTeamProjectsContext } from '../model/TeamProjectsContext';
 
 export const TeamProjectsCard = ({ data }) => {
-  const { techIcons, label, subLabel } = useTeamProjectsContext();
+  const { label, subLabel } = useTeamProjectsContext();
 
   return (
     <ProjectCardEntity
@@ -16,7 +16,6 @@ export const TeamProjectsCard = ({ data }) => {
       }}
       buttons={data.buttons}
       backTitle={data.backTitle}
-      techIcons={techIcons}
       header={<CardHeader label={label} language={data.displayLanguage} />}
       footer={<CardFooter subLabel={subLabel} year={data.displayYear} />}
     />

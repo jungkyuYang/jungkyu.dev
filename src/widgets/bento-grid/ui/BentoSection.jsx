@@ -1,16 +1,16 @@
 import { Suspense } from 'react';
 
-import { AnalyticsWrapper } from '@shared/ui/bentoGrid/AnalyticsWrapper';
-import { ContactSkeleton } from '@shared/ui/bentoGrid/Contact';
-import { ContactWrapper } from '@shared/ui/bentoGrid/ContactWrapper';
-import { GitHubStatsSkeleton } from '@shared/ui/bentoGrid/GitHubStats';
-import { GitHubStatsWrapper } from '@shared/ui/bentoGrid/GitHubStatsWrapper';
-import { TechStackWrapper } from '@shared/ui/bentoGrid/TechStackWrapper';
 import { ThreeDLogoWrapper } from '@widgets/ThreeDLogo/ui/ThreeDLogoWrapper';
 
-import { BentoCard } from '@/shared/ui/bentoGrid/BentoCard';
-import { BentoGrid } from '@/shared/ui/bentoGrid/BentoGrid';
-import { MainProjectContent } from '@/shared/ui/bentoGrid/MainProjectContent';
+import { AnalyticsWrapper } from '@/widgets/bento-grid/ui/AnalyticsWrapper';
+import { BentoCard } from '@/widgets/bento-grid/ui/BentoCard';
+import { BentoGrid } from '@/widgets/bento-grid/ui/BentoGrid';
+import { ContactSkeleton } from '@/widgets/bento-grid/ui/Contact';
+import { ContactWrapper } from '@/widgets/bento-grid/ui/ContactWrapper';
+import { GitHubStatsSkeleton } from '@/widgets/bento-grid/ui/GitHubStats';
+import { GitHubStatsWrapper } from '@/widgets/bento-grid/ui/GitHubStatsWrapper';
+import { MainProjectContent } from '@/widgets/bento-grid/ui/MainProjectContent';
+import { TechStackWrapper } from '@/widgets/bento-grid/ui/TechStackWrapper';
 
 import { ProjectCard } from './ProjectCard';
 

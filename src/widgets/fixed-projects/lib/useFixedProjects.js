@@ -2,8 +2,6 @@
 
 import { useMemo } from 'react';
 
-import * as CONSTANTS from '@/shared/constants';
-
 const getYearFromDate = (dateString) => {
   if (!dateString) return '';
   const date = new Date(dateString);
@@ -17,7 +15,6 @@ export const useFixedProjects = (data = {}, isInternal = false) => {
     title = 'Main Projects',
     label = 'Featured Project',
     subLabel = 'Core Architecture',
-    techIcons = CONSTANTS.TECH_ICONS,
     githubLabel = 'GitHub',
     demoLabel = 'Live Demo',
     pdfLabel = 'PDF',
@@ -62,14 +59,12 @@ export const useFixedProjects = (data = {}, isInternal = false) => {
       title,
       label,
       subLabel,
-      techIcons,
     };
   }, [
     rawProjects,
     title,
     label,
     subLabel,
-    techIcons,
     githubLabel,
     demoLabel,
     backTitle,

@@ -6,8 +6,7 @@ import ProjectCardEntity from '@/entities/projects/ui/ProjectCardEntity';
 import { usePersonalProjectsContext } from '../model/PersonalProjectsContext';
 
 export const PersonalProjectsCard = ({ data }) => {
-  // 🌟 Personal Context 사용
-  const { techIcons, label, subLabel } = usePersonalProjectsContext();
+  const { label, subLabel } = usePersonalProjectsContext();
 
   return (
     <ProjectCardEntity
@@ -18,7 +17,6 @@ export const PersonalProjectsCard = ({ data }) => {
       }}
       buttons={data.buttons}
       backTitle={data.backTitle}
-      techIcons={techIcons}
       header={<CardHeader label={label} language={data.displayLanguage} />}
       footer={<CardFooter subLabel={subLabel} year={data.displayYear} />}
     />

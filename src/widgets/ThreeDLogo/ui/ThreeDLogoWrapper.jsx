@@ -6,7 +6,7 @@ import { useTheme } from 'next-themes';
 import { createPortal } from 'react-dom';
 
 import { LogoStoreContext, createLogoStore, useLogoStore } from '@/shared/model/useLogoStore';
-import { ThreeDLogo } from '@/shared/ui/bentoGrid/ThreeDLogo';
+import { ThreeDLogo } from '@/widgets/bento-grid/ui/ThreeDLogo';
 
 export const ThreeDLogoWrapper = ({ name = 'LOGO', options = {} }) => {
   const [store] = useState(() => createLogoStore(name));

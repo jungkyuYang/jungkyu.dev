@@ -1,4 +1,4 @@
-export * from './bentoGrid';
+export * from './bento-grid';
 export * from './fixed-projects';
 export * from './layout';
 export * from './navigation';

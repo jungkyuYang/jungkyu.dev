@@ -2,7 +2,7 @@
 import { getUser } from '@/shared/api/data';
 import data from '@/shared/constants/data.json';
 import { toUpper } from '@/shared/lib/format';
-import { BentoSection } from '@/widgets/bentoGrid/ui/BentoSection';
+import { BentoSection } from '@/widgets/bento-grid/ui/BentoSection';
 import { Profile } from '@/widgets/profile/ui/Profile';
 import { ProfileActivity } from '@/widgets/profile-activity/ui/ProfileActivity';
 

@@ -3,17 +3,17 @@
 import { useState, useRef } from 'react';
 
 import { cn } from '@/shared/lib/utils';
+import { TechIcon } from '@/shared/ui';
 import Carousel from '@/shared/ui/Carousel';
 
 import { ProjectCardBack } from './ProjectCardBack';
 import { ProjectCardFront } from './ProjectCardFront';
-import { useOutsideClick } from '../lib/useOutsideClick';
-import { useProjectFlip } from '../lib/useProjectFlip';
+import { useOutsideClick } from '../lib/hooks/useOutsideClick';
+import { useProjectFlip } from '../lib/hooks/useProjectFlip';
 
 // 🌟 backTitle props 추가
 export default function ProjectCardEntity({
   project,
-  techIcons,
   header,
   footer,
   buttons,
@@ -31,7 +31,7 @@ export default function ProjectCardEntity({
       key={tech}
       className="flex items-center gap-1.5 rounded border border-zinc-700 bg-zinc-800 px-2 py-1 text-[10px] whitespace-nowrap text-zinc-200"
     >
-      {techIcons?.[tech]}
+      <TechIcon name={tech} size="1.2em" />
       {tech}
     </span>
   ));

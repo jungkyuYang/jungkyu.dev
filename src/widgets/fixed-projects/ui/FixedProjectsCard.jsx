@@ -5,7 +5,7 @@ import ProjectCardEntity from '@/entities/projects/ui/ProjectCardEntity';
 import { useFixedProjectsContext } from '../model/FixedProjectsContext';
 
 export const FixedProjectsCard = ({ data }) => {
-  const { techIcons, label, subLabel } = useFixedProjectsContext();
+  const { label, subLabel } = useFixedProjectsContext();
 
   return (
     <ProjectCardEntity
@@ -16,7 +16,6 @@ export const FixedProjectsCard = ({ data }) => {
       }}
       buttons={data.buttons}
       backTitle={data.backTitle}
-      techIcons={techIcons}
       header={<CardHeader label={label} language={data.displayLanguage} />}
       footer={<CardFooter subLabel={subLabel} year={data.displayYear} />}
     />

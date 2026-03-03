@@ -1,5 +1,5 @@
-import { getTechIconUrl } from '@/shared/api/utils';
 import data from '@/shared/constants/data.json';
+import { getTechIconUrl } from '@/shared/lib/format';
 
 import { TechStack } from './TechStack';
 
